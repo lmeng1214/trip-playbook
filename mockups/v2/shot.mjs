@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 
 const root = dirname(fileURLToPath(import.meta.url));
 const htmlDir = join(root, "html");
-const outDir = join(root, "r1");
+const outDir = join(root, process.argv[2] || "r1");
 mkdirSync(outDir, { recursive: true });
 
 const themes = ["rail", "plate", "poster"];

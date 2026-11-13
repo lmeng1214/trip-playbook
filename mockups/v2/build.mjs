@@ -151,10 +151,7 @@ function titleInner(step) {
   const emoji = emojiOf(step);
   const mark = emoji ? `<span class="em">${esc(emoji)}</span>` : "";
   if (!hasMaps(step)) return `<span class="pl">${mark}<span class="name">${esc(label)}</span></span>`;
-  const words = label.split(" ");
-  const last = words.pop() || "";
-  const head = words.length ? `${esc(words.join(" "))} ` : "";
-  return `<a class="pl" href="${esc(hrefOf(step))}">${mark}<span class="name">${head}<span class="tail">${esc(last)}<span class="go" aria-hidden="true">↗</span></span></span></a>`;
+  return `<a class="pl" href="${esc(hrefOf(step))}"><span class="go" aria-hidden="true">↗</span>${mark}<span class="name">${esc(label)}</span></a>`;
 }
 
 function chips(confs) {
@@ -429,18 +426,20 @@ function css() {
     .all { justify-content: flex-end; padding: 0 2px; }
     .days { display: flex; align-items: center; gap: 0; }
     .nav { width: 44px; font-size: 26px; line-height: 1; }
-    .daysel { flex: 1; min-width: 0; font-size: 16px; letter-spacing: -0.015em; }
+    .daysel { flex: 1; min-width: 0; font-size: 16px; font-weight: 500; letter-spacing: -0.015em; }
     .meter { display: flex; align-items: center; gap: 8px; padding-bottom: 8px; }
     .prog { flex: 1; height: 3px; background: var(--rule); }
     .prog i { display: block; height: 100%; background: var(--ink); }
     [data-theme="rail"] .prog i { background: #141414; }
-    .pn { font-size: 13px; line-height: 18px; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
-    .dayhead {
+    .pn { font-size: 13px; line-height: 18px; font-weight: 500; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .dayhead, .stay, .nowbox {
       display: grid;
-      grid-template-columns: 64px minmax(0, 1fr);
+      grid-template-columns: 64px minmax(0, 1fr) 44px;
       column-gap: 8px;
+    }
+    .dayhead {
       align-items: baseline;
-      padding-top: 8px;
+      padding-top: 16px;
     }
     [data-theme="plate"] .dayhead {
       background: var(--plate);
@@ -451,28 +450,28 @@ function css() {
     .dnum {
       grid-column: 1;
       grid-row: 1;
-      text-align: right;
+      text-align: left;
       font-size: 40px;
-      line-height: 40px;
+      line-height: 1;
       font-weight: 700;
-      letter-spacing: -0.04em;
+      letter-spacing: -0.045em;
       font-variant-numeric: tabular-nums;
     }
-    [data-theme="poster"] .dnum { font-size: 48px; line-height: 48px; }
+    [data-theme="poster"] .dnum { font-size: 48px; line-height: 0.85; }
     [data-theme="rail"] .dnum, [data-theme="rail"] .when, [data-theme="rail"] .contents .when, [data-theme="rail"] .nl .when {
       font-family: "JetBrains Mono", ui-monospace, monospace;
       font-weight: 500;
       letter-spacing: 0;
     }
     [data-theme="rail"] .when, [data-theme="rail"] .contents .when { font-size: 12px; }
-    .dtop { grid-column: 2; grid-row: 1; font-size: 16px; line-height: 22px; font-weight: 600; }
-    .areas { grid-column: 2; margin-top: 2px; font-size: 16px; line-height: 22px; font-weight: 600; }
-    .alarm { grid-column: 2; margin-top: 4px; font-size: 16px; line-height: 22px; }
-    .al { color: var(--muted); font-weight: 600; }
+    .dtop { grid-column: 2 / -1; grid-row: 1; font-size: 16px; line-height: 22px; font-weight: 600; }
+    .areas { grid-column: 2 / -1; margin-top: 8px; font-size: 16px; line-height: 22px; font-weight: 500; }
+    .alarm { grid-column: 2 / -1; margin-top: 8px; font-size: 13px; line-height: 18px; font-weight: 400; }
+    .al { color: var(--muted); font-weight: 400; }
     [data-theme="plate"] .al { color: #c5d2c8; }
-    .big { font-weight: 700; font-variant-numeric: tabular-nums; }
-    .em { font-family: "Noto Color Emoji", sans-serif; font-style: normal; margin-right: 6px; }
-    .stay { margin-top: 4px; }
+    .big { font-size: 16px; line-height: 22px; font-weight: 600; font-variant-numeric: tabular-nums; }
+    .em { font-family: "Noto Color Emoji", sans-serif; font-style: normal; margin-right: 4px; vertical-align: -0.125em; }
+    .stay { margin-top: 8px; }
     .rowlink, .exp, .idea {
       display: flex;
       align-items: center;
@@ -482,25 +481,26 @@ function css() {
       padding: 8px 0;
       font-size: 16px;
       line-height: 22px;
-      font-weight: 600;
+      font-weight: 500;
     }
     .rowlink .name, .exp .name, .idea .name, .pl .name { flex: 1; min-width: 0; overflow-wrap: break-word; }
     .rowlink .go, .idea .go, .exp .chev { margin-left: auto; flex: 0 0 auto; }
     .go { display: inline-block; min-width: 16px; text-align: right; font-weight: 500; }
-    .pl .go { margin-left: 8px; flex: none; }
-    .tail { white-space: nowrap; }
+    .pl .go { float: right; margin: 1px 0 0 8px; }
     .hnote { display: block; margin-top: 2px; font-weight: 500; color: var(--muted); }
     .note { padding: 8px 0; font-size: 16px; line-height: 22px; color: var(--muted); overflow-wrap: anywhere; }
-    .nowbox { margin-top: 4px; padding-top: 4px; border-top: 1px solid var(--rule); }
+    .nowbox { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--rule); }
     .nl {
       display: grid;
-      grid-template-columns: 64px minmax(0, 1fr);
-      column-gap: 8px;
+      grid-template-columns: subgrid;
+      grid-column: 1 / -1;
       align-items: start;
       width: 100%;
       min-height: 44px;
       text-align: left;
     }
+    .nowbox > .exp { grid-column: 2 / -1; }
+    .nl .on { grid-column: 2 / -1; }
     .nl .when, .contents .when { padding-top: 11px; text-align: right; }
     .nl .on, .crow .on {
       min-width: 0;
@@ -510,7 +510,7 @@ function css() {
       font-weight: 600;
       overflow-wrap: break-word;
     }
-    .filters { display: flex; flex-wrap: wrap; align-items: center; }
+    .filters { display: flex; flex-wrap: wrap; align-items: center; border-bottom: 1px solid var(--rule); }
     .fchip {
       min-width: 44px;
       min-height: 44px;
@@ -521,11 +521,21 @@ function css() {
       color: var(--muted);
       font-size: 13px;
       line-height: 18px;
-      font-weight: 600;
+      font-weight: 500;
       letter-spacing: 0;
+      position: relative;
     }
-    .fchip.on { color: var(--ink); box-shadow: inset 0 -2px 0 var(--ink); }
-    .contents, .kath { border-top: 1px solid var(--rule); }
+    .fchip.on { color: var(--ink); font-weight: 600; }
+    .fchip.on::after {
+      content: "";
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      bottom: 8px;
+      height: 2px;
+      background: var(--ink);
+    }
+    .kath { border-top: 1px solid var(--rule); }
     summary {
       display: flex;
       align-items: center;
@@ -642,7 +652,7 @@ function css() {
       padding: 0 0 4px;
     }
     .hotelconf { padding-top: 0; }
-    .tag { font-size: 13px; line-height: 18px; font-weight: 600; color: var(--muted); white-space: nowrap; }
+    .tag { font-size: 13px; line-height: 18px; font-weight: 500; color: var(--muted); white-space: nowrap; }
     .tag.meal, .tag.booked { color: var(--ink); }
     .badge {
       display: inline-flex;
@@ -656,14 +666,14 @@ function css() {
       white-space: nowrap;
     }
     .badge.now { background: var(--now); color: var(--now-ink); }
-    .badge.nx { height: auto; padding: 0; color: var(--ink); }
+    .badge.nx { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
     .chip {
       display: inline-flex;
       align-items: center;
       min-height: 44px;
       min-width: 44px;
       padding: 0 12px;
-      border: 1.5px solid var(--ink);
+      border: 1px solid var(--ink);
       background: var(--chip);
       color: var(--chip-ink);
       font-size: 13px;
@@ -674,15 +684,15 @@ function css() {
     .trv { margin: 0 0 4px; font-size: 16px; line-height: 22px; color: var(--muted); overflow-wrap: break-word; }
     .panel { padding: 0 0 8px; }
     .ia {
-      padding-top: 4px;
-      font-size: 12px;
-      line-height: 16px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
+      padding-top: 8px;
+      font-size: 13px;
+      line-height: 18px;
+      font-weight: 600;
+      letter-spacing: 0;
       color: var(--muted);
     }
     .det div { padding: 8px 0; color: var(--muted); overflow-wrap: anywhere; white-space: pre-wrap; }
-    .row.now { box-shadow: inset 3px 0 0 var(--bar); }
+    .row.now .when { box-shadow: inset 3px 0 0 var(--bar); }
     .row.past .pl, .row.past .when, .row.past .tag, .row.past .trv,
     .crow.past .on, .crow.past .when { color: #6a6862; }
     [data-theme="poster"] .row.past .pl, [data-theme="poster"] .row.past .when, [data-theme="poster"] .row.past .tag,

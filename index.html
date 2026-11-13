@@ -8,75 +8,20 @@
       name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
-    <meta name="color-scheme" content="dark" />
-    <meta name="theme-color" content="#141210" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#f6f1e6" />
     <link rel="icon" href="data:," />
     <style>
-@font-face {
-        font-family: Inter;
-        font-style: normal;
-        font-weight: 400;
-        font-display: swap;
-        src: url("fonts/inter-400.woff2") format("woff2");
-        unicode-range: U+0000-00FF, U+0100-017F, U+2000-206F, U+2190-21FF, U+2212;
-      }
-      @font-face {
-        font-family: Inter;
-        font-style: normal;
-        font-weight: 500;
-        font-display: swap;
-        src: url("fonts/inter-500.woff2") format("woff2");
-        unicode-range: U+0000-00FF, U+0100-017F, U+2000-206F, U+2190-21FF, U+2212;
-      }
-      @font-face {
-        font-family: Inter;
-        font-style: normal;
-        font-weight: 600;
-        font-display: swap;
-        src: url("fonts/inter-600.woff2") format("woff2");
-        unicode-range: U+0000-00FF, U+0100-017F, U+2000-206F, U+2190-21FF, U+2212;
-      }
-      @font-face {
-        font-family: Inter;
-        font-style: normal;
-        font-weight: 700;
-        font-display: swap;
-        src: url("fonts/inter-700.woff2") format("woff2");
-        unicode-range: U+0000-00FF, U+0100-017F, U+2000-206F, U+2190-21FF, U+2212;
-      }
-      @font-face {
-        font-family: "JetBrains Mono";
-        font-style: normal;
-        font-weight: 500;
-        font-display: swap;
-        src: url("fonts/jetbrains-mono-500.woff2") format("woff2");
-        unicode-range: U+0000-00FF, U+0100-017F, U+2000-206F, U+2190-21FF, U+2212;
-      }
-      @font-face {
-        font-family: "JetBrains Mono";
-        font-style: normal;
-        font-weight: 600;
-        font-display: swap;
-        src: url("fonts/jetbrains-mono-600.woff2") format("woff2");
-        unicode-range: U+0000-00FF, U+0100-017F, U+2000-206F, U+2190-21FF, U+2212;
-      }
-      @font-face {
-        font-family: "JetBrains Mono";
-        font-style: normal;
-        font-weight: 700;
-        font-display: swap;
-        src: url("fonts/jetbrains-mono-700.woff2") format("woff2");
-        unicode-range: U+0000-00FF, U+0100-017F, U+2000-206F, U+2190-21FF, U+2212;
-      }
       :root {
-        --ink: #f6f1e7;
-        --muted: #b3a89a;
-        --quiet: #9c9388;
-        --past: #a89f93;
-        --rule: #5e564e;
-        --page: #141210;
-        --amber: #f0b429;
-        --now-ink: #1c1406;
+        --ink: #1c1914;
+        --muted: #5c564e;
+        --quiet: #5c564e;
+        --past: #5c564e;
+        --rule: #b0a694;
+        --page: #f6f1e6;
+        --amber: #7a4a08;
+        --now-ink: #f6f1e6;
+        --rail: 104px;
       }
       * { box-sizing: border-box; }
       [hidden] { display: none !important; }
@@ -88,10 +33,10 @@
       }
       body {
         color: var(--ink);
-        font-family: Inter, "WenQuanYi Micro Hei", "Noto Color Emoji", system-ui, sans-serif;
+        font-family: -apple-system, system-ui, sans-serif;
         font-size: 16px;
         line-height: 22px;
-        letter-spacing: -0.011em;
+        letter-spacing: 0;
         -webkit-text-size-adjust: 100%;
       }
       button, a, select {
@@ -105,7 +50,7 @@
       }
       button, a, summary { -webkit-tap-highlight-color: transparent; }
       :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
-      button:active, a:active, summary:active { background: rgba(255, 255, 255, 0.08); }
+      button:active, a:active, summary:active { background: rgba(28, 25, 20, 0.06); }
       header {
         position: sticky;
         top: 0;
@@ -178,27 +123,12 @@
         font-variant-numeric: tabular-nums;
         white-space: nowrap;
       }
-      .plate {
-        margin: 8px -16px 0;
-        height: 112px;
-        overflow: hidden;
-        background: #0c0b09;
-        border-bottom: 1px solid var(--rule);
-      }
-      .plate img {
-        display: block;
-        width: 100%;
-        height: 112px;
-        object-fit: cover;
-        object-position: center 40%;
-      }
-      .plate.singapore img { object-position: center 62%; }
       .dayhead, .stay, .nowbox {
         display: grid;
-        grid-template-columns: 64px minmax(0, 1fr) 44px;
+        grid-template-columns: var(--rail) minmax(0, 1fr) 44px;
         column-gap: 8px;
       }
-      .dayhead { align-items: center; padding-top: 12px; }
+      .dayhead { align-items: center; padding-top: 16px; }
       .dnum {
         grid-column: 1;
         grid-row: 1;
@@ -233,15 +163,16 @@
       }
       .al { color: var(--muted); font-weight: 400; }
       .big {
-        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
         font-size: 15px;
         line-height: 22px;
         font-weight: 500;
         letter-spacing: 0;
         font-variant-numeric: tabular-nums;
+        color: var(--amber);
       }
       .em {
-        font-family: "Noto Color Emoji", sans-serif;
+        font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
         font-style: normal;
         margin-right: 4px;
         vertical-align: -0.125em;
@@ -266,7 +197,7 @@
       .nowbox { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--rule); }
       .nl {
         display: grid;
-        grid-template-columns: 64px minmax(0, 1fr) 44px;
+        grid-template-columns: var(--rail) minmax(0, 1fr) 44px;
         column-gap: 8px;
         grid-column: 1 / -1;
         align-items: start;
@@ -340,7 +271,7 @@
       details[open] > summary .chev, .exp.open .chev { transform: rotate(135deg); }
       .crow {
         display: grid;
-        grid-template-columns: 64px minmax(0, 1fr);
+        grid-template-columns: var(--rail) minmax(0, 1fr);
         column-gap: 8px;
         align-items: start;
         width: 100%;
@@ -359,7 +290,7 @@
       .plan { border-top: 1px solid var(--rule); }
       .row {
         display: grid;
-        grid-template-columns: 64px minmax(0, 1fr) 44px;
+        grid-template-columns: var(--rail) minmax(0, 1fr) 44px;
         column-gap: 8px;
         align-items: start;
         border-bottom: 1px solid var(--rule);
@@ -371,16 +302,15 @@
         align-self: start;
         padding-top: 11px;
         text-align: right;
-        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
         font-weight: 500;
         font-size: 12px;
         line-height: 22px;
         letter-spacing: 0;
-        color: var(--ink);
+        white-space: nowrap;
+        color: var(--amber);
       }
-      .row > .when,
-      .crow > .when { padding-top: 13px; }
-      .when .flex { color: var(--quiet); font-weight: 500; }
+      .when .flex { color: var(--muted); font-weight: 500; }
       .ttl { grid-column: 2; grid-row: 1; min-width: 0; align-self: start; }
       .pl {
         display: block;
@@ -413,7 +343,7 @@
         border: 1.5px solid var(--quiet);
         background: transparent;
       }
-      .done[aria-pressed="true"]::before { background: #f6f1e7; border-color: #f6f1e7; }
+      .done[aria-pressed="true"]::before { background: var(--ink); border-color: var(--ink); }
       .done[aria-pressed="true"]::after {
         content: "";
         position: absolute;
@@ -421,8 +351,8 @@
         top: 18px;
         width: 10px;
         height: 6px;
-        border-left: 2px solid #141210;
-        border-bottom: 2px solid #141210;
+        border-left: 2px solid var(--page);
+        border-bottom: 2px solid var(--page);
         transform: rotate(-45deg);
       }
       .meta, .trv, .note, .rowlink, .exp, .panel, .dayof, .dl, .late { grid-column: 2 / -1; }
@@ -569,12 +499,12 @@
         text-align: left;
       }
       .ovr .ot, .rrow .rd {
-        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
         font-size: 12px;
         line-height: 22px;
         font-weight: 500;
         letter-spacing: 0;
-        color: var(--ink);
+        color: var(--amber);
       }
       .ovr .on, .bi { font-size: 16px; line-height: 22px; font-weight: 600; overflow-wrap: anywhere; }
       .oa, .prov, .on2 { color: var(--muted); font-size: 13px; line-height: 18px; overflow-wrap: anywhere; }
@@ -583,7 +513,7 @@
       @keyframes inR { from { transform: translateX(-12px); opacity: 0.2; } to { transform: none; opacity: 1; } }
       @keyframes bumpL { 40% { transform: translateX(-10px); } }
       @keyframes bumpR { 40% { transform: translateX(10px); } }
-      @keyframes fl { from { background: rgba(255, 255, 255, 0.08); } to { background: transparent; } }
+      @keyframes fl { from { background: rgba(28, 25, 20, 0.06); } to { background: transparent; } }
       main.sl > * { animation: inL 0.24s ease-out; }
       main.sr > * { animation: inR 0.24s ease-out; }
       main.bl > * { animation: bumpL 0.26s ease-out; }
@@ -889,9 +819,7 @@
           );
         }
         function q(t) {
-          return t.timeText
-            ? u(t.timeText).replace(/([\/\u2013~])/g, "$1<wbr>")
-            : '<span class="flex">Flexible</span>';
+          return t.timeText ? u(t.timeText) : '<span class="flex">Flexible</span>';
         }
         function F(t) {
           return t.doc
@@ -1450,11 +1378,7 @@
               I = "",
               L = "Singapore" === S.countries[0];
             ((I +=
-              '<div class="plate ' +
-              (L ? "singapore" : "taipei") +
-              '"><img src="img/' +
-              (L ? "singapore" : "taipei") +
-              '.jpg" alt=""></div><section class="dayhead"><div class="dnum">' +
+              '<section class="dayhead"><div class="dnum">' +
               S.d +
               '</div><div class="dtop"><span class="em">' +
               (L ? "🇸🇬" : "🇹🇼") +

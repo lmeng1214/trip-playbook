@@ -1,12 +1,32 @@
 {
-  "viewport": "393x852 CSS px, deviceScaleFactor 3 for the screenshots in this folder",
-  "baseline": "mockups/v2/r4/board-*.png on cursor/mockups-v2-7010. A fresh render of mockups/v2/html/board-*.html from the commit that produced those PNGs matches them at 0% hot pixels.",
+  "viewport": "393x852 CSS px, deviceScaleFactor 3",
+  "pageWeight": {
+    "indexHtmlBytes": 68431,
+    "requests": ["index.html", "data.json"],
+    "imageRequests": 0,
+    "fontRequests": 0
+  },
+  "theme": {
+    "colorScheme": "light",
+    "themeColor": "#f6f1e6",
+    "page": "#f6f1e6",
+    "ink": "#1c1914",
+    "muted": "#5c564e",
+    "accent": "#7a4a08",
+    "nowInk": "#f6f1e6",
+    "hairline": "#b0a694"
+  },
+  "contrast": {
+    "inkOnPage": 15.56,
+    "mutedOnPage": 6.44,
+    "accentOnPage": 6.63,
+    "nowInkOnAccent": 6.63,
+    "note": "Every text pair clears WCAG AA 4.5:1. The hairline is not text."
+  },
   "content": {
     "days": 15,
-    "fieldDiffs": 0,
-    "fields": ["time", "title words", "tags", "chip count", "row order", "hotel chip count", "day route"],
-    "confirmationHrefDiffs": 0,
-    "confirmationLinks": 46,
+    "sheetTimeMismatches": 0,
+    "fieldDiffsAgainstMain": 0,
     "confirmationIdsInDom": 0,
     "confirmationIdsChecked": 46
   },
@@ -15,33 +35,24 @@
     "scrollWidthOver393": 0,
     "controlsUnder44": 0,
     "ellipsis": 0,
-    "gridFailures": 0,
-    "grid": "rail time right edge 80, title left 88, done toggle 333-377, title and time first baselines equal",
-    "overlappingTapTargets": 0
+    "overlappingTapTargets": 0,
+    "rail": "104px. Time right edge x=120. Title starts x=128. Done toggle stays x=333-377.",
+    "times": "Every timeText is one line, verbatim, with the same 11px top padding. The 16px title baseline sits 2px lower than the 12px time on every row."
   },
-  "mockupScore": {
-    "threshold": "channel delta above 18, deviceScaleFactor 1",
-    "day4": "0.310% pixels differ. Flexible times sit 2px lower so the first baseline matches the title.",
-    "day4-full": "0.599% pixels differ. Same time shift, plus the booked tag reads ✓ Booked and the confirmation chip sits to its right. Page height is 1667 CSS px, the same as the board screenshot.",
-    "day4-expanded": "0.759% pixels differ. Same time shift and booked tag. The frame is Spring City Resort Soak with Dinner's ideas open.",
-    "contents": "0.517% pixels differ. Flexible times in the contents rows sit 2px lower.",
-    "now": "0.398% pixels differ. Rail times sit 2px lower. NOW is Tekka Centre and NEXT is Kampong Glam at 9:30 AM."
-  },
-  "contrastOnPage": {
-    "ink": 16.6,
-    "muted": 8.0,
-    "quiet": 6.18,
-    "past": 7.16,
-    "amber": 10.02,
-    "nowInkOnAmber": 9.78,
-    "note": "Text pairs clear WCAG AA 4.5:1. The hairline #5e564e is 2.6:1 and is not text."
-  },
+  "longestTimes": [
+    { "text": "10:00–10:45 AM", "day": 15, "lines": 1, "right": 120 },
+    { "text": "12:00–1:00 PM", "day": 12, "lines": 1, "right": 120 },
+    { "text": "~1:35–4:05 PM", "day": 12, "lines": 1, "right": 120 },
+    { "text": "9:15–10:15 AM", "day": 14, "lines": 1, "right": 120 },
+    { "text": "9:00–10:00 AM", "day": 15, "lines": 1, "right": 120 },
+    { "text": "12:15–1:15 PM", "day": 15, "lines": 1, "right": 120 },
+    { "text": "4:05–5:45 PM", "day": 12, "lines": 1, "right": 120 },
+    { "text": "5:00–5:45 PM", "day": 13, "lines": 1, "right": 120 },
+    { "text": "4:35–5:20 PM", "day": 14, "lines": 1, "right": 120 },
+    { "text": "5:50–7:10 PM", "day": 14, "lines": 1, "right": 120 }
+  ],
   "behavior": {
-    "doneKey": "done:1125:TBD#0 stored as 1 and aria-pressed true",
-    "today": "Taiwan/SG now 9:30 AM, NOW Tekka, NEXT Kampong Glam, temple done",
-    "runningLate": "Maps href contains the in-browser coordinates. localStorage stayed pb-data-v1. No request URL contained the coordinates.",
-    "reservations": "23 rows, 23 View Confirmation chips, host docs.google.com",
-    "day10": "Taipei plate, flag 🇹🇼, hotel note present",
-    "day12": "Singapore plate, flag 🇸🇬, Katherine 11 rows, link 46x44"
+    "today": "Taiwan/SG now 9:30 AM. NOW is Tekka Centre. NEXT is Kampong Glam.",
+    "runningLate": "Maps href contains the in-browser coordinates. localStorage stayed pb-data-v1. No request URL contained the coordinates."
   }
 }

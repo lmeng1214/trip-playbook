@@ -731,30 +731,30 @@ function css() {
     [data-theme="board"] { --rule: #5e564e; }
     [data-theme="board"] .plate {
       display: block;
-      position: relative;
       margin: 8px -16px 0;
-      height: 88px;
+      height: 112px;
       overflow: hidden;
       background: #0c0b09;
-    }
-    [data-theme="board"] .plate::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 28px;
-      background: linear-gradient(to bottom, rgba(20, 18, 16, 0), #141210);
+      border-bottom: 1px solid #5e564e;
     }
     [data-theme="board"] .plate img {
       display: block;
       width: 100%;
-      height: 88px;
+      height: 112px;
       object-fit: cover;
-      object-position: center 38%;
+      object-position: center 40%;
     }
-    [data-theme="board"] .plate.singapore img { object-position: center 58%; }
-    [data-theme="board"] .dayhead { align-items: center; padding-top: 10px; }
+    [data-theme="board"] .plate.singapore img { object-position: center 62%; }
+    [data-theme="board"] .dayhead { align-items: center; padding-top: 12px; }
+    [data-theme="board"] .dnum { font-size: 56px; line-height: 0.8; }
+    [data-theme="board"] .areas,
+    [data-theme="board"] .alarm { grid-column: 1 / -1; }
+    [data-theme="board"] .big {
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-weight: 500;
+      font-size: 15px;
+      letter-spacing: 0;
+    }
     [data-theme="board"] .when,
     [data-theme="board"] .contents .when,
     [data-theme="board"] .nl .when {
@@ -762,7 +762,7 @@ function css() {
       font-weight: 500;
       font-size: 12px;
       letter-spacing: 0;
-      color: #f0b429;
+      color: #f6f1e7;
     }
     [data-theme="board"] .when .flex,
     [data-theme="board"] .contents .when .flex { color: #9c9388; font-weight: 500; }
@@ -772,14 +772,14 @@ function css() {
       box-shadow: none;
     }
     [data-theme="board"] .badge.nx {
-      color: #f0b429;
-      box-shadow: inset 0 0 0 1px #f0b429;
+      color: #f6f1e7;
+      box-shadow: inset 0 0 0 1px #f6f1e7;
     }
-    [data-theme="board"] .meta { padding-left: 22px; padding-bottom: 8px; }
+    [data-theme="board"] .meta { grid-column: 2; padding-left: 0; padding-bottom: 8px; }
     [data-theme="board"] .pl .go { margin-right: 8px; }
     [data-theme="board"] .crow .on { font-weight: 500; }
-    [data-theme="board"] .panel { padding-left: 22px; }
-    [data-theme="board"] .ia { letter-spacing: 0.08em; font-size: 12px; }
+    [data-theme="board"] .done::before { border-color: #9c9388; }
+    [data-theme="board"] .fchip.on::after { bottom: 0; left: 6px; right: 6px; }
     [data-theme="board"] .row.past .pl,
     [data-theme="board"] .row.past .tag,
     [data-theme="board"] .row.past .trv,
@@ -788,7 +788,7 @@ function css() {
     [data-theme="board"] .row.past .when,
     [data-theme="board"] .crow.past .when,
     [data-theme="board"] .row.is-done .when { color: #9c9388; background: transparent; }
-    [data-theme="board"] .done[aria-pressed="true"]::before { background: #f6f1e7; }
+    [data-theme="board"] .done[aria-pressed="true"]::before { background: #f6f1e7; border-color: #f6f1e7; }
     [data-theme="board"] .done[aria-pressed="true"]::after { border-color: #141210; }
     [data-theme="board"] button:active,
     [data-theme="board"] a:active,

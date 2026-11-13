@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en" data-theme="plate">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=393">
+<title>Day 4</title>
+<style>
+
+    :root {
+      --ink: #141414;
+      --muted: #5c5a54;
+      --rule: #ddd9d0;
+      --page: #f3f1eb;
+      --now: #141414;
+      --now-ink: #fff;
+      --chip: #141414;
+      --chip-ink: #fff;
+      --plate: transparent;
+      --plate-ink: #141414;
+      --bar: #141414;
+    }
+    [data-theme="plate"] {
+      --ink: #142019;
+      --muted: #3e5148;
+      --rule: #d5ddd6;
+      --page: #eef3ec;
+      --now: #c4321a;
+      --now-ink: #fff;
+      --chip: transparent;
+      --chip-ink: #142019;
+      --plate: #163028;
+      --plate-ink: #f4f7f2;
+      --bar: #c4321a;
+    }
+    [data-theme="poster"] {
+      --ink: #111111;
+      --muted: #595959;
+      --rule: #e6e6e6;
+      --page: #ffffff;
+      --now: #ffe14a;
+      --now-ink: #111111;
+      --chip: transparent;
+      --chip-ink: #111111;
+      --plate: transparent;
+      --plate-ink: #111111;
+      --bar: #ffe14a;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; width: 393px; overflow-x: clip; }
+    body {
+      background: var(--page);
+      color: var(--ink);
+      font-family: Inter, "WenQuanYi Micro Hei", "Noto Color Emoji", sans-serif;
+      font-size: 16px;
+      line-height: 22px;
+      letter-spacing: -0.011em;
+    }
+    button, a { font: inherit; color: inherit; background: none; border: 0; padding: 0; text-align: left; text-decoration: none; }
+    button, a, summary { -webkit-tap-highlight-color: transparent; }
+    :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+    button:active, a:active, summary:active { background: rgba(0, 0, 0, 0.06); }
+    header { position: sticky; top: 0; z-index: 3; background: var(--page); }
+    body.full header { position: static; }
+    .top, .days, .meter, main { padding-left: 16px; padding-right: 16px; }
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      min-height: 52px;
+      padding-top: 8px;
+    }
+    [data-theme="rail"] .top {
+      background: #141414;
+      color: #fff;
+      margin: 0;
+      padding: 8px 16px 0;
+    }
+    h1 { margin: 0; font-size: 17px; line-height: 22px; font-weight: 600; letter-spacing: -0.02em; }
+    .clock { margin-top: 1px; font-size: 13px; line-height: 18px; font-weight: 500; color: var(--muted); letter-spacing: 0; }
+    [data-theme="rail"] .clock { color: #c8c8c8; }
+    .all, .nav, .daysel, .refresh {
+      min-width: 44px;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
+    .all { justify-content: flex-end; padding: 0 2px; }
+    .days { display: flex; align-items: center; gap: 0; }
+    .nav { width: 44px; font-size: 26px; line-height: 1; }
+    .daysel { flex: 1; min-width: 0; font-size: 16px; font-weight: 500; letter-spacing: -0.015em; }
+    .meter { display: flex; align-items: center; gap: 8px; padding-bottom: 8px; }
+    .prog { flex: 1; height: 3px; background: var(--rule); }
+    .prog i { display: block; height: 100%; background: var(--ink); }
+    [data-theme="rail"] .prog i { background: #141414; }
+    .pn { font-size: 13px; line-height: 18px; font-weight: 500; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .dayhead, .stay, .nowbox {
+      display: grid;
+      grid-template-columns: 64px minmax(0, 1fr) 44px;
+      column-gap: 8px;
+    }
+    .dayhead {
+      align-items: baseline;
+      padding-top: 16px;
+    }
+    [data-theme="plate"] .dayhead {
+      background: var(--plate);
+      color: var(--plate-ink);
+      margin: 8px -16px 0;
+      padding: 12px 16px 12px;
+    }
+    .dnum {
+      grid-column: 1;
+      grid-row: 1;
+      text-align: left;
+      font-size: 40px;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: -0.045em;
+      font-variant-numeric: tabular-nums;
+    }
+    [data-theme="poster"] .dnum { font-size: 48px; line-height: 0.85; }
+    [data-theme="rail"] .dnum, [data-theme="rail"] .when, [data-theme="rail"] .contents .when, [data-theme="rail"] .nl .when {
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+    [data-theme="rail"] .when, [data-theme="rail"] .contents .when { font-size: 12px; }
+    .dtop { grid-column: 2 / -1; grid-row: 1; font-size: 16px; line-height: 22px; font-weight: 600; }
+    .areas { grid-column: 2 / -1; margin-top: 8px; font-size: 16px; line-height: 22px; font-weight: 500; }
+    .alarm { grid-column: 2 / -1; margin-top: 8px; font-size: 13px; line-height: 18px; font-weight: 400; }
+    .al { color: var(--muted); font-weight: 400; }
+    [data-theme="plate"] .al { color: #c5d2c8; }
+    .big { font-size: 16px; line-height: 22px; font-weight: 600; font-variant-numeric: tabular-nums; }
+    .em { font-family: "Noto Color Emoji", sans-serif; font-style: normal; margin-right: 4px; vertical-align: -0.125em; }
+    .stay { margin-top: 8px; }
+    .rowlink, .exp, .idea {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+      min-height: 44px;
+      padding: 8px 0;
+      font-size: 16px;
+      line-height: 22px;
+      font-weight: 500;
+    }
+    .rowlink .name, .exp .name, .idea .name, .pl .name { flex: 1; min-width: 0; overflow-wrap: break-word; }
+    .rowlink .go, .idea .go, .exp .chev { margin-left: auto; flex: 0 0 auto; }
+    .go { display: inline-block; min-width: 16px; text-align: right; font-weight: 500; }
+    .pl .go { float: right; margin: 1px 0 0 8px; }
+    .hnote { display: block; margin-top: 2px; font-weight: 500; color: var(--muted); }
+    .note { padding: 8px 0; font-size: 16px; line-height: 22px; color: var(--muted); overflow-wrap: anywhere; }
+    .nowbox { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--rule); }
+    .nl {
+      display: grid;
+      grid-template-columns: subgrid;
+      grid-column: 1 / -1;
+      align-items: start;
+      width: 100%;
+      min-height: 44px;
+      text-align: left;
+    }
+    .nowbox > .exp { grid-column: 2 / -1; }
+    .nl .on { grid-column: 2 / -1; }
+    .nl .when, .contents .when { padding-top: 11px; text-align: right; }
+    .nl .on, .crow .on {
+      min-width: 0;
+      padding: 11px 0;
+      font-size: 16px;
+      line-height: 22px;
+      font-weight: 600;
+      overflow-wrap: break-word;
+    }
+    .filters { display: flex; flex-wrap: wrap; align-items: center; border-bottom: 1px solid var(--rule); }
+    .fchip {
+      min-width: 44px;
+      min-height: 44px;
+      padding: 0 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 18px;
+      font-weight: 500;
+      letter-spacing: 0;
+      position: relative;
+    }
+    .fchip.on { color: var(--ink); font-weight: 600; }
+    .fchip.on::after {
+      content: "";
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      bottom: 8px;
+      height: 2px;
+      background: var(--ink);
+    }
+    .kath { border-top: 1px solid var(--rule); }
+    summary {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      min-height: 44px;
+      padding: 8px 0;
+      font-size: 16px;
+      line-height: 22px;
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary .chev, .exp .chev { margin-left: auto; }
+    .chev {
+      width: 8px;
+      height: 8px;
+      margin-right: 4px;
+      border-top: 2px solid currentColor;
+      border-right: 2px solid currentColor;
+      transform: rotate(45deg);
+      flex: 0 0 auto;
+    }
+    details[open] > summary .chev, .exp.open .chev { transform: rotate(135deg); margin-top: 0; }
+    .crow {
+      display: grid;
+      grid-template-columns: 64px minmax(0, 1fr);
+      column-gap: 8px;
+      align-items: start;
+      width: 100%;
+      min-height: 44px;
+      border-top: 1px solid var(--rule);
+      text-align: left;
+    }
+    .plan {
+      border-top: 1px solid var(--rule);
+    }
+    [data-theme="rail"] .plan {
+      background-image: linear-gradient(#cfcabe, #cfcabe);
+      background-size: 1px 100%;
+      background-repeat: no-repeat;
+      background-position: 64px 0;
+    }
+    .row {
+      display: grid;
+      grid-template-columns: 64px minmax(0, 1fr) 44px;
+      column-gap: 8px;
+      align-items: start;
+      border-bottom: 1px solid var(--rule);
+      min-width: 0;
+    }
+    .when {
+      grid-column: 1;
+      grid-row: 1;
+      padding-top: 11px;
+      text-align: right;
+      font-size: 13px;
+      line-height: 22px;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0;
+    }
+    .when .flex { font-weight: 600; }
+    .ttl { grid-column: 2; grid-row: 1; min-width: 0; }
+    .pl {
+      display: block;
+      min-height: 44px;
+      min-width: 44px;
+      padding: 11px 0 4px;
+      font-size: 16px;
+      line-height: 22px;
+      font-weight: 600;
+      overflow-wrap: break-word;
+    }
+    [data-theme="poster"] .pl, [data-theme="poster"] .dtop { letter-spacing: -0.02em; }
+    .done {
+      grid-column: 3;
+      grid-row: 1;
+      position: relative;
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      min-height: 44px;
+    }
+    .done::before {
+      content: "";
+      position: absolute;
+      left: 13px;
+      top: 13px;
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--ink);
+      background: transparent;
+    }
+    .done[aria-pressed="true"]::before { background: var(--ink); }
+    .done[aria-pressed="true"]::after {
+      content: "";
+      position: absolute;
+      left: 17px;
+      top: 18px;
+      width: 10px;
+      height: 6px;
+      border-left: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      transform: rotate(-45deg);
+    }
+    .meta, .trv, .note, .rowlink, .exp, .panel { grid-column: 2 / -1; }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      padding: 0 0 4px;
+    }
+    .hotelconf { padding-top: 0; }
+    .tag { font-size: 13px; line-height: 18px; font-weight: 500; color: var(--muted); white-space: nowrap; }
+    .tag.meal, .tag.booked { color: var(--ink); }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      height: 18px;
+      padding: 0 5px;
+      font-size: 11px;
+      line-height: 16px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .badge.now { background: var(--now); color: var(--now-ink); }
+    .badge.nx { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      min-width: 44px;
+      padding: 0 12px;
+      border: 1px solid var(--ink);
+      background: var(--chip);
+      color: var(--chip-ink);
+      font-size: 13px;
+      line-height: 18px;
+      font-weight: 600;
+    }
+    [data-theme="plate"] .chip, [data-theme="poster"] .chip { background: transparent; }
+    .trv { margin: 0 0 4px; font-size: 16px; line-height: 22px; color: var(--muted); overflow-wrap: break-word; }
+    .panel { padding: 0 0 8px; }
+    .ia {
+      padding-top: 8px;
+      font-size: 13px;
+      line-height: 18px;
+      font-weight: 600;
+      letter-spacing: 0;
+      color: var(--muted);
+    }
+    .det div { padding: 8px 0; color: var(--muted); overflow-wrap: anywhere; white-space: pre-wrap; }
+    .row.now .when { box-shadow: inset 3px 0 0 var(--bar); }
+    .row.past .pl, .row.past .when, .row.past .tag, .row.past .trv,
+    .crow.past .on, .crow.past .when { color: #6a6862; }
+    [data-theme="poster"] .row.past .pl, [data-theme="poster"] .row.past .when, [data-theme="poster"] .row.past .tag,
+    [data-theme="poster"] .crow.past .on, [data-theme="poster"] .crow.past .when { color: #6e6e6e; }
+    .row.is-done .pl, .row.is-done .when { color: var(--muted); }
+    .kath { margin-top: 16px; }
+    .k { padding: 8px 0; border-top: 1px solid var(--rule); color: var(--muted); white-space: pre-wrap; overflow-wrap: anywhere; }
+    .foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 12px;
+      padding-top: 4px;
+      font-size: 13px;
+      line-height: 18px;
+      color: var(--muted);
+    }
+    .refresh { font-size: 16px; color: var(--ink); }
+  
+</style>
+</head>
+<body class="">
+<header>
+  <div class="top">
+    <div class="brand">
+      <h1>Trip Playbook</h1>
+      <div class="clock">Taiwan/SG now 3:18 PM</div>
+    </div>
+    <button class="all">All days</button>
+  </div>
+  <div class="days">
+    <button class="nav" aria-label="Previous day">‹</button>
+    <button class="daysel">Day 4 · Wed 11/25</button>
+    <button class="nav" aria-label="Next day">›</button>
+  </div>
+  <div class="meter">
+    <div class="prog" aria-hidden="true"><i style="width:27%"></i></div>
+    <span class="pn">Day 4 of 15</span>
+  </div>
+</header>
+<main>
+  <section class="dayhead">
+    <div class="dnum">25</div>
+    <div class="dtop"><span class="em">🇹🇼</span>Wed · Nov</div>
+    <div class="areas">Beitou, Tamsui, Ximending</div>
+    <div class="alarm"><span class="em">⏰</span> <span class="al">Alarm (computed)</span> <span class="big">9:00 AM</span></div>
+  </section>
+  <section class="stay"><a class="rowlink" href="https://www.google.com/maps/search/?api=1&amp;query=Wonstar%20Hotel%20Zhong%20Hua%20Taipei"><span class="name"><span class="em">🏨</span>Wonstar Hotel Zhong Hua</span><span class="go" aria-hidden="true">↗</span></a><div class="meta hotelconf"><a class="chip" href="https://docs.google.com/document/d/1L-cKIWlbQEZ_kFE50ERSVNBP7JjiNnNv6T5DwdQUiqU/edit">View Confirmation</a></div><a class="rowlink" href="https://www.google.com/maps/dir/Beitou%20Station%2C%20Taipei/Beitou%20Thermal%20Valley%2C%20Taipei/Spring%20City%20Resort%20Beitou/Tamsui%20Old%20Street/%E8%AA%A0%E6%A0%BC%E7%BE%8E%E8%A1%93%20%E5%A3%AB%E6%9E%97/Ximending%20Walking%20District%2C%20Taipei"><span class="name"><span class="em">🗺️</span>Day route in Maps</span><span class="go" aria-hidden="true">↗</span></a></section>
+  
+  <div class="filters" role="group"><button class="fchip on" aria-pressed="true">All</button><button class="fchip" aria-pressed="false">Food</button><button class="fchip" aria-pressed="false">Coffee</button><button class="fchip" aria-pressed="false">Sights</button><button class="fchip" aria-pressed="false">Photo</button><button class="fchip" aria-pressed="false">Transport</button></div>
+  <details class="contents"><summary><span>Contents · 10 stops</span><span class="chev" aria-hidden="true"></span></summary><button class="crow "><span class="when"><span class="flex">Flexible</span></span><span class="on"><span class="em">🍔</span><span class="name">BREAKFAST: TBD</span></span></button><button class="crow "><span class="when"><span class="flex">Flexible</span></span><span class="on"><span class="em">🚆</span><span class="name">EasyCard: Taipei → Beitou</span></span></button><button class="crow "><span class="when"><span class="flex">Flexible</span></span><span class="on"><span class="em">🏃</span><span class="name">Thermal Valley</span></span></button><button class="crow "><span class="when"><span class="flex">Flexible</span></span><span class="on"><span class="em">🍔</span><span class="name">LUNCH: TBD</span></span></button><button class="crow "><span class="when"><span class="flex">Flexible</span></span><span class="on"><span class="em">🏃</span><span class="name">Spring City Resort Soak</span></span></button><button class="crow "><span class="when"><span class="flex">Flexible</span></span><span class="on"><span class="em">🏃</span><span class="name">Tamsui</span></span></button><button class="crow "><span class="when"><span class="flex">Flexible</span></span><span class="on"><span class="em">🛍️</span><span class="name">Artfans (誠格美術), Shilin</span></span></button><button class="crow "><span class="when"><span class="flex">Flexible</span></span><span class="on"><span class="em">🏃</span><span class="name">Ximending Walking District</span></span></button><button class="crow "><span class="when"><span class="flex">Flexible</span></span><span class="on"><span class="em">🍔</span><span class="name">DINNER: TBD</span></span></button><button class="crow "><span class="when"><span class="flex">Flexible</span></span><span class="on"><span class="em">🧋</span><span class="name">Teas: 50 Lan, Milksha, WooTEA, Lattea</span></span></button></details>
+  <div class="plan"><article class="row " id="s0">
+    <div class="when"><span class="flex">Flexible</span></div>
+    <div class="ttl"><span class="pl"><span class="em">🍔</span><span class="name">BREAKFAST: TBD</span></span></div>
+    <button class="done" aria-pressed="false" aria-label="Mark done: 🍔 BREAKFAST: TBD"></button>
+    <div class="meta"><span class="tag">Food</span><span class="tag meal">Breakfast</span></div>
+    <a class="rowlink" href="https://maps.app.goo.gl/stPCGjzAemBYAKEM7"><span class="name"><span class="em">🗺️</span>Pick from saved list</span><span class="go" aria-hidden="true">↗</span></a>
+  </article><article class="row " id="s1">
+    <div class="when"><span class="flex">Flexible</span></div>
+    <div class="ttl"><a class="pl" href="https://www.google.com/maps/dir/?api=1&amp;destination=Beitou%2C%20Taiwan&amp;travelmode=transit"><span class="go" aria-hidden="true">↗</span><span class="em">🚆</span><span class="name">EasyCard: Taipei → Beitou</span></a></div>
+    <button class="done" aria-pressed="false" aria-label="Mark done: 🚆 EasyCard: Taipei → Beitou"></button>
+    <div class="meta"><span class="tag">Transport</span></div>
+    
+  </article><article class="row " id="s2">
+    <div class="when"><span class="flex">Flexible</span></div>
+    <div class="ttl"><a class="pl" href="https://www.google.com/maps/dir/?api=1&amp;destination=Thermal%20Valley%2C%20Taiwan&amp;travelmode=transit"><span class="go" aria-hidden="true">↗</span><span class="em">🏃</span><span class="name">Thermal Valley</span></a></div>
+    <button class="done" aria-pressed="false" aria-label="Mark done: 🏃 Thermal Valley"></button>
+    <div class="meta"><span class="tag">Sights</span></div>
+    
+  </article><article class="row " id="s3">
+    <div class="when"><span class="flex">Flexible</span></div>
+    <div class="ttl"><span class="pl"><span class="em">🍔</span><span class="name">LUNCH: TBD</span></span></div>
+    <button class="done" aria-pressed="false" aria-label="Mark done: 🍔 LUNCH: TBD"></button>
+    <div class="meta"><span class="tag">Food</span><span class="tag meal">Lunch</span></div>
+    <a class="rowlink" href="https://maps.app.goo.gl/dxA3RnWguAzdeCeX8"><span class="name"><span class="em">🗺️</span>Pick from saved list</span><span class="go" aria-hidden="true">↗</span></a>
+  </article><article class="row " id="s4">
+    <div class="when"><span class="flex">Flexible</span></div>
+    <div class="ttl"><a class="pl" href="https://www.google.com/maps/dir/?api=1&amp;destination=Spring%20City%20Resort%20Soak%2C%20Taiwan&amp;travelmode=transit"><span class="go" aria-hidden="true">↗</span><span class="em">🏃</span><span class="name">Spring City Resort Soak</span></a></div>
+    <button class="done" aria-pressed="false" aria-label="Mark done: 🏃 Spring City Resort Soak"></button>
+    <div class="meta"><span class="tag">Sights</span><span class="tag booked">Booked</span><a class="chip" href="https://docs.google.com/document/d/1qP2igliKUUvrz-t26h9pdflVLJ8857EJYU2a1KgUdLA/edit">View Confirmation</a></div>
+    
+  </article><article class="row " id="s5">
+    <div class="when"><span class="flex">Flexible</span></div>
+    <div class="ttl"><a class="pl" href="https://www.google.com/maps/dir/?api=1&amp;destination=Tamsui%2C%20Taiwan&amp;travelmode=transit"><span class="go" aria-hidden="true">↗</span><span class="em">🏃</span><span class="name">Tamsui</span></a></div>
+    <button class="done" aria-pressed="false" aria-label="Mark done: 🏃 Tamsui"></button>
+    <div class="meta"><span class="tag">Sights</span></div>
+    
+  </article><article class="row " id="s6">
+    <div class="when"><span class="flex">Flexible</span></div>
+    <div class="ttl"><a class="pl" href="https://www.google.com/maps/dir/?api=1&amp;destination=Artfans%2C%20Taiwan&amp;travelmode=transit"><span class="go" aria-hidden="true">↗</span><span class="em">🛍️</span><span class="name">Artfans (誠格美術), Shilin</span></a></div>
+    <button class="done" aria-pressed="false" aria-label="Mark done: 🛍️ Artfans (誠格美術), Shilin"></button>
+    <div class="meta"><span class="tag">Sights</span></div>
+    
+  </article><article class="row " id="s7">
+    <div class="when"><span class="flex">Flexible</span></div>
+    <div class="ttl"><a class="pl" href="https://www.google.com/maps/dir/?api=1&amp;destination=Ximending%20Walking%20District%2C%20Taiwan&amp;travelmode=transit"><span class="go" aria-hidden="true">↗</span><span class="em">🏃</span><span class="name">Ximending Walking District</span></a></div>
+    <button class="done" aria-pressed="false" aria-label="Mark done: 🏃 Ximending Walking District"></button>
+    <div class="meta"><span class="tag">Sights</span></div>
+    
+  </article><article class="row " id="s8">
+    <div class="when"><span class="flex">Flexible</span></div>
+    <div class="ttl"><span class="pl"><span class="em">🍔</span><span class="name">DINNER: TBD</span></span></div>
+    <button class="done" aria-pressed="false" aria-label="Mark done: 🍔 DINNER: TBD"></button>
+    <div class="meta"><span class="tag">Food</span><span class="tag meal">Dinner</span></div>
+    <a class="rowlink" href="https://maps.app.goo.gl/dxA3RnWguAzdeCeX8"><span class="name"><span class="em">🗺️</span>Pick from saved list</span><span class="go" aria-hidden="true">↗</span></a><button class="exp" aria-expanded="false"><span class="name"><span class="em">💡</span>Ideas · 2</span><span class="chev" aria-hidden="true"></span></button>
+  </article><article class="row " id="s9">
+    <div class="when"><span class="flex">Flexible</span></div>
+    <div class="ttl"><a class="pl" href="https://docs.google.com/spreadsheets/d/1tlPG1bMpZtP4Xrfu5OGCd6bi5qppr4oCkTY3lsZL07Y/edit#gid=1769366264"><span class="go" aria-hidden="true">↗</span><span class="em">🧋</span><span class="name">Teas: 50 Lan, Milksha, WooTEA, Lattea</span></a></div>
+    <button class="done" aria-pressed="false" aria-label="Mark done: 🧋 Teas: 50 Lan, Milksha, WooTEA, Lattea"></button>
+    <div class="meta"><span class="tag">Coffee</span></div>
+    
+  </article></div>
+  
+  <footer class="foot"><span>Updated Nov 13, 2:48 PM Taiwan/SG</span><button class="refresh">↻ Refresh</button></footer>
+</main>
+</body>
+</html>

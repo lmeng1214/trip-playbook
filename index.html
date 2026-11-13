@@ -51,7 +51,7 @@
       }
       :root {
         --r: 4px;
-        --rs: 3px;
+        --rs: 4px;
         --cur: color-mix(in srgb, #f5c400 10%, transparent);
         --surface: #fff;
         --bg: #fff;
@@ -157,7 +157,7 @@
         position: relative;
         min-width: 44px;
         padding: 0 4px;
-        font-size: 13px;
+        font-size: 16px;
         font-weight: 600;
         color: var(--link);
         display: inline-flex;
@@ -194,7 +194,10 @@
         flex: 1;
         min-width: 0;
         height: 44px;
-        font: 600 17px/1.2 inherit;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 1.2;
+        font-family: inherit;
         color: var(--ink);
         background: var(--fill);
         border: 0;
@@ -204,12 +207,12 @@
       .dots {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
         padding: 4px 0 0;
       }
       .prog,
       .prog i {
-        border-radius: 2px;
+        border-radius: var(--r);
       }
       .prog {
         flex: 1;
@@ -264,7 +267,7 @@
       .stay .dayof,
       .stay .dl {
         margin: 0;
-        padding: 0 14px 8px;
+        padding: 0 12px 8px;
         overflow-wrap: anywhere;
       }
       .dayhead h2 {
@@ -289,7 +292,7 @@
         font-variant-numeric: tabular-nums;
       }
       .stay {
-        margin: 6px 0 0;
+        margin: 8px 0 0;
         border: 1px solid var(--cardline);
         border-radius: var(--r);
         background: var(--card);
@@ -298,9 +301,9 @@
       .stay .arow {
         display: block;
         min-height: 44px;
-        padding: 12px 36px 12px 14px;
+        padding: 12px 32px 12px 12px;
         border-top: 1px solid var(--line);
-        font-size: 17px;
+        font-size: 16px;
         font-weight: 600;
         line-height: 1.35;
         color: var(--ink);
@@ -311,8 +314,8 @@
       }
       .stay .hnote {
         display: block;
-        margin-top: 2px;
-        font-size: 15px;
+        margin-top: 4px;
+        font-size: 16px;
         font-weight: 500;
         line-height: 1.35;
         color: var(--mut);
@@ -324,8 +327,8 @@
         display: block;
         position: relative;
         min-height: 44px;
-        margin: -12px -36px -12px -14px;
-        padding: 12px 36px 12px 14px;
+        margin: -12px -32px -12px -12px;
+        padding: 12px 32px 12px 12px;
         border: 0;
         border-radius: 0;
         background: transparent;
@@ -338,8 +341,8 @@
       .stay .arow a::after {
         content: "↗";
         position: absolute;
-        right: 14px;
-        top: 14px;
+        right: 12px;
+        top: 12px;
         font-weight: 500;
         color: var(--soft2);
       }
@@ -352,7 +355,7 @@
         grid-template-columns: 1fr auto;
         gap: 0 8px;
         margin: 0 0 8px;
-        padding: 6px 10px;
+        padding: 8px 12px;
         border: 0;
         border-radius: var(--r);
         background: var(--soft);
@@ -362,7 +365,7 @@
         grid-column: 1/-1;
       }
       .msg {
-        font-size: 15px;
+        font-size: 16px;
         padding: 4px 0;
       }
       .nls {
@@ -370,7 +373,7 @@
       }
       .nl {
         display: grid;
-        grid-template-columns: 52px 1fr;
+        grid-template-columns: 56px 1fr;
         gap: 0 8px;
         align-items: center;
         min-height: 44px;
@@ -378,7 +381,7 @@
       }
       .nt {
         min-width: 0;
-        font-size: 15px;
+        font-size: 16px;
         font-weight: 600;
         line-height: 1.3;
         padding: 4px 0;
@@ -398,7 +401,7 @@
         font-size: 12px;
         font-weight: 700;
         letter-spacing: 0.03em;
-        padding: 0 7px;
+        padding: 0 8px;
         margin-left: auto;
       }
       .flag.now {
@@ -411,13 +414,29 @@
       }
       .nl .flag {
         margin: 0;
-        width: 52px;
+        width: 56px;
       }
       #latebtn {
         display: flex;
+        grid-column: 1 / -1;
+        width: 100%;
         height: 44px;
         padding: 0 12px;
-        align-self: center;
+        align-self: stretch;
+        justify-content: space-between;
+      }
+      #latebtn::after {
+        content: "";
+        flex: 0 0 auto;
+        width: 8px;
+        height: 8px;
+        box-sizing: border-box;
+        border-right: 2px solid var(--ink);
+        border-bottom: 2px solid var(--ink);
+        transform: rotate(-45deg);
+      }
+      #latebtn[aria-pressed="true"]::after {
+        transform: rotate(45deg);
       }
       .gut .flag {
         margin: 4px 0 0;
@@ -437,14 +456,15 @@
         display: inline-block;
         background: var(--sig);
         color: var(--sigink);
-        padding: 2px 6px;
+        padding: 4px 8px;
         border-radius: var(--rs);
       }
       .filters,
       .vtabs {
         display: flex;
-        gap: 4px;
-        padding: 0 4px 4px;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 0 0 8px;
       }
       .fchip {
         position: relative;
@@ -452,8 +472,8 @@
         flex: 1 1 auto;
         min-height: 44px;
         min-width: 44px;
-        padding: 0 7px;
-        font-size: 14px;
+        padding: 0 8px;
+        font-size: 12px;
         font-weight: 500;
         text-align: center;
         white-space: nowrap;
@@ -474,7 +494,7 @@
       }
       .vtabs .fchip {
         flex: 0 0 auto;
-        padding: 0 14px;
+        padding: 0 12px;
       }
       #ov {
         margin: 8px 0 0;
@@ -490,7 +510,7 @@
       #ov summary,
       .kath summary {
         font-weight: 600;
-        font-size: 15px;
+        font-size: 16px;
         cursor: pointer;
       }
       summary {
@@ -524,20 +544,25 @@
         transform: rotate(45deg);
       }
       .ovr {
-        gap: 10px;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 4px;
         width: 100%;
         border-top: 1px solid var(--line);
-        font-size: 14px;
+        font-size: 16px;
+        padding: 8px 0;
       }
       .ovr .on,
       .ovr .ot {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        white-space: normal;
+        overflow: visible;
       }
       .ovr .ot {
-        flex: 0 0 92px;
+        flex: 0 0 104px;
+        font-size: 12px;
         font-weight: 700;
+        line-height: 16px;
+        padding-top: 2px;
         font-variant-numeric: tabular-nums;
       }
       .ovr .on {
@@ -550,9 +575,13 @@
         overflow: visible;
       }
       .ovr .oa {
-        flex: 0 0 auto;
-        max-width: 45%;
-        font-size: 13px;
+        flex: 1 0 100%;
+        max-width: none;
+        white-space: nowrap;
+        box-sizing: border-box;
+        padding-left: 108px;
+        text-align: left;
+        font-size: 12px;
         color: var(--mut);
         text-align: right;
       }
@@ -569,28 +598,28 @@
         font-weight: 700;
       }
       #plan {
-        margin: 0-12px;
+        margin: 0 -12px;
       }
       .card {
         display: grid;
         grid-template-columns: 104px minmax(0, 1fr) 56px;
         column-gap: 4px;
         align-items: start;
-        padding: 8px 6px 8px 8px;
+        padding: 12px;
         border-bottom: 1px solid var(--line);
       }
       .gut {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        padding-top: 2px;
+        padding-top: 6px;
       }
       .bd {
         min-width: 0;
       }
       .card.now {
         margin: 0;
-        padding: 12px 12px 12px 16px;
+        padding: 12px;
         border-radius: 0;
         background: var(--cur);
         box-shadow: none;
@@ -665,24 +694,8 @@
         min-width: 0;
         max-width: 100%;
       }
-      .r1 > .chip {
-        min-height: 0;
-        padding: 1px 5px;
-        line-height: 1.2;
-        position: relative;
-        z-index: 1;
-      }
-      .r1 > .chip::before {
-        content: "";
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: max(100%, 44px);
-        height: 44px;
-        transform: translate(-50%, -50%);
-      }
       .tm {
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 600;
         font-variant-numeric: tabular-nums;
         white-space: nowrap;
@@ -694,13 +707,13 @@
         overflow-wrap: normal;
       }
       .tm.flex {
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 500;
         color: var(--soft2);
         white-space: nowrap;
       }
       a.pl > span::after {
-        font-size: 15px;
+        font-size: 16px;
         font-weight: 500;
         color: var(--soft2);
       }
@@ -708,8 +721,8 @@
         font-size: 12px;
         font-weight: 500;
         border-radius: var(--rs);
-        padding: 1px 5px;
-        line-height: 1.2;
+        padding: 2px 8px;
+        line-height: 16px;
         white-space: nowrap;
       }
       .ok {
@@ -740,8 +753,8 @@
         flex: 0 0 auto;
       }
       .sub {
-        margin: 10px 0 0 0;
-        font-size: 15px;
+        margin: 8px 0 0 0;
+        font-size: 16px;
         line-height: 1.4;
         color: var(--mut);
       }
@@ -763,23 +776,24 @@
       }
       a.pl > span::after {
         content: " ↗";
-        font-size: 15px;
+        font-size: 16px;
       }
       a.pl:active {
         text-decoration: underline;
       }
       .trv {
-        font-size: 14px;
-        margin-top: 2px;
+        font-size: 16px;
+        margin-top: 4px;
         font-weight: 600;
       }
       .dayof,
       .dl {
-        font-size: 14px;
-        margin-top: 6px;
+        font-size: 16px;
+        margin-top: 8px;
+        color: var(--mut);
       }
       .dl {
-        margin-top: 4px;
+        margin-top: 8px;
         color: var(--mut);
       }
       .dayof a {
@@ -795,16 +809,16 @@
         display: flex;
         flex-direction: column;
         align-items: stretch;
-        gap: 4px;
-        margin-top: 10px;
+        gap: 8px;
+        margin-top: 8px;
       }
       .act,
       .panel {
-        font-size: 14px;
+        font-size: 16px;
       }
       .act {
         min-height: 44px;
-        padding: 0 14px;
+        padding: 0 12px;
         border-radius: var(--rs);
         font-weight: 600;
         white-space: nowrap;
@@ -870,14 +884,11 @@
         background: var(--soft);
         border-radius: var(--r);
       }
-      .card .panel {
-        margin-right: -68px;
-      }
       .det div {
         white-space: pre-wrap;
       }
       .det div + div {
-        margin-top: 6px;
+        margin-top: 8px;
       }
       .prov a {
         display: inline-flex;
@@ -893,17 +904,28 @@
         box-sizing: border-box;
         max-width: 100%;
         min-width: 0;
-        min-height: 44px;
-        padding: 0 6px;
+        min-height: 0;
+        padding: 2px 8px;
         border: 0;
         border-radius: var(--rs);
         background: var(--chip);
         color: var(--ink);
         font-size: 12px;
         font-weight: 500;
-        line-height: 1.2;
+        line-height: 16px;
         white-space: nowrap;
         text-decoration: none;
+        position: relative;
+        z-index: 1;
+      }
+      .chip::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: max(100%, 44px);
+        height: 44px;
+        transform: translate(-50%, -50%);
       }
       .acts .chip {
         flex: 0 1 auto;
@@ -913,13 +935,13 @@
       }
       .hconf {
         margin: 0;
-        padding: 0 14px 8px;
+        padding: 0 12px 12px;
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
       }
       .bi {
-        font-size: 14px;
+        font-size: 16px;
         font-weight: 600;
       }
       .prov a {
@@ -931,16 +953,16 @@
         text-transform: uppercase;
         letter-spacing: 0.05em;
         color: var(--mut);
-        margin: 8px 0 2px;
+        margin: 8px 0 4px;
       }
       .ia:first-child {
         margin-top: 0;
       }
       .idea {
         display: flex;
-        gap: 6px;
+        gap: 8px;
         align-items: center;
-        padding: 2px 0;
+        padding: 4px 0;
       }
       .idea a,
       .kath .k a {
@@ -953,17 +975,17 @@
         min-width: 0;
       }
       .empty {
-        margin: 4px 16px 8px;
-        padding: 12px 4px 20px;
+        margin: 8px 0;
+        padding: 16px 0 24px;
         border: 0;
         background: transparent;
         color: var(--mut);
-        font-size: 15px;
+        font-size: 16px;
         line-height: 1.4;
       }
       .loose {
         border-bottom: 1px solid var(--line);
-        padding: 10px 0;
+        padding: 12px 0;
       }
       .kath {
         margin: 16px 0 0;
@@ -973,14 +995,14 @@
         overflow: hidden;
       }
       .kath summary {
-        padding: 12px 14px;
+        padding: 12px;
       }
       .kath .k {
-        font-size: 15px;
+        font-size: 16px;
         line-height: 1.4;
         color: var(--ink);
         border-top: 1px solid var(--line);
-        padding: 12px 14px;
+        padding: 12px;
         white-space: pre-wrap;
         overflow-wrap: anywhere;
       }
@@ -1000,7 +1022,7 @@
         border-top: 1px solid var(--cardline);
       }
       .late .lh {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 800;
       }
       .btns,
@@ -1016,7 +1038,7 @@
         flex: 1 1 auto;
         align-items: center;
         justify-content: center;
-        min-height: 48px;
+        min-height: 44px;
         background: var(--ink);
         color: var(--bg);
         border-radius: var(--rs);
@@ -1028,18 +1050,21 @@
       }
       .note,
       .warn {
-        font-size: 13px;
-        margin-top: 6px;
+        font-size: 12px;
+        margin-top: 8px;
       }
       .rrow {
         display: flex;
-        gap: 10px;
+        gap: 8px;
         padding: 12px 0;
         border-bottom: 1px solid var(--line);
       }
       .rd {
-        flex: 0 0 44px;
+        flex: 0 0 56px;
+        font-size: 12px;
         font-weight: 700;
+        line-height: 16px;
+        padding-top: 2px;
         font-variant-numeric: tabular-nums;
       }
       .rb {
@@ -1048,11 +1073,11 @@
       }
       .foot,
       .on2 {
-        font-size: 13px;
+        font-size: 12px;
         color: var(--mut);
       }
       .on2 {
-        margin-top: 2px;
+        margin-top: 4px;
       }
       .foot {
         display: flex;
@@ -1070,10 +1095,10 @@
         margin-top: 12px;
       }
       .fb ol {
-        padding-left: 22px;
+        padding-left: 24px;
       }
       .fb li {
-        padding: 6px 0;
+        padding: 8px 0;
       }
     </style>
   </head>
@@ -1630,6 +1655,8 @@
             (r +=
               '<button class="act sec" id="latebtn" aria-pressed="' +
               E +
+              '" aria-expanded="' +
+              (E ? "true" : "false") +
               '">🏃 Running late</button>'),
             E &&
               (r += (function (t, e) {

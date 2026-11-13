@@ -87,6 +87,7 @@
         --hotel-i: #582a75;
         --meal: #f6ecc8;
         --meal-i: #5f4a0c;
+        --time-col: 64px;
       }
       * {
         box-sizing: border-box;
@@ -630,10 +631,11 @@
       }
       .card {
         display: grid;
-        grid-template-columns: 104px minmax(0, 1fr) 56px;
-        column-gap: 4px;
+        grid-template-columns: var(--time-col) minmax(0, 1fr) 56px;
+        column-gap: 8px;
         align-items: start;
         position: relative;
+        overflow: clip;
         padding: 12px;
         border-bottom: 1px solid var(--line);
       }
@@ -729,7 +731,7 @@
         flex-wrap: wrap;
         align-items: center;
         gap: 4px;
-        margin-top: 4px;
+        margin-top: 12px;
         min-width: 0;
         max-width: 100%;
       }
@@ -741,7 +743,8 @@
       }
       .gut .tm {
         line-height: 1.2;
-        white-space: nowrap;
+        max-width: 100%;
+        white-space: normal;
         word-break: normal;
         overflow-wrap: normal;
       }
@@ -751,7 +754,7 @@
         color: var(--soft2);
         white-space: nowrap;
       }
-      a.pl > span::after {
+      a.pl > span:last-child::after {
         font-size: 16px;
         font-weight: 500;
         color: var(--soft2);
@@ -803,19 +806,27 @@
         word-break: break-word;
       }
       .pl {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 4px;
         word-break: normal;
         overflow-wrap: break-word;
-      }
-      .pl {
         color: var(--ink);
       }
       a.pl {
-        display: inline-flex;
-        align-items: flex-end;
-        min-height: 44px;
+        position: relative;
+        align-items: baseline;
         min-width: 44px;
       }
-      a.pl > span::after {
+      a.pl::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: -12px;
+        height: 44px;
+      }
+      a.pl > span:last-child::after {
         content: " ↗";
         font-size: 16px;
       }
@@ -892,10 +903,12 @@
         box-sizing: border-box;
         align-items: center;
         justify-content: space-between;
+        gap: 8px;
         min-height: 44px;
-        padding: 0 12px;
+        padding: 0 12px 0 0;
         background: var(--chip);
         border-radius: var(--rs);
+        white-space: normal;
       }
       a.act.sec::after {
         content: "↗";
@@ -922,9 +935,10 @@
         align-items: center;
         justify-content: space-between;
         gap: 8px;
-        padding: 0 12px;
+        padding: 0 12px 0 0;
         border-radius: var(--rs);
         background: var(--chip);
+        white-space: normal;
         color: var(--ink);
         text-decoration: none;
       }
@@ -992,9 +1006,12 @@
         height: 44px;
         transform: translate(-50%, -50%);
       }
+      .r1 .chip {
+        min-height: 44px;
+        padding: 0 8px;
+      }
       .r1 .chip::before {
-        top: 0;
-        transform: translate(-50%, 0);
+        content: none;
       }
       .acts .chip {
         flex: 0 1 auto;
@@ -1463,7 +1480,10 @@
         function q(t) {
           return t.timeText
             ? '<span class="tm">' +
-                u(t.timeText).replace(/\//g, "/<wbr>") +
+                u(t.timeText)
+                  .replace(/ /g, "\u00A0")
+                  .replace(/\//g, "/<wbr>")
+                  .replace(/–/g, "–<wbr>") +
                 "</span>"
             : '<span class="tm flex">Flexible</span>';
         }
@@ -1579,23 +1599,18 @@
             '</div><div class="bd"><div class="r2">' +
             (function (t, e) {
               var n = U(t),
-                a = u(
-                  O(t)[0].replace(
-                    /^\p{Extended_Pictographic}\uFE0F?(?:\u200D\p{Extended_Pictographic}\uFE0F?)*\s/u,
-                    "",
-                  ),
-                ),
-                i = t.ic && !/^\p{Extended_Pictographic}/u.test(t.ic);
-              return (
-                (e || !i ? "" : '<span class="ic">' + u(t.ic) + "</span> ") +
-                (n
-                  ? '<a class="pl" href="' +
+                a = u(O(t)[0]),
+                i =
+                  t.ic && !e ? '<span class="ic">' + u(t.ic) + "</span>" : "";
+              return n
+                ? '<a class="pl" href="' +
                     u(n) +
-                    '"><span>' +
+                    '">' +
+                    i +
+                    "<span>" +
                     a +
                     "</span></a>"
-                  : '<span class="pl">' + a + "</span>")
-              );
+                : '<span class="pl">' + i + "<span>" + a + "</span></span>";
             })(e, e.dupIcon) +
             "</div>" +
             '<div class="r1"><span class="tag t-' +

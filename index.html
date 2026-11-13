@@ -653,6 +653,25 @@
         align-self: baseline;
         min-width: 0;
       }
+      .bd:has(> .r2 > .ic) {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        column-gap: 4px;
+        align-items: baseline;
+      }
+      .bd:has(> .r2 > .ic) > .r2 {
+        display: grid;
+        grid-template-columns: subgrid;
+        grid-column: 1 / -1;
+        align-items: baseline;
+      }
+      .bd:has(> .r2 > .ic) > .r1,
+      .bd:has(> .r2 > .ic) > .sub {
+        grid-column: 2;
+      }
+      .bd:has(> .r2 > .ic) > :not(.r2):not(.r1):not(.sub) {
+        grid-column: 1 / -1;
+      }
       .card.now {
         margin: 0;
         padding: 12px;
@@ -791,6 +810,10 @@
       }
       .r2 .ic {
         flex: 0 0 auto;
+      }
+      .r2 .pl {
+        min-width: 0;
+        max-width: 100%;
       }
       .sub {
         margin: 8px 0 0 0;
@@ -1579,15 +1602,9 @@
             '</div><div class="bd"><div class="r2">' +
             (function (t, e) {
               var n = U(t),
-                a = u(
-                  O(t)[0].replace(
-                    /^\p{Extended_Pictographic}\uFE0F?(?:\u200D\p{Extended_Pictographic}\uFE0F?)*\s/u,
-                    "",
-                  ),
-                ),
-                i = t.ic && !/^\p{Extended_Pictographic}/u.test(t.ic);
+                a = u(O(t)[0]);
               return (
-                (e || !i ? "" : '<span class="ic">' + u(t.ic) + "</span> ") +
+                (e ? "" : '<span class="ic">' + u(t.ic) + "</span>") +
                 (n
                   ? '<a class="pl" href="' +
                     u(n) +

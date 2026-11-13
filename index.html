@@ -8,1187 +8,609 @@
       name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
-    <meta name="color-scheme" content="light" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#141210" />
     <link rel="icon" href="data:," />
     <style>
-      @keyframes inL {
-        0% {
-          transform: translateX(12px);
-          opacity: 0.2;
-        }
-        to {
-          transform: none;
-          opacity: 1;
-        }
+@font-face {
+        font-family: Inter;
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url("fonts/inter-400.woff2") format("woff2");
+        unicode-range: U+0000-00FF, U+0100-017F, U+2000-206F, U+2190-21FF, U+2212;
       }
-      @keyframes inR {
-        0% {
-          transform: translateX(-12px);
-          opacity: 0.2;
-        }
-        to {
-          transform: none;
-          opacity: 1;
-        }
+      @font-face {
+        font-family: Inter;
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url("fonts/inter-500.woff2") format("woff2");
+        unicode-range: U+0000-00FF, U+0100-017F, U+2000-206F, U+2190-21FF, U+2212;
       }
-      @keyframes bumpL {
-        40% {
-          transform: translateX(-10px);
-        }
+      @font-face {
+        font-family: Inter;
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url("fonts/inter-600.woff2") format("woff2");
+        unicode-range: U+0000-00FF, U+0100-017F, U+2000-206F, U+2190-21FF, U+2212;
       }
-      @keyframes bumpR {
-        40% {
-          transform: translateX(10px);
-        }
+      @font-face {
+        font-family: Inter;
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url("fonts/inter-700.woff2") format("woff2");
+        unicode-range: U+0000-00FF, U+0100-017F, U+2000-206F, U+2190-21FF, U+2212;
       }
-      @keyframes fl {
-        0% {
-          background: var(--soft);
-        }
-        to {
-          background: 0 0;
-        }
+      @font-face {
+        font-family: "JetBrains Mono";
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url("fonts/jetbrains-mono-500.woff2") format("woff2");
+        unicode-range: U+0000-00FF, U+0100-017F, U+2000-206F, U+2190-21FF, U+2212;
+      }
+      @font-face {
+        font-family: "JetBrains Mono";
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url("fonts/jetbrains-mono-600.woff2") format("woff2");
+        unicode-range: U+0000-00FF, U+0100-017F, U+2000-206F, U+2190-21FF, U+2212;
+      }
+      @font-face {
+        font-family: "JetBrains Mono";
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url("fonts/jetbrains-mono-700.woff2") format("woff2");
+        unicode-range: U+0000-00FF, U+0100-017F, U+2000-206F, U+2190-21FF, U+2212;
       }
       :root {
-        --r: 4px;
-        --rs: 4px;
-        --cur: color-mix(in srgb, #f5c400 10%, transparent);
-        --surface: #fff;
-        --bg: #fff;
-        --ink: #111;
-        --mut: #4a4a4a;
-        --soft2: #555;
-        --chip: #f0f0f0;
-        --done: #f3f3f3;
-        --line: #e8e8e8;
-        --soft: #f4f4f2;
-        --fill: rgba(0, 0, 0, 0.05);
-        --sel: #111;
-        --selink: #fff;
-        --sig: #f2b705;
-        --sigink: #111;
-        --nowbg: #fff8e1;
-        --ok: #1b7f3b;
-        --link: #0b57d0;
-        --past: #555;
-        --card: #fafafa;
-        --cardline: rgba(0, 0, 0, 0.12);
-        --food: #fbe4d5;
-        --food-i: #7a3510;
-        --coffee: #ece2d6;
-        --coffee-i: #55391f;
-        --sights: #dcf0e1;
-        --sights-i: #18552c;
-        --photo: #e2e5fb;
-        --photo-i: #2b3584;
-        --transport: #dbeaf6;
-        --transport-i: #174a70;
-        --hotel: #eee0f6;
-        --hotel-i: #582a75;
-        --meal: #f6ecc8;
-        --meal-i: #5f4a0c;
+        --ink: #f6f1e7;
+        --muted: #b3a89a;
+        --quiet: #9c9388;
+        --past: #a89f93;
+        --rule: #5e564e;
+        --page: #141210;
+        --amber: #f0b429;
+        --now-ink: #1c1406;
       }
-      * {
-        box-sizing: border-box;
-      }
-      html {
-        overscroll-behavior-x: none;
+      * { box-sizing: border-box; }
+      [hidden] { display: none !important; }
+      html, body {
+        margin: 0;
+        background: var(--page);
         overflow-x: clip;
-      }
-      body,
-      header {
-        background: var(--bg);
+        overscroll-behavior-x: none;
       }
       body {
-        overscroll-behavior-x: none;
-        margin: 0;
-        font:
-          16px/1.4 -apple-system,
-          BlinkMacSystemFont,
-          "Segoe UI",
-          Roboto,
-          "Noto Sans TC",
-          sans-serif;
         color: var(--ink);
+        font-family: Inter, "WenQuanYi Micro Hei", "Noto Color Emoji", system-ui, sans-serif;
+        font-size: 16px;
+        line-height: 22px;
+        letter-spacing: -0.011em;
         -webkit-text-size-adjust: 100%;
-        overflow-x: clip;
       }
-      a {
-        color: var(--link);
-        text-decoration: none;
-      }
-      button {
+      button, a, select {
         font: inherit;
         color: inherit;
-        background: 0 0;
+        background: none;
         border: 0;
         padding: 0;
-        cursor: pointer;
         text-align: left;
+        text-decoration: none;
       }
+      button, a, summary { -webkit-tap-highlight-color: transparent; }
+      :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+      button:active, a:active, summary:active { background: rgba(255, 255, 255, 0.08); }
       header {
         position: sticky;
         top: 0;
-        z-index: 5;
-        padding: calc(env(safe-area-inset-top) + 4px) 12px 4px;
+        z-index: 3;
+        background: var(--page);
+        padding-top: env(safe-area-inset-top);
       }
+      .top, .days, .meter, main { padding-left: 16px; padding-right: 16px; }
       .top {
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        justify-content: space-between;
         gap: 8px;
-        position: relative;
-        z-index: 2;
+        min-height: 52px;
+        padding-top: 8px;
       }
-      .top h1 {
-        font-size: 16px;
-        font-weight: 700;
+      h1 {
         margin: 0;
-        letter-spacing: -0.01em;
-        line-height: 1.2;
+        font-size: 17px;
+        line-height: 22px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
       }
       .clock {
-        font-size: 12px;
-        color: var(--mut);
-        white-space: nowrap;
-        font-variant-numeric: tabular-nums;
+        margin-top: 1px;
+        font-size: 13px;
+        line-height: 18px;
+        font-weight: 500;
+        color: var(--muted);
+        letter-spacing: 0;
       }
-      .hbtn {
-        position: relative;
+      .all, .nav, .daysel, .refresh {
         min-width: 44px;
-        padding: 0 4px;
-        font-size: 16px;
-        font-weight: 600;
-        color: var(--link);
+        min-height: 44px;
         display: inline-flex;
         align-items: center;
-        line-height: 1.2;
+        justify-content: center;
+        font-weight: 600;
       }
-      .hbtn::before {
-        content: "";
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: max(100%, 44px);
-        height: 44px;
-        transform: translate(-50%, -50%);
-      }
-      .days {
-        display: flex;
-        gap: 8px;
-        padding: 8px 0 0;
-      }
-      .nav {
-        flex: 0 0 44px;
-        height: 44px;
-        background: 0 0;
-        border-radius: var(--rs);
-        font-size: 24px;
-        text-align: center;
-      }
-      .nav:disabled {
-        opacity: 0.3;
-        cursor: default;
-      }
-      #daysel {
+      .all { justify-content: flex-end; padding: 0 2px; font-size: 16px; }
+      .days { display: flex; align-items: center; min-width: 0; }
+      .nav { width: 44px; height: 44px; font-size: 26px; line-height: 1; flex: 0 0 44px; }
+      .nav:disabled { opacity: 0.3; }
+      select.daysel {
+        appearance: none;
         flex: 1;
         min-width: 0;
+        width: 100%;
         height: 44px;
-        font-weight: 600;
         font-size: 16px;
-        line-height: 1.2;
-        font-family: inherit;
-        color: var(--ink);
-        background: var(--fill);
-        border: 0;
-        border-radius: var(--rs);
-        padding: 0 12px;
+        font-weight: 500;
+        letter-spacing: -0.015em;
+        text-align: center;
+        text-align-last: center;
+        border-radius: 0;
       }
-      .dots {
+      .meter {
         display: flex;
         align-items: center;
         gap: 8px;
-        padding: 4px 0 0;
+        padding-bottom: 8px;
       }
-      .prog,
-      .prog i {
-        border-radius: var(--r);
-      }
-      .prog {
-        flex: 1;
-        height: 3px;
-        background: var(--line);
-        overflow: hidden;
-      }
-      .prog i {
-        display: block;
-        height: 100%;
-        background: var(--mut);
-      }
+      .prog { flex: 1; height: 3px; background: var(--rule); }
+      .prog i { display: block; height: 100%; background: var(--ink); }
       .pn {
-        font-size: 12px;
-        color: var(--mut);
+        font-size: 13px;
+        line-height: 18px;
+        font-weight: 500;
+        color: var(--muted);
+        font-variant-numeric: tabular-nums;
         white-space: nowrap;
-        font-variant-numeric: tabular-nums;
       }
-      main {
-        display: flex;
-        flex-direction: column;
-        min-height: calc(100dvh - 117px);
-        padding: 0 12px 24px;
-        max-width: 560px;
-        margin: 0 auto;
-      }
-      @media (min-width: 561px) {
-        header {
-          padding-left: 0;
-          padding-right: 0;
-        }
-        header .top,
-        header .days,
-        header .dots {
-          box-sizing: border-box;
-          width: 100%;
-          max-width: 560px;
-          margin-left: auto;
-          margin-right: auto;
-          padding-left: 12px;
-          padding-right: 12px;
-        }
-      }
-      main.sl #plan > * > *,
-      main.sl > :not(#plan) {
-        animation: inL 0.24s ease-out;
-      }
-      main.sr #plan > * > *,
-      main.sr > :not(#plan) {
-        animation: inR 0.24s ease-out;
-      }
-      main.bl #plan > * > *,
-      main.bl > :not(#plan) {
-        animation: bumpL 0.26s ease-out;
-      }
-      main.br #plan > * > *,
-      main.br > :not(#plan) {
-        animation: bumpR 0.26s ease-out;
-      }
-      @media (prefers-reduced-motion: reduce) {
-        .card.flash,
-        main * {
-          animation: none !important;
-        }
-      }
-      .dayhead {
-        padding: 4px 0 8px;
-      }
-      .stay .dayof,
-      .stay .dl {
-        margin: 0;
-        padding: 0 12px 8px;
-        overflow-wrap: anywhere;
-      }
-      .stay .dayof {
-        padding-top: 22px;
-        padding-left: calc(12px + 1.5em);
-        text-indent: -1.5em;
-      }
-      .dayhead h2 {
-        margin: 8px 0 0;
-        font-size: 24px;
-        line-height: 1.25;
-        letter-spacing: -0.01em;
-        overflow-wrap: anywhere;
-      }
-      .dayhead h2 .area {
-        font: inherit;
-      }
-      .alarm {
-        margin: 8px 0;
-      }
-      .alarm .al {
-        color: var(--mut);
-        font-weight: 600;
-      }
-      .alarm .big {
-        font-weight: 700;
-        font-variant-numeric: tabular-nums;
-      }
-      .stay {
-        margin: 8px 0 0;
-        border: 1px solid var(--cardline);
-        border-radius: var(--r);
-        background: var(--card);
+      .plate {
+        position: relative;
+        margin: 8px -16px 0;
+        height: 88px;
         overflow: hidden;
+        background: #0c0b09;
       }
-      .stay .arow {
-        display: block;
-        min-height: 44px;
-        padding: 12px 32px 12px 12px;
-        border-top: 1px solid var(--line);
-        font-size: 16px;
-        font-weight: 600;
-        line-height: 1.35;
-        color: var(--ink);
-        overflow-wrap: anywhere;
-      }
-      .stay .arow:has(+ .hconf) {
-        padding-bottom: 4px;
-      }
-      .stay .arow:has(+ .hconf) a {
-        margin-bottom: -4px;
-        padding-bottom: 4px;
-      }
-      .stay .hnote {
-        display: block;
-        margin-top: 4px;
-        font-size: 16px;
-        font-weight: 500;
-        line-height: 1.35;
-        color: var(--mut);
-      }
-      .stay .arow:first-child {
-        border-top: 0;
-      }
-      .stay .arow a {
-        display: block;
-        position: relative;
-        min-height: 44px;
-        margin: -12px -32px -12px -12px;
-        padding: 12px 32px 12px 12px;
-        border: 0;
-        border-radius: 0;
-        background: transparent;
-        color: var(--ink);
-        font: inherit;
-        font-weight: 600;
-        overflow-wrap: anywhere;
-        text-decoration: none;
-      }
-      .stay .arow a::after {
-        content: "↗";
-        position: absolute;
-        right: 12px;
-        top: 12px;
-        font-weight: 500;
-        color: var(--soft2);
-      }
-      .stay .arow a:active {
-        background: var(--fill);
-      }
-      .nowbox {
-        align-items: center;
-        display: grid;
-        grid-template-columns: 1fr auto;
-        gap: 0 8px;
-        margin: 0 0 8px;
-        padding: 8px 12px;
-        border: 0;
-        border-radius: var(--r);
-        background: var(--soft);
-      }
-      .nowbox > .late,
-      .nowbox > .msg {
-        grid-column: 1/-1;
-      }
-      .msg {
-        font-size: 16px;
-        padding: 4px 0;
-      }
-      .nls {
-        min-width: 0;
-      }
-      .nl {
-        display: grid;
-        grid-template-columns: 56px 1fr;
-        gap: 0 8px;
-        align-items: center;
-        min-height: 44px;
-        cursor: pointer;
-      }
-      .nt {
-        min-width: 0;
-        font-size: 16px;
-        font-weight: 600;
-        line-height: 1.3;
-        padding: 4px 0;
-      }
-      .fchip::before,
-      .flag {
-        border-radius: var(--rs);
-      }
-      #latebtn,
-      .flag {
-        align-items: center;
-        justify-content: center;
-      }
-      .flag {
-        display: inline-flex;
-        height: 24px;
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 0.03em;
-        padding: 0 8px;
-        margin-left: auto;
-      }
-      .flag.now {
-        background: var(--sig);
-        color: var(--sigink);
-      }
-      .flag.nx {
-        border: 1px solid var(--soft2);
-        color: var(--mut);
-      }
-      .nl .flag {
-        margin: 0;
-        width: 56px;
-      }
-      #latebtn {
-        display: flex;
-        grid-column: 1 / -1;
-        width: 100%;
-        height: 44px;
-        padding: 0 12px;
-        align-self: stretch;
-        justify-content: space-between;
-      }
-      #latebtn::after {
-        content: "";
-        flex: 0 0 auto;
-        width: 8px;
-        height: 8px;
-        box-sizing: border-box;
-        border-right: 2px solid var(--ink);
-        border-bottom: 2px solid var(--ink);
-        transform: rotate(-45deg);
-      }
-      #latebtn[aria-pressed="true"]::after {
-        transform: rotate(45deg);
-      }
-      .gut .flag {
-        margin: 4px 0 0;
-        height: auto;
-        padding: 0;
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 0.04em;
-        border: 0;
-        background: 0 0;
-        text-transform: uppercase;
-      }
-      .gut .flag.nx {
-        color: var(--mut);
-      }
-      .gut .flag.now {
-        display: inline-block;
-        background: var(--sig);
-        color: var(--sigink);
-        padding: 4px 8px;
-        border-radius: var(--rs);
-      }
-      .filters,
-      .vtabs {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        padding: 0 0 8px;
-      }
-      .fchip {
-        position: relative;
-        isolation: isolate;
-        flex: 1 1 auto;
-        min-height: 44px;
-        min-width: 44px;
-        padding: 0 8px;
-        font-size: 12px;
-        font-weight: 500;
-        text-align: center;
-        white-space: nowrap;
-      }
-      .fchip::before {
-        content: "";
-        position: absolute;
-        inset: 4px 0;
-        background: var(--fill);
-        box-shadow: inset 0 0 0 1px #6a6a6a;
-        z-index: -1;
-      }
-      .fchip[aria-pressed="true"] {
-        color: var(--selink);
-        font-weight: 600;
-      }
-      .fchip[aria-pressed="true"]::before {
-        background: var(--sel);
-        box-shadow: none;
-      }
-      .vtabs .fchip {
-        flex: 0 0 auto;
-        padding: 0 12px;
-      }
-      #ov {
-        margin: 8px 0 0;
-        border-bottom: 1px solid var(--line);
-      }
-      #ov summary,
-      .kath summary,
-      .ovr {
-        display: flex;
-        align-items: center;
-        min-height: 44px;
-      }
-      #ov summary,
-      .kath summary {
-        font-weight: 600;
-        font-size: 16px;
-        cursor: pointer;
-      }
-      summary {
-        list-style: none;
-      }
-      summary::-webkit-details-marker {
-        display: none;
-      }
-      summary::marker {
-        content: none;
-      }
-      #ov summary,
-      .kath summary {
-        justify-content: space-between;
-      }
-      #ov summary::after,
-      .kath summary::after {
-        content: "";
-        flex: 0 0 auto;
-        width: 8px;
-        height: 8px;
-        margin-left: 8px;
-        box-sizing: border-box;
-        border-right: 2px solid var(--ink);
-        border-bottom: 2px solid var(--ink);
-        transform: rotate(-45deg);
-        transition: transform 0.15s ease;
-      }
-      #ov[open] > summary::after,
-      .kath[open] > summary::after {
-        transform: rotate(45deg);
-      }
-      .ovr {
-        align-items: flex-start;
-        flex-wrap: wrap;
-        gap: 4px;
-        width: 100%;
-        border-top: 1px solid var(--line);
-        font-size: 16px;
-        padding: 8px 0;
-      }
-      .ovr .on,
-      .ovr .ot {
-        white-space: normal;
-        overflow: visible;
-      }
-      .ovr .ot {
-        flex: 0 0 104px;
-        font-size: 12px;
-        font-weight: 700;
-        line-height: 16px;
-        padding-top: 2px;
-        font-variant-numeric: tabular-nums;
-      }
-      .ovr .on {
-        flex: 1;
-        min-width: 0;
-      }
-      #ov .ovr .on,
-      #ov .ovr .ot {
-        white-space: normal;
-        overflow: visible;
-      }
-      .ovr .oa {
-        flex: 1 0 100%;
-        max-width: none;
-        white-space: nowrap;
-        box-sizing: border-box;
-        padding-left: 108px;
-        text-align: left;
-        font-size: 12px;
-        color: var(--mut);
-        text-align: right;
-      }
-      .card.past .pl,
-      .ovr.past {
-        color: var(--past);
-      }
-      .ovr.now {
-        background: var(--nowbg);
-        box-shadow: inset 4px 0 0 var(--sig);
-        padding-left: 8px;
-      }
-      .ovr.today {
-        font-weight: 700;
-      }
-      #plan {
-        margin: 0 -12px;
-      }
-      .card {
-        display: grid;
-        grid-template-columns: 104px minmax(0, 1fr) 56px;
-        column-gap: 4px;
-        align-items: start;
-        position: relative;
-        padding: 12px;
-        border-bottom: 1px solid var(--line);
-      }
-      .gut {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        grid-column: 1;
-        grid-row: 1;
-        align-self: baseline;
-        padding-top: 0;
-      }
-      .bd {
-        display: block;
-        grid-column: 2;
-        grid-row: 1;
-        align-self: baseline;
-        min-width: 0;
-      }
-      .card.now {
-        margin: 0;
-        padding: 12px;
-        border-radius: 0;
-        background: var(--cur);
-        box-shadow: none;
-        border-bottom: 1px solid var(--line);
-      }
-      .card.past .ic {
-        opacity: 0.6;
-      }
-      .card.done {
-        background: var(--done);
-      }
-      .card.done .tm,
-      .card.done .sub,
-      .card.done .ok {
-        color: var(--past);
-      }
-      .card.done .pl {
-        color: var(--past);
-      }
-      .card.done .tag,
-      .card.done .ic {
-        opacity: 0.5;
-      }
-      .card.done .chip {
-        color: var(--past);
-        background: #ececec;
-      }
-      .dn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: absolute;
-        top: 12px;
-        right: 12px;
-        width: 56px;
-        height: 56px;
-        min-width: 56px;
-        min-height: 56px;
-        box-sizing: border-box;
-        flex: 0 0 56px;
-        margin: 0;
-        padding: 0;
-        align-self: start;
-        overflow: hidden;
-        border-radius: var(--rs);
-        border: 1.5px solid #6a6a6a;
-        background: var(--surface);
-        font-size: 0;
-        color: transparent;
-      }
-      .dn[aria-pressed="true"] {
-        background: var(--ok);
-        border-color: var(--ok);
-      }
-      .dn[aria-pressed="true"]::after {
-        content: "✓";
-        color: #fff;
-        font-size: 24px;
-        font-weight: 700;
-        line-height: 1;
-      }
-      .card.flash {
-        animation: fl 1.2s ease-out;
-      }
-      .r1,
-      a.pl {
-        align-items: center;
-      }
-      .r1 {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 4px;
-        margin-top: 4px;
-        min-width: 0;
-        max-width: 100%;
-      }
-      .tm {
-        font-size: 12px;
-        font-weight: 600;
-        font-variant-numeric: tabular-nums;
-        white-space: nowrap;
-      }
-      .gut .tm {
-        line-height: 1.2;
-        white-space: nowrap;
-        word-break: normal;
-        overflow-wrap: normal;
-      }
-      .tm.flex {
-        font-size: 12px;
-        font-weight: 500;
-        color: var(--soft2);
-        white-space: nowrap;
-      }
-      a.pl > span::after {
-        font-size: 16px;
-        font-weight: 500;
-        color: var(--soft2);
-      }
-      .tag {
-        font-size: 12px;
-        font-weight: 500;
-        border-radius: var(--rs);
-        padding: 2px 8px;
-        line-height: 16px;
-        white-space: nowrap;
-      }
-      .ok {
-        white-space: nowrap;
-      }
-      .tag {
-        background: var(--chip);
-        color: var(--mut);
-        box-shadow: inset 0 0 0 1px #6a6a6a;
-      }
-      .ok,
-      .r2 {
-        font-weight: 600;
-      }
-      .ok {
-        font-size: 12px;
-        color: var(--mut);
-      }
-      .r2 {
-        margin-top: 0;
-        font-size: 16px;
-        line-height: 1.25;
-        display: flex;
-        gap: 4px;
-        align-items: baseline;
-        min-width: 0;
-      }
-      .r2 .ic {
-        flex: 0 0 auto;
-      }
-      .sub {
-        margin: 8px 0 0 0;
-        font-size: 16px;
-        line-height: 1.4;
-        color: var(--mut);
-      }
-      .det div,
-      .sub {
-        word-break: break-word;
-      }
-      .pl {
-        word-break: normal;
-        overflow-wrap: break-word;
-      }
-      .pl {
-        color: var(--ink);
-      }
-      a.pl {
-        display: inline-flex;
-        align-items: flex-end;
-        min-height: 44px;
-        min-width: 44px;
-      }
-      a.pl > span::after {
-        content: " ↗";
-        font-size: 16px;
-      }
-      a.pl:active {
-        text-decoration: underline;
-      }
-      .trv {
-        font-size: 16px;
-        margin-top: 4px;
-        font-weight: 400;
-        color: var(--mut);
-      }
-      .dayof,
-      .dl {
-        font-size: 16px;
-        margin-top: 8px;
-        color: var(--mut);
-      }
-      .dayof {
-        padding-left: 1.5em;
-        text-indent: -1.5em;
-      }
-      .dl {
-        margin-top: 8px;
-        color: var(--mut);
-      }
-      .stay .dayof a {
-        position: relative;
-        display: inline;
-      }
-      .stay .dayof a::before {
+      .plate::after {
         content: "";
         position: absolute;
         left: 0;
+        right: 0;
+        bottom: 0;
+        height: 28px;
+        background: linear-gradient(to bottom, rgba(20, 18, 16, 0), #141210);
+      }
+      .plate img {
+        display: block;
         width: 100%;
-        top: -22px;
-        height: 44px;
+        height: 88px;
+        object-fit: cover;
+        object-position: center 38%;
       }
-      .acts,
-      a.act {
-        align-items: center;
+      .plate.singapore img { object-position: center 58%; }
+      .dayhead, .stay, .nowbox {
+        display: grid;
+        grid-template-columns: 64px minmax(0, 1fr) 44px;
+        column-gap: 8px;
       }
-      .acts {
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 4px;
-        margin-top: 4px;
+      .dayhead { align-items: center; padding-top: 10px; }
+      .dnum {
+        grid-column: 1;
+        grid-row: 1;
+        text-align: left;
+        font-size: 40px;
+        line-height: 1;
+        font-weight: 700;
+        letter-spacing: -0.045em;
+        font-variant-numeric: tabular-nums;
       }
-      .act,
-      .panel {
+      .dtop {
+        grid-column: 2 / -1;
+        grid-row: 1;
         font-size: 16px;
-      }
-      .act {
-        min-height: 44px;
-        padding: 0 12px;
-        border-radius: var(--rs);
+        line-height: 22px;
         font-weight: 600;
-        white-space: nowrap;
       }
-      a.act {
-        display: inline-flex;
-        color: var(--ink);
+      .areas {
+        grid-column: 2 / -1;
+        margin-top: 8px;
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 500;
+        overflow-wrap: break-word;
       }
-      .act.sec {
-        background: transparent;
-        border: 0;
-        color: var(--ink);
-        padding: 0 4px 0 0;
+      .alarm {
+        grid-column: 2 / -1;
+        margin-top: 8px;
+        font-size: 13px;
+        line-height: 18px;
+        font-weight: 400;
       }
-      a.act.sec {
+      .al { color: var(--muted); font-weight: 400; }
+      .big {
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+      }
+      .em {
+        font-family: "Noto Color Emoji", sans-serif;
+        font-style: normal;
+        margin-right: 4px;
+        vertical-align: -0.125em;
+      }
+      .stay { margin-top: 8px; }
+      .rowlink, .exp, .idea {
         display: flex;
-        width: 100%;
-        box-sizing: border-box;
         align-items: center;
-        justify-content: space-between;
+        gap: 16px;
+        width: 100%;
         min-height: 44px;
-        padding: 0 12px;
-        background: var(--chip);
-        border-radius: var(--rs);
-      }
-      a.act.sec::after {
-        content: "↗";
-        color: var(--soft2);
+        padding: 8px 0;
+        font-size: 16px;
+        line-height: 22px;
         font-weight: 500;
       }
-      #latebtn {
-        border: 1.5px solid #6a6a6a;
-        background: var(--surface);
-        border-radius: var(--rs);
-        padding: 0 12px;
-        font-weight: 700;
-      }
-      .act.ter {
-        background: 0 0;
-        color: var(--ink);
-        padding: 0 4px 0 0;
-        min-width: 44px;
-      }
-      .act[aria-expanded] {
-        display: flex;
+      .rowlink .name, .exp .name, .idea .name { flex: 1; min-width: 0; overflow-wrap: break-word; }
+      .rowlink .go, .idea .go, .exp .chev { margin-left: auto; flex: 0 0 auto; }
+      .go { display: inline-block; min-width: 16px; text-align: right; font-weight: 500; }
+      .pl .go { float: right; margin: 1px 8px 0 8px; }
+      .hnote { display: block; margin-top: 2px; font-weight: 500; color: var(--muted); }
+      .nowbox { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--rule); }
+      .nl {
+        display: grid;
+        grid-template-columns: 64px minmax(0, 1fr) 44px;
+        column-gap: 8px;
+        grid-column: 1 / -1;
+        align-items: start;
         width: 100%;
-        box-sizing: border-box;
+        min-height: 44px;
+        text-align: left;
+      }
+      .nowbox > .exp, .nowbox > .late, .nowbox > .msg { grid-column: 2 / -1; }
+      .nl .on {
+        grid-column: 2 / -1;
+        min-width: 0;
+        padding: 11px 0;
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 600;
+        overflow-wrap: break-word;
+      }
+      .filters {
+        display: flex;
+        flex-wrap: wrap;
         align-items: center;
-        justify-content: space-between;
-        gap: 8px;
-        padding: 0 12px;
-        border-radius: var(--rs);
-        background: var(--chip);
-        color: var(--ink);
-        text-decoration: none;
+        border-bottom: 1px solid var(--rule);
       }
-      .act[aria-expanded]::after {
-        content: "";
-        flex: 0 0 auto;
-        width: 8px;
-        height: 8px;
-        box-sizing: border-box;
-        border-right: 2px solid var(--ink);
-        border-bottom: 2px solid var(--ink);
-        transform: rotate(-45deg);
-        transition: transform 0.15s ease;
-      }
-      .act[aria-expanded="true"]::after {
-        transform: rotate(45deg);
-      }
-      .panel {
-        margin-top: 4px;
-        padding: 8px 12px;
-        background: var(--soft);
-        border-radius: var(--r);
-      }
-      .det div {
-        white-space: pre-wrap;
-      }
-      .det div + div {
-        margin-top: 8px;
-      }
-      .prov a {
+      .fchip {
+        min-width: 44px;
+        min-height: 44px;
+        padding: 0 6px;
         display: inline-flex;
         align-items: center;
+        justify-content: center;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 18px;
+        font-weight: 500;
+        letter-spacing: 0;
+        position: relative;
       }
-      .det div {
-        color: var(--mut);
+      .fchip.on { color: var(--ink); font-weight: 600; }
+      .fchip.on::after {
+        content: "";
+        position: absolute;
+        left: 8px;
+        right: 8px;
+        bottom: 8px;
+        height: 2px;
+        background: var(--ink);
+      }
+      summary {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        min-height: 44px;
+        padding: 8px 0;
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 600;
+        cursor: pointer;
+        list-style: none;
+      }
+      summary::-webkit-details-marker { display: none; }
+      summary .chev { margin-left: auto; }
+      .chev {
+        width: 8px;
+        height: 8px;
+        margin-right: 4px;
+        border-top: 2px solid currentColor;
+        border-right: 2px solid currentColor;
+        transform: rotate(45deg);
+        flex: 0 0 auto;
+      }
+      details[open] > summary .chev, .exp.open .chev { transform: rotate(135deg); }
+      .crow {
+        display: grid;
+        grid-template-columns: 64px minmax(0, 1fr);
+        column-gap: 8px;
+        align-items: start;
+        width: 100%;
+        min-height: 44px;
+        border-top: 1px solid var(--rule);
+        text-align: left;
+      }
+      .crow .on {
+        min-width: 0;
+        padding: 11px 0;
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 500;
+        overflow-wrap: break-word;
+      }
+      .plan { border-top: 1px solid var(--rule); }
+      .row {
+        display: grid;
+        grid-template-columns: 64px minmax(0, 1fr) 44px;
+        column-gap: 8px;
+        align-items: start;
+        border-bottom: 1px solid var(--rule);
+        min-width: 0;
+      }
+      .when {
+        grid-column: 1;
+        grid-row: 1;
+        align-self: start;
+        padding-top: 11px;
+        text-align: right;
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 22px;
+        letter-spacing: 0;
+        color: var(--amber);
+      }
+      .row > .when,
+      .crow > .when { padding-top: 13px; }
+      .when .flex { color: var(--quiet); font-weight: 500; }
+      .ttl { grid-column: 2; grid-row: 1; min-width: 0; align-self: start; }
+      .pl {
+        display: block;
+        min-height: 44px;
+        min-width: 44px;
+        padding: 11px 0 4px;
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 600;
+        overflow-wrap: break-word;
+      }
+      .done {
+        grid-column: 3;
+        grid-row: 1;
+        align-self: start;
+        justify-self: start;
+        position: relative;
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        min-height: 44px;
+      }
+      .done::before {
+        content: "";
+        position: absolute;
+        left: 13px;
+        top: 13px;
+        width: 18px;
+        height: 18px;
+        border: 1.5px solid var(--ink);
+        background: transparent;
+      }
+      .done[aria-pressed="true"]::before { background: #f6f1e7; }
+      .done[aria-pressed="true"]::after {
+        content: "";
+        position: absolute;
+        left: 17px;
+        top: 18px;
+        width: 10px;
+        height: 6px;
+        border-left: 2px solid #141210;
+        border-bottom: 2px solid #141210;
+        transform: rotate(-45deg);
+      }
+      .meta, .trv, .note, .rowlink, .exp, .panel, .dayof, .dl, .late { grid-column: 2 / -1; }
+      .meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+        padding: 0 0 8px 22px;
+      }
+      .tag {
+        font-size: 13px;
+        line-height: 18px;
+        font-weight: 500;
+        color: var(--muted);
+        white-space: nowrap;
+      }
+      .tag.meal, .tag.booked { color: var(--ink); }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        height: 18px;
+        padding: 0 5px;
+        font-size: 11px;
+        line-height: 16px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        white-space: nowrap;
+      }
+      .badge.now { background: var(--amber); color: var(--now-ink); }
+      .badge.nx {
+        background: transparent;
+        color: var(--amber);
+        box-shadow: inset 0 0 0 1px var(--amber);
       }
       .chip {
         display: inline-flex;
         align-items: center;
-        align-self: center;
-        box-sizing: border-box;
-        max-width: 100%;
-        min-width: 0;
-        min-height: 0;
-        padding: 2px 8px;
-        border: 0;
-        border-radius: var(--rs);
-        background: var(--chip);
-        box-shadow: inset 0 0 0 1px #6a6a6a;
-        color: var(--ink);
-        font-size: 12px;
-        font-weight: 500;
-        line-height: 16px;
-        white-space: nowrap;
-        text-decoration: none;
-        position: relative;
-        z-index: 1;
-      }
-      .chip::before {
-        content: "";
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: max(100%, 44px);
-        height: 44px;
-        transform: translate(-50%, -50%);
-      }
-      .r1 .chip::before {
-        top: 0;
-        transform: translate(-50%, 0);
-      }
-      .acts .chip {
-        flex: 0 1 auto;
-      }
-      .rb .chip {
-        margin-top: 8px;
-      }
-      .hconf {
-        margin: 0;
-        padding: 0 12px 12px;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-      }
-      .hconf .chip {
-        min-height: 44px;
-        padding: 0 8px;
-      }
-      .hconf .chip::before {
-        content: none;
-      }
-      .bi {
-        font-size: 16px;
-        font-weight: 600;
-      }
-      .prov a {
-        min-height: 44px;
-      }
-      .ia {
-        font-size: 12px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: var(--mut);
-        margin: 8px 0 4px;
-      }
-      .ia:first-child {
-        margin-top: 0;
-      }
-      .idea {
-        display: flex;
-        gap: 8px;
-        align-items: baseline;
-        padding: 4px 0;
-      }
-      .idea a,
-      .kath .k a {
-        display: inline-flex;
-        align-items: center;
-        min-height: 44px;
-      }
-      .idea a {
-        flex: 1;
-        min-width: 0;
-      }
-      .empty {
-        margin: 8px 0;
-        padding: 16px 0 24px;
-        border: 0;
-        background: transparent;
-        color: var(--mut);
-        font-size: 16px;
-        line-height: 1.4;
-      }
-      .loose {
-        border-bottom: 1px solid var(--line);
-        padding: 12px 0;
-      }
-      .kath {
-        margin: 16px 0 0;
-        border: 1px solid var(--cardline);
-        border-radius: var(--r);
-        background: var(--card);
-        overflow: hidden;
-      }
-      .kath summary {
-        padding: 12px;
-      }
-      .kath .k {
-        font-size: 16px;
-        line-height: 1.4;
-        color: var(--ink);
-        border-top: 1px solid var(--line);
-        padding: 12px;
-        white-space: pre-wrap;
-        overflow-wrap: anywhere;
-      }
-      .kath .k a {
-        min-width: 44px;
-        color: var(--ink);
-        font-weight: 600;
-      }
-      .kath .k a::after {
-        content: " ↗";
-        color: var(--soft2);
-        font-weight: 500;
-      }
-      .late {
-        margin-top: 8px;
-        padding-top: 8px;
-        border-top: 1px solid var(--cardline);
-      }
-      .late .lh {
-        font-size: 16px;
-        font-weight: 800;
-      }
-      .btns,
-      .go {
-        display: flex;
-      }
-      .btns {
-        gap: 8px;
-        margin-top: 8px;
-        flex-wrap: wrap;
-      }
-      .go {
-        flex: 1 1 auto;
-        align-items: center;
         justify-content: center;
         min-height: 44px;
-        background: var(--ink);
-        color: var(--bg);
-        border-radius: var(--rs);
-        font-weight: 700;
+        min-width: 44px;
         padding: 0 12px;
+        border: 1px solid var(--ink);
+        background: transparent;
+        color: var(--ink);
+        font-size: 13px;
+        line-height: 18px;
+        font-weight: 600;
       }
-      .note {
-        color: var(--mut);
+      .trv, .sub, .dayof, .dl, .note, .det div, .k, .loose {
+        font-size: 16px;
+        line-height: 22px;
+        color: var(--muted);
+        overflow-wrap: anywhere;
       }
-      .note,
-      .warn {
+      .trv { margin: 0 0 4px; }
+      .sub, .dayof, .dl { padding: 8px 0; }
+      .panel { padding: 0 0 8px 22px; }
+      .ia {
+        padding-top: 8px;
         font-size: 12px;
-        margin-top: 8px;
+        line-height: 18px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        color: var(--muted);
       }
-      .rrow {
-        display: flex;
-        gap: 8px;
-        padding: 12px 0;
-        border-bottom: 1px solid var(--line);
+      .det div { padding: 8px 0; white-space: pre-wrap; }
+      .row.now .when {
+        background: var(--amber);
+        color: var(--now-ink);
       }
-      .rd {
-        flex: 0 0 56px;
-        font-size: 12px;
-        font-weight: 700;
-        line-height: 16px;
-        padding-top: 2px;
-        font-variant-numeric: tabular-nums;
+      .row.past .pl, .row.past .tag, .row.past .trv, .row.past .sub,
+      .crow.past .on, .row.is-done .pl { color: var(--past); }
+      .row.past .when, .crow.past .when, .row.is-done .when {
+        color: var(--quiet);
+        background: transparent;
       }
-      .rb {
-        flex: 1;
-        min-width: 0;
+      .row.past .tag.meal, .row.past .tag.booked, .row.is-done .tag.meal, .row.is-done .tag.booked {
+        color: var(--past);
       }
-      .foot,
-      .on2 {
-        font-size: 12px;
-        color: var(--mut);
-      }
-      .on2 {
-        margin-top: 4px;
+      .kath { margin-top: 16px; border-top: 1px solid var(--rule); }
+      .k { padding: 8px 0; border-top: 1px solid var(--rule); white-space: pre-wrap; }
+      .k a, .dayof a, .dl a {
+        color: var(--ink);
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 44px;
+        min-height: 44px;
+        padding: 0 8px;
+        vertical-align: middle;
       }
       .foot {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 8px;
-        margin-top: auto;
-        margin-bottom: calc(env(safe-area-inset-bottom) + 16px);
-        padding-top: 16px;
-      }
-      .err {
-        border: 2px solid var(--ink);
-        border-radius: var(--r);
-        padding: 12px;
+        gap: 12px;
         margin-top: 12px;
+        padding-top: 4px;
+        padding-bottom: env(safe-area-inset-bottom);
+        font-size: 13px;
+        line-height: 18px;
+        color: var(--muted);
       }
-      .fb ol {
-        padding-left: 24px;
+      .foot span { overflow-wrap: anywhere; }
+      .refresh { font-size: 16px; color: var(--ink); flex: 0 0 auto; }
+      .late { padding: 0 0 8px; }
+      .late .lh { font-weight: 600; color: var(--ink); padding: 8px 0; }
+      .late .note, .late .warn { padding: 8px 0; }
+      .late .warn { color: var(--ink); }
+      .late .btns { display: flex; flex-wrap: wrap; gap: 8px; }
+      .late a.go, .late .act, button.act, a.act {
+        min-height: 44px;
+        min-width: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 12px;
+        border: 1px solid var(--ink);
+        color: var(--ink);
+        font-size: 13px;
+        line-height: 18px;
+        font-weight: 600;
+        letter-spacing: 0;
       }
-      .fb li {
-        padding: 8px 0;
+      .empty, .err, .msg { padding: 16px 0; color: var(--muted); overflow-wrap: anywhere; }
+      .fb h2 { font-size: 16px; line-height: 22px; font-weight: 600; }
+      .fb ol { padding-left: 1.2em; }
+      .vtabs { display: flex; border-bottom: 1px solid var(--rule); }
+      .vtabs .fchip { flex: 1; }
+      .ovr, .rrow {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 4px 12px;
+        width: 100%;
+        min-height: 44px;
+        padding: 11px 0;
+        border-bottom: 1px solid var(--rule);
+        text-align: left;
+      }
+      .ovr .ot, .rrow .rd {
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 12px;
+        line-height: 22px;
+        font-weight: 500;
+        letter-spacing: 0;
+        color: var(--amber);
+      }
+      .ovr .on, .bi { font-size: 16px; line-height: 22px; font-weight: 600; overflow-wrap: anywhere; }
+      .oa, .prov, .on2 { color: var(--muted); font-size: 13px; line-height: 18px; overflow-wrap: anywhere; }
+      .ovr.past, .ovr.past .on, .ovr.past .ot { color: var(--past); }
+      @keyframes inL { from { transform: translateX(12px); opacity: 0.2; } to { transform: none; opacity: 1; } }
+      @keyframes inR { from { transform: translateX(-12px); opacity: 0.2; } to { transform: none; opacity: 1; } }
+      @keyframes bumpL { 40% { transform: translateX(-10px); } }
+      @keyframes bumpR { 40% { transform: translateX(10px); } }
+      @keyframes fl { from { background: rgba(255, 255, 255, 0.08); } to { background: transparent; } }
+      main.sl > * { animation: inL 0.24s ease-out; }
+      main.sr > * { animation: inR 0.24s ease-out; }
+      main.bl > * { animation: bumpL 0.26s ease-out; }
+      main.br > * { animation: bumpR 0.26s ease-out; }
+      .row.flash { animation: fl 0.6s ease-out; }
+      @media (prefers-reduced-motion: reduce) {
+        main *, .row.flash { animation: none !important; }
       }
     </style>
   </head>
   <body>
     <header>
       <div class="top">
-        <div class="tt">
+        <div class="brand">
           <h1>Trip Playbook</h1>
           <div class="clock" id="clock"></div>
         </div>
-        <button class="hbtn" id="alldays">All days</button>
+        <button class="all" id="alldays">All days</button>
       </div>
       <div class="days" id="days"></div>
-      <div class="dots" id="dots"></div>
+      <div class="meter" id="dots"></div>
     </header>
     <main id="main"></main>
     <noscript
@@ -1387,7 +809,7 @@
           ((a.innerHTML =
             '<button class="nav" data-step="-1" aria-label="Previous day"' +
             (i <= 0 ? " disabled" : "") +
-            '>‹</button><select id="daysel" aria-label="Day"><option value="trip"' +
+            '>‹</button><select id="daysel" class="daysel" aria-label="Day"><option value="trip"' +
             (0 === i ? " selected" : "") +
             ">Trip overview</option>" +
             e.days
@@ -1460,12 +882,22 @@
               ]
             : [e, ""];
         }
+        function titleOf(t) {
+          var e = O(t)[0].replace(
+            /^\p{Extended_Pictographic}\uFE0F?(?:\u200D\p{Extended_Pictographic}\uFE0F?)*\s/u,
+            "",
+          );
+          return (
+            (t.ic ? '<span class="em">' + u(t.ic) + "</span>" : "") +
+            '<span class="name">' +
+            u(e) +
+            "</span>"
+          );
+        }
         function q(t) {
           return t.timeText
-            ? '<span class="tm">' +
-                u(t.timeText).replace(/\//g, "/<wbr>") +
-                "</span>"
-            : '<span class="tm flex">Flexible</span>';
+            ? u(t.timeText).replace(/([\/\u2013~])/g, "$1<wbr>")
+            : '<span class="flex">Flexible</span>';
         }
         function F(t) {
           return t.doc
@@ -1509,9 +941,8 @@
             .replace(/[^\p{L}\p{N}]+/gu, "");
         }
         function W(t, e, n, a) {
-          var o = "card c-" + e.cat,
-            r = "",
-            i = m(t, e),
+          var i = m(t, e),
+            skipped = h(t, e),
             s = (function (t, e) {
               var n = _(
                   t.steps
@@ -1525,46 +956,83 @@
                     })
                     .join(" "),
                 ),
-                a = U(e);
+                link = U(e);
               return e.srcs.some(function (t) {
                 return (
                   n.indexOf(_(t)) < 0 ||
                   (t.match(/https?:\/\/\S+/g) || []).some(function (t) {
-                    return t !== a;
+                    return t !== link;
                   })
                 );
               });
-            })(t, e);
-          (a.res[n].past && (o += " past"),
-            i && (o += " done"),
-            h(t, e) &&
-              ((o += " past"), (r = '<span class="flag">Skipped</span>')),
-            a.today && n === a.cur
-              ? ((o += " now"), (r = '<span class="flag now">NOW</span>'))
-              : a.today &&
-                n === a.next &&
-                ((o += " nx"), (r = '<span class="flag nx">NEXT</span>')));
-          var c =
-            (e.pick
-              ? '<a class="act sec" data-pick href="' +
-                u(e.pick) +
-                '">🗺️ Pick from saved list</a>'
-              : "") +
-            (e.ideas.length
-              ? '<button class="act sec" data-p="i' +
-                n +
-                '" aria-expanded="false">💡 Ideas · ' +
-                e.ideas.length +
-                "</button>"
-              : "") +
-            (s
-              ? '<button class="act ter" data-p="d' +
-                n +
-                '" aria-expanded="false">Details</button>'
-              : "");
+            })(t, e),
+            cls = "row",
+            badge = "";
+          ((a.res[n].past || skipped) && (cls += " past"),
+            i && (cls += " is-done"),
+            skipped
+              ? (badge = '<span class="tag">Skipped</span>')
+              : a.today && n === a.cur
+                ? ((cls += " now"),
+                  (badge = '<span class="badge now">NOW</span>'))
+                : a.today &&
+                  n === a.next &&
+                  ((cls += " next"),
+                  (badge = '<span class="badge nx">NEXT</span>')));
+          var link = U(e),
+            ideas = (function (t) {
+              var e = [];
+              return (
+                t.ideas.forEach(function (t) {
+                  var n = e.filter(function (e) {
+                    return e.area === t.area;
+                  })[0];
+                  (n || e.push((n = { area: t.area, items: [] })),
+                    n.items.push(t));
+                }),
+                e
+                  .map(function (t) {
+                    return (
+                      (t.area ? '<div class="ia">' + u(t.area) + "</div>" : "") +
+                      t.items
+                        .map(function (t) {
+                          var e = U(t.step),
+                            inner =
+                              (t.step.ic
+                                ? '<span class="em">' + u(t.step.ic) + "</span>"
+                                : "") +
+                              '<span class="name">' +
+                              u(t.text) +
+                              "</span>" +
+                              (e
+                                ? '<span class="go" aria-hidden="true">↗</span>'
+                                : ""),
+                            attrs =
+                              ' data-cells="' +
+                              u(t.step.cells.join(" ")) +
+                              '" data-cat="' +
+                              t.step.cat +
+                              '"' +
+                              A(t.step.srcs.join("\n"));
+                          return e
+                            ? '<a class="idea" href="' +
+                                u(e) +
+                                '"' +
+                                attrs +
+                                ">" +
+                                inner +
+                                "</a>"
+                            : '<div class="idea"' + attrs + ">" + inner + "</div>";
+                        })
+                        .join("")
+                    );
+                  })
+                  .join("")
+              );
+            })(e);
           return (
             '<article class="' +
-            o +
+            cls +
             '" id="s' +
             n +
             '" data-cat="' +
@@ -1573,108 +1041,62 @@
             u(e.cells.join(" ")) +
             '"' +
             A(e.srcs.join("\n")) +
-            '><div class="gut">' +
+            '><div class="when">' +
             q(e) +
-            r +
-            '</div><div class="bd"><div class="r2">' +
-            (function (t, e) {
-              var n = U(t),
-                a = u(
-                  O(t)[0].replace(
-                    /^\p{Extended_Pictographic}\uFE0F?(?:\u200D\p{Extended_Pictographic}\uFE0F?)*\s/u,
-                    "",
-                  ),
-                ),
-                i = t.ic && !/^\p{Extended_Pictographic}/u.test(t.ic);
-              return (
-                (e || !i ? "" : '<span class="ic">' + u(t.ic) + "</span> ") +
-                (n
-                  ? '<a class="pl" href="' +
-                    u(n) +
-                    '"><span>' +
-                    a +
-                    "</span></a>"
-                  : '<span class="pl">' + a + "</span>")
-              );
-            })(e, e.dupIcon) +
-            "</div>" +
-            '<div class="r1"><span class="tag t-' +
-            e.cat +
-            '">' +
-            e.catLabel +
+            '</div><div class="ttl">' +
+            (link
+              ? '<a class="pl" href="' +
+                u(link) +
+                '"><span class="go" aria-hidden="true">↗</span>' +
+                titleOf(e) +
+                "</a>"
+              : '<span class="pl">' + titleOf(e) + "</span>") +
+            (O(e)[1] ? '<div class="sub">' + u(O(e)[1]) + "</div>" : "") +
+            '</div><button class="done" data-dn="' +
+            n +
+            '" aria-pressed="' +
+            i +
+            '" aria-label="' +
+            (i ? "Done: " : "Mark done: ") +
+            u(H(e)) +
+            '"></button><div class="meta">' +
+            badge +
+            '<span class="tag">' +
+            u(e.catLabel) +
             "</span>" +
             (e.meal
-              ? '<span class="tag t-meal">' +
+              ? '<span class="tag meal">' +
                 u(e.meal.charAt(0) + e.meal.slice(1).toLowerCase()) +
                 "</span>"
               : "") +
             (e.booked
-              ? '<span class="ok" title="Booked">✓ Booked</span>'
+              ? '<span class="tag booked" title="Booked">✓ Booked</span>'
               : "") +
             e.conf.map(F).join("") +
             "</div>" +
-            (O(e)[1] ? '<div class="sub">' + u(O(e)[1]) + "</div>" : "") +
-            (e.travelRow
-              ? '<div class="trv">' + u(e.travelRow) + "</div>"
-              : "") +
+            (e.travelRow ? '<div class="trv">' + u(e.travelRow) + "</div>" : "") +
             e.dayof.map(R).join("") +
             (e.deadlines || []).map(P).join("") +
-            '<div class="acts">' +
-            c +
-            "</div>" +
+            (e.pick
+              ? '<a class="rowlink" data-pick href="' +
+                u(e.pick) +
+                '"><span class="name"><span class="em">🗺️</span>Pick from saved list</span><span class="go" aria-hidden="true">↗</span></a>'
+              : "") +
             (e.ideas.length
-              ? '<div class="panel" id="i' +
+              ? '<button class="exp" data-p="i' +
+                n +
+                '" aria-expanded="false"><span class="name"><span class="em">💡</span>Ideas · ' +
+                e.ideas.length +
+                '</span><span class="chev" aria-hidden="true"></span></button><div class="panel" id="i' +
                 n +
                 '" hidden>' +
-                (function (t) {
-                  var e = [];
-                  return (
-                    t.ideas.forEach(function (t) {
-                      var n = e.filter(function (e) {
-                        return e.area === t.area;
-                      })[0];
-                      (n || e.push((n = { area: t.area, items: [] })),
-                        n.items.push(t));
-                    }),
-                    e
-                      .map(function (t) {
-                        return (
-                          (t.area
-                            ? '<div class="ia">' + u(t.area) + "</div>"
-                            : "") +
-                          t.items
-                            .map(function (t) {
-                              var e = U(t.step);
-                              return (
-                                '<div class="idea" data-cells="' +
-                                u(t.step.cells.join(" ")) +
-                                '" data-cat="' +
-                                t.step.cat +
-                                '"' +
-                                A(t.step.srcs.join("\n")) +
-                                ">" +
-                                u(t.step.ic) +
-                                " " +
-                                (e
-                                  ? '<a href="' +
-                                    u(e) +
-                                    '">' +
-                                    u(t.text) +
-                                    "</a>"
-                                  : u(t.text)) +
-                                "</div>"
-                              );
-                            })
-                            .join("")
-                        );
-                      })
-                      .join("")
-                  );
-                })(e) +
+                ideas +
                 "</div>"
               : "") +
             (s
-              ? '<div class="panel det" id="d' +
+              ? '<button class="exp" data-p="d' +
+                n +
+                '" aria-expanded="false"><span class="name">Details</span><span class="chev" aria-hidden="true"></span></button><div class="panel det" id="d' +
                 n +
                 '" hidden>' +
                 e.srcs
@@ -1684,17 +1106,7 @@
                   .join("") +
                 "</div>"
               : "") +
-            "</div>" +
-            '<button class="dn" data-dn="' +
-            n +
-            '" aria-pressed="' +
-            i +
-            '" aria-label="' +
-            (i ? "Done: " : "Mark done: ") +
-            u(H(e)) +
-            '">' +
-            (i ? "✓ Done" : "Done") +
-            "</button></article>"
+            "</article>"
           );
         }
         function X(n, a, o) {
@@ -1703,37 +1115,39 @@
             c = g(o),
             l = function (t, e) {
               return (
-                '<div class="nl" data-jump="' +
+                '<button class="nl" data-jump="' +
                 e.idx +
                 '"' +
                 A(e.srcs.join("\n")) +
-                '><span class="flag ' +
+                '><span class="when"><span class="badge ' +
                 ("NOW" === t ? "now" : "nx") +
                 '">' +
                 t +
-                '</span><span class="nt">' +
+                '</span></span><span class="on">' +
+                (e.ic ? '<span class="em">' + u(e.ic) + "</span>" : "") +
+                '<span class="name">' +
                 u(H(e)) +
-                "</span></div>"
+                "</span></span></button>"
               );
             };
           (o.getUTCFullYear() <= t &&
             c < s.key &&
             n.key === s.key &&
             n.steps.length &&
-            (r += '<div class="nls">' + l("NEXT", n.steps[0]) + "</div>"),
+            (r += l("NEXT", n.steps[0])),
           a.today) &&
             ((r +=
-              '<div class="nls">' +
               ((a.cur >= 0 ? l("NOW", n.steps[a.cur]) : "") +
                 (a.next >= 0 ? l("NEXT", n.steps[a.next]) : "") ||
-                '<div class="msg">Nothing left on today\'s plan</div>') +
-              "</div>"),
+                '<div class="msg">Nothing left on today\'s plan</div>')),
             (r +=
-              '<button class="act sec" id="latebtn" aria-pressed="' +
+              '<button class="exp' +
+              (E ? " open" : "") +
+              '" id="latebtn" aria-pressed="' +
               E +
               '" aria-expanded="' +
               (E ? "true" : "false") +
-              '">🏃 Running late</button>'),
+              '"><span class="name"><span class="em">🏃</span>Running late</span><span class="chev" aria-hidden="true"></span></button>'),
             E &&
               (r += (function (t, e) {
                 for (
@@ -1834,12 +1248,12 @@
             var d = g(l);
             if (!a) {
               var f = e.days[0],
-                w = e.days[e.days.length - 1];
+                end = e.days[e.days.length - 1];
               n =
                 l.getUTCFullYear() < t || d < f.key
                   ? f.key
-                  : d > w.key
-                    ? w.key
+                  : d > end.key
+                    ? end.key
                     : (
                         e.days.filter(function (t) {
                           return t.key === d;
@@ -1855,9 +1269,13 @@
                 C(t);
                 var r = g(t),
                   i =
-                    '<div class="vtabs"><button class="fchip" data-v="trip" aria-pressed="' +
+                    '<div class="vtabs"><button class="fchip' +
+                    ("trip" === o ? " on" : "") +
+                    '" data-v="trip" aria-pressed="' +
                     ("trip" === o) +
-                    '">All days</button><button class="fchip" data-v="res" aria-pressed="' +
+                    '">All days</button><button class="fchip' +
+                    ("res" === o ? " on" : "") +
+                    '" data-v="res" aria-pressed="' +
                     ("res" === o) +
                     '">Reservations</button></div>';
                 if ("trip" === o)
@@ -2038,57 +1456,73 @@
               I = "",
               L = "Singapore" === S.countries[0];
             ((I +=
-              '<section class="dayhead"><h2>' +
-              (L ? "🇸🇬" : "🇹🇼") +
-              " " +
-              k[S.date.getUTCDay()] +
-              " " +
-              S.mo +
-              "/" +
+              '<div class="plate ' +
+              (L ? "singapore" : "taipei") +
+              '"><img src="img/' +
+              (L ? "singapore" : "taipei") +
+              '.jpg" alt=""></div><section class="dayhead"><div class="dnum">' +
               S.d +
+              '</div><div class="dtop"><span class="em">' +
+              (L ? "🇸🇬" : "🇹🇼") +
+              "</span>" +
+              k[S.date.getUTCDay()] +
+              " · " +
+              w[S.date.getUTCMonth()] +
+              "</div>" +
               (S.areas.length
-                ? ' · <span class="area">' + u(S.areas.join(" · ")) + "</span>"
+                ? '<div class="areas">' + u(S.areas.join(" · ")) + "</div>"
                 : "") +
-              "</h2>" +
               (function (t) {
                 return t.noAlarm
                   ? ""
                   : '<div class="alarm"' +
                       (t.alarm ? ' data-extra="alarm:' + t.akey + '"' : "") +
-                      ">⏰ " +
+                      '><span class="em">⏰</span> ' +
                       (t.alarm
-                        ? '<span class="al">Alarm (computed)</span> '
-                        : "") +
-                      '<span class="big">' +
-                      B(t) +
-                      "</span></div>";
+                        ? '<span class="al">Alarm (computed)</span> <span class="big">' +
+                          B(t) +
+                          "</span>"
+                        : '<span class="al">' + B(t) + "</span>") +
+                      "</div>";
               })(S) +
-              (function () {
+              "</section>"),
+              (I += (function () {
                 var stay =
                   S.hotels
                     .map(function (t) {
+                      var i = t.full.indexOf(" ("),
+                        name =
+                          i < 0
+                            ? u(t.full)
+                            : u(t.full.slice(0, i)) +
+                              '<span class="hnote">' +
+                              u(t.full.slice(i)) +
+                              "</span>",
+                        body =
+                          '<span class="name"><span class="em">🏨</span>' +
+                          name +
+                          "</span>" +
+                          (t.link
+                            ? '<span class="go" aria-hidden="true">↗</span>'
+                            : "");
                       return (
-                        '<div class="arow"' +
-                        A(t.full) +
-                        ">" +
-                        (function (f, l) {
-                          var i = f.indexOf(" ("),
-                            n =
-                              i < 0
-                                ? u(f)
-                                : u(f.slice(0, i)) +
-                                  '<span class="hnote">' +
-                                  u(f.slice(i)) +
-                                  "</span>";
-                          return l
-                            ? '<a href="' + u(l) + '">🏨 ' + n + "</a>"
-                            : "🏨 " + n;
-                        })(t.full, t.link) +
-                        "</div>" +
+                        (t.link
+                          ? '<a class="rowlink" href="' +
+                            u(t.link) +
+                            '"' +
+                            A(t.full) +
+                            ">" +
+                            body +
+                            "</a>"
+                          : '<div class="rowlink"' +
+                            A(t.full) +
+                            ">" +
+                            body +
+                            "</div>") +
                         (t.dayof || []).map(R).join("") +
                         (t.deadlines || []).map(P).join("") +
                         ((t.conf || []).length
-                          ? '<div class="hconf">' +
+                          ? '<div class="meta hotelconf">' +
                             t.conf.map(F).join("") +
                             "</div>"
                           : "")
@@ -2096,22 +1530,23 @@
                     })
                     .join("") +
                   (S.routeLink
-                    ? '<div class="arow"><a href="' +
+                    ? '<a class="rowlink" href="' +
                       u(S.routeLink) +
-                      '">🗺️ Day route in Maps</a></div>'
+                      '"><span class="name"><span class="em">🗺️</span>Day route in Maps</span><span class="go" aria-hidden="true">↗</span></a>'
                     : "");
                 return stay
                   ? '<section class="stay">' + stay + "</section>"
                   : "";
-              })() +
-              "</section>"),
+              })()),
               (I += X(S, j, l)),
               (I +=
                 '<div class="filters" role="group">' +
                 x
                   .map(function (t) {
                     return (
-                      '<button class="fchip" data-f="' +
+                      '<button class="fchip' +
+                      (T === t[0] ? " on" : "") +
+                      '" data-f="' +
                       t[0] +
                       '" aria-pressed="' +
                       (T === t[0]) +
@@ -2123,28 +1558,29 @@
                   .join("") +
                 "</div>"),
               (I +=
-                '<details id="ov"' +
+                '<details id="ov" class="contents"' +
                 (r ? " open" : "") +
-                "><summary>Contents · " +
+                "><summary><span>Contents · " +
                 S.steps.length +
-                " stops</summary>" +
+                ' stops</span><span class="chev" aria-hidden="true"></span></summary>' +
                 S.steps
                   .map(function (t, e) {
                     return (
-                      '<button class="' +
-                      ("ovr" +
-                        (j.res[e].past ? " past" : "") +
-                        (j.today && e === j.cur ? " now" : "") +
-                        (j.today && e === j.next ? " nx" : "")) +
+                      '<button class="crow' +
+                      (j.res[e].past || h(S, t) ? " past" : "") +
+                      (j.today && e === j.cur ? " now" : "") +
+                      (j.today && e === j.next ? " next" : "") +
                       '" data-jump="' +
                       e +
                       '"' +
                       A(t.srcs.join("\n")) +
-                      '><span class="ot">' +
-                      (t.timeText ? u(t.timeText) : "Flexible") +
+                      '><span class="when">' +
+                      q(t) +
                       '</span><span class="on">' +
+                      (t.ic ? '<span class="em">' + u(t.ic) + "</span>" : "") +
+                      '<span class="name">' +
                       u(H(t)) +
-                      "</span></button>"
+                      "</span></span></button>"
                     );
                   })
                   .join("") +
@@ -2159,7 +1595,7 @@
               );
             });
             ((I +=
-              '<div id="plan">' +
+              '<div id="plan" class="plan">' +
               S.steps
                 .map(function (t, e) {
                   return M.indexOf(t) >= 0 ? W(S, t, e, j) : "";
@@ -2182,9 +1618,9 @@
                   "</section>"),
               S.kath.length &&
                 (I +=
-                  '<details class="kath"><summary>💙 Katherine\'s plan · read-only · ' +
+                  '<details class="kath"><summary><span>💙 Katherine\'s plan · read-only · ' +
                   S.kath.length +
-                  "</summary>" +
+                  '</span><span class="chev" aria-hidden="true"></span></summary>' +
                   S.kath
                     .map(function (t) {
                       return (
@@ -2215,6 +1651,7 @@
                             document.querySelectorAll('[data-p="' + e + '"]'),
                             function (t) {
                               t.setAttribute("aria-expanded", String(o));
+                              t.classList.toggle("open", o);
                             },
                           ));
                       })(0, t.getAttribute("data-p"));
@@ -2379,7 +1816,7 @@
               (t ? ' data-extra="updated"' : "") +
               ">" +
               (t ? "Updated " + u(t) + " Taiwan/SG" : "From the trip sheet") +
-              '</span><button class="act" id="refresh">↻ Refresh</button></footer>'
+              '</span><button class="refresh" id="refresh">↻ Refresh</button></footer>'
           );
         }
         function V(n, a) {

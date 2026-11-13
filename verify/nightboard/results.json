@@ -1,0 +1,44 @@
+{
+  "viewport": "393x852 CSS px, deviceScaleFactor 3 for the screenshots in this folder",
+  "content": {
+    "days": 15,
+    "fieldDiffs": 0,
+    "fields": ["time", "title words", "tags", "chip count", "row order", "hotel chip count", "day route"],
+    "confirmationHrefDiffs": 0,
+    "confirmationLinks": 46,
+    "confirmationIdsInDom": 0,
+    "confirmationIdsChecked": 46
+  },
+  "layout": {
+    "days": 15,
+    "scrollWidthOver393": 0,
+    "controlsUnder44": 0,
+    "ellipsis": 0,
+    "gridFailures": 0,
+    "grid": "rail time right edge 80, title left 88, done toggle 333-377, title and time first baselines equal",
+    "overlappingTapTargets": 0
+  },
+  "mockupScore": {
+    "threshold": "channel delta above 18",
+    "day4": "0.310% pixels differ. Flexible times sit 2px lower so the first baseline matches the title.",
+    "day4-full": "0.803% pixels differ. Same time shift, plus the booked tag reads ✓ Booked and the confirmation chip sits to its right.",
+    "day4-expanded": "1.106% pixels differ. Same time shift and booked tag. Dinner ideas are open on Spring City Resort Soak.",
+    "contents": "0.620% pixels differ. Flexible times in the contents rows sit 2px lower.",
+    "now": "0.387% pixels differ. Rail times sit 2px lower. NOW is Tekka Centre and NEXT is Kampong Glam at 9:30 AM."
+  },
+  "contrastOnPage": {
+    "ink": 16.6,
+    "muted": 8.0,
+    "quiet": 6.18,
+    "past": 7.16,
+    "amber": 10.02,
+    "nowInkOnAmber": 9.78,
+    "note": "Text pairs clear WCAG AA 4.5:1. The hairline #5e564e is 2.6:1 and is not text."
+  },
+  "behavior": {
+    "doneKey": "done:1125:TBD#0 stored as 1 and aria-pressed true",
+    "today": "Taiwan/SG now 9:30 AM, NOW Tekka, NEXT Kampong Glam, temple done",
+    "runningLate": "Maps href contains the in-browser coordinates. localStorage stayed pb-data-v1. No request URL contained the coordinates.",
+    "reservations": "23 rows, 23 View Confirmation chips, host docs.google.com"
+  }
+}

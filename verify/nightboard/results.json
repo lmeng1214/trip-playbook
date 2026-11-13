@@ -1,0 +1,58 @@
+{
+  "viewport": "393x852 CSS px, deviceScaleFactor 3",
+  "pageWeight": {
+    "indexHtmlBytes": 68760,
+    "requests": ["index.html", "data.json"],
+    "imageRequests": 0,
+    "fontRequests": 0
+  },
+  "theme": {
+    "colorScheme": "light",
+    "themeColor": "#f6f1e6",
+    "page": "#f6f1e6",
+    "ink": "#1c1914",
+    "muted": "#5c564e",
+    "accent": "#7a4a08",
+    "nowInk": "#f6f1e6",
+    "hairline": "#b0a694"
+  },
+  "contrast": {
+    "inkOnPage": 15.56,
+    "mutedOnPage": 6.44,
+    "accentOnPage": 6.63,
+    "nowInkOnAccent": 6.63,
+    "note": "Every text pair clears WCAG AA 4.5:1. The hairline is not text."
+  },
+  "content": {
+    "days": 15,
+    "sheetTimeMismatches": 0,
+    "fieldDiffsAgainstMain": 0,
+    "confirmationIdsInDom": 0,
+    "confirmationIdsChecked": 46
+  },
+  "layout": {
+    "days": 15,
+    "scrollWidthOver393": 0,
+    "controlsUnder44": 0,
+    "ellipsis": 0,
+    "overlappingTapTargets": 0,
+    "rail": "104px. Time right edge x=120. Title starts x=128. Done toggle stays x=333-377.",
+    "times": "Each timeText is verbatim. A break is allowed only after an en dash, and the dash stays on the first fragment. ~ and / sit inside a nowrap span. On the 104px rail all 10 longest strings render as one line, right edge x=120."
+  },
+  "longestTimes": [
+    { "text": "10:00–10:45 AM", "day": 15, "lines": 1, "right": 120 },
+    { "text": "12:00–1:00 PM", "day": 12, "lines": 1, "right": 120 },
+    { "text": "~1:35–4:05 PM", "day": 12, "lines": 1, "right": 120 },
+    { "text": "9:15–10:15 AM", "day": 14, "lines": 1, "right": 120 },
+    { "text": "9:00–10:00 AM", "day": 15, "lines": 1, "right": 120 },
+    { "text": "12:15–1:15 PM", "day": 15, "lines": 1, "right": 120 },
+    { "text": "4:05–5:45 PM", "day": 12, "lines": 1, "right": 120 },
+    { "text": "5:00–5:45 PM", "day": 13, "lines": 1, "right": 120 },
+    { "text": "4:35–5:20 PM", "day": 14, "lines": 1, "right": 120 },
+    { "text": "5:50–7:10 PM", "day": 14, "lines": 1, "right": 120 }
+  ],
+  "behavior": {
+    "today": "Taiwan/SG now 9:30 AM. NOW is Tekka Centre. NEXT is Kampong Glam.",
+    "runningLate": "Maps href contains the in-browser coordinates. localStorage stayed pb-data-v1. No request URL contained the coordinates."
+  }
+}

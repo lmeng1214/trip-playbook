@@ -312,6 +312,10 @@
       .stay .arow:has(+ .hconf) {
         padding-bottom: 4px;
       }
+      .stay .arow:has(+ .hconf) a {
+        margin-bottom: -4px;
+        padding-bottom: 4px;
+      }
       .stay .hnote {
         display: block;
         margin-top: 4px;
@@ -694,6 +698,24 @@
         min-width: 0;
         max-width: 100%;
       }
+      .card:has(.r1 .chip) .r2 {
+        min-height: 56px;
+        align-items: flex-end;
+      }
+      .card:has(.r1 .chip) .gut {
+        min-height: 56px;
+        padding-top: 0;
+        justify-content: flex-end;
+      }
+      .card:has(.r1 .chip) .r1 {
+        width: calc(100% + 60px);
+        max-width: none;
+        margin-right: -60px;
+      }
+      .card:has(.r1 .t-meal):has(.r1 .ok):has(.r1 .chip) .r1 {
+        width: calc(100% + 168px);
+        margin-left: -108px;
+      }
       .tm {
         font-size: 12px;
         font-weight: 600;
@@ -951,6 +973,13 @@
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
+      }
+      .hconf .chip {
+        min-height: 44px;
+        padding: 0 8px;
+      }
+      .hconf .chip::before {
+        content: none;
       }
       .bi {
         font-size: 16px;
@@ -1407,7 +1436,7 @@
           return t.doc
             ? '<a class="chip" href="' +
                 u(t.doc) +
-                '">🎫 Has confirmation · open in Drive</a>'
+                '">View Confirmation</a>'
             : e.docsReady
               ? ""
               : '<span class="chip">🎫 Has confirmation · details in Drive</span>';
@@ -1539,7 +1568,7 @@
             '">' +
             e.catLabel +
             "</span>" +
-            (e.meal && O(e)[0].toLowerCase().indexOf(e.meal.toLowerCase()) !== 0
+            (e.meal
               ? '<span class="tag t-meal">' +
                 u(e.meal.charAt(0) + e.meal.slice(1).toLowerCase()) +
                 "</span>"

@@ -647,7 +647,11 @@
         padding-top: 0;
       }
       .bd {
-        display: contents;
+        display: block;
+        grid-column: 2;
+        grid-row: 1;
+        align-self: baseline;
+        min-width: 0;
       }
       .card.now {
         margin: 0;
@@ -729,15 +733,6 @@
         min-width: 0;
         max-width: 100%;
       }
-      .r1,
-      .sub,
-      .trv,
-      .dayof,
-      .dl,
-      .acts,
-      .panel {
-        grid-column: 2;
-      }
       .tm {
         font-size: 12px;
         font-weight: 600;
@@ -792,9 +787,6 @@
         display: flex;
         gap: 4px;
         align-items: baseline;
-        grid-column: 2;
-        grid-row: 1;
-        align-self: baseline;
         min-width: 0;
       }
       .r2 .ic {

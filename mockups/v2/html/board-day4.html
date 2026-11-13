@@ -390,22 +390,33 @@
     }
     .refresh { font-size: 16px; color: var(--ink); }
     .plate { display: none; }
+    [data-theme="board"] { --rule: #5e564e; }
     [data-theme="board"] .plate {
       display: block;
+      position: relative;
       margin: 8px -16px 0;
-      height: 112px;
+      height: 88px;
       overflow: hidden;
       background: #0c0b09;
+    }
+    [data-theme="board"] .plate::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 28px;
+      background: linear-gradient(to bottom, rgba(20, 18, 16, 0), #141210);
     }
     [data-theme="board"] .plate img {
       display: block;
       width: 100%;
-      height: 112px;
+      height: 88px;
       object-fit: cover;
       object-position: center 38%;
     }
     [data-theme="board"] .plate.singapore img { object-position: center 58%; }
-    }
+    [data-theme="board"] .dayhead { align-items: center; padding-top: 10px; }
     [data-theme="board"] .when,
     [data-theme="board"] .contents .when,
     [data-theme="board"] .nl .when {
@@ -415,11 +426,22 @@
       letter-spacing: 0;
       color: #f0b429;
     }
-    [data-theme="board"] .when .flex { color: #c9a15a; font-weight: 500; }
+    [data-theme="board"] .when .flex,
+    [data-theme="board"] .contents .when .flex { color: #9c9388; font-weight: 500; }
+    [data-theme="board"] .row.now .when {
+      background: #f0b429;
+      color: #1c1406;
+      box-shadow: none;
+    }
     [data-theme="board"] .badge.nx {
       color: #f0b429;
       box-shadow: inset 0 0 0 1px #f0b429;
     }
+    [data-theme="board"] .meta { padding-left: 22px; padding-bottom: 8px; }
+    [data-theme="board"] .pl .go { margin-right: 8px; }
+    [data-theme="board"] .crow .on { font-weight: 500; }
+    [data-theme="board"] .panel { padding-left: 22px; }
+    [data-theme="board"] .ia { letter-spacing: 0.08em; font-size: 12px; }
     [data-theme="board"] .row.past .pl,
     [data-theme="board"] .row.past .tag,
     [data-theme="board"] .row.past .trv,
@@ -427,7 +449,7 @@
     [data-theme="board"] .row.is-done .pl { color: #a89f93; }
     [data-theme="board"] .row.past .when,
     [data-theme="board"] .crow.past .when,
-    [data-theme="board"] .row.is-done .when { color: #a89870; }
+    [data-theme="board"] .row.is-done .when { color: #9c9388; background: transparent; }
     [data-theme="board"] .done[aria-pressed="true"]::before { background: #f6f1e7; }
     [data-theme="board"] .done[aria-pressed="true"]::after { border-color: #141210; }
     [data-theme="board"] button:active,

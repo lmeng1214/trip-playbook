@@ -15,7 +15,7 @@ const screens = [
   { id: "day4", scroll: null, full: true },
   { id: "expanded", scroll: "s4", full: false },
   { id: "contents", scroll: null, full: false },
-  { id: "now", scroll: null, full: false },
+  { id: "now", scroll: "live", full: false },
 ];
 
 const browser = await chromium.launch({
@@ -34,7 +34,14 @@ for (const theme of themes) {
     const file = `file://${join(htmlDir, `${theme}-${screen.id}.html`)}`;
     await page.goto(file, { waitUntil: "load" });
     await page.evaluate(() => document.fonts.ready);
-    if (screen.scroll) {
+    if (screen.scroll === "live") {
+      await page.evaluate(() => {
+        const header = document.querySelector("header");
+        header.style.position = "static";
+        const plate = document.querySelector(".plate");
+        window.scrollTo(0, Math.max(0, plate.getBoundingClientRect().top + window.scrollY));
+      });
+    } else if (screen.scroll) {
       await page.evaluate((id) => {
         const header = document.querySelector("header").offsetHeight;
         const el = document.getElementById(id);

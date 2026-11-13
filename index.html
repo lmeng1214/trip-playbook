@@ -784,7 +784,8 @@
       .trv {
         font-size: 16px;
         margin-top: 4px;
-        font-weight: 600;
+        font-weight: 400;
+        color: var(--mut);
       }
       .dayof,
       .dl {
@@ -809,8 +810,8 @@
         display: flex;
         flex-direction: column;
         align-items: stretch;
-        gap: 8px;
-        margin-top: 8px;
+        gap: 4px;
+        margin-top: 4px;
       }
       .act,
       .panel {
@@ -833,8 +834,19 @@
         color: var(--ink);
         padding: 0 4px 0 0;
       }
+      a.act.sec {
+        display: flex;
+        width: 100%;
+        box-sizing: border-box;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 44px;
+        padding: 0 12px;
+        background: var(--chip);
+        border-radius: var(--rs);
+      }
       a.act.sec::after {
-        content: " ↗";
+        content: "↗";
         color: var(--soft2);
         font-weight: 500;
       }
@@ -879,7 +891,7 @@
         transform: rotate(45deg);
       }
       .panel {
-        margin-top: 8px;
+        margin-top: 4px;
         padding: 8px 12px;
         background: var(--soft);
         border-radius: var(--r);

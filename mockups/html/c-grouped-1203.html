@@ -1,0 +1,370 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thursday 3</title>
+<style>
+  :root {
+    --ink: #1c1c1e;
+    --mut: #636366;
+    --line: rgba(60, 60, 67, 0.29);
+    --link: #0a4fbf;
+    --now: #b42318;
+    --page: #f2f2f7;
+    --card: #ffffff;
+    --gap: 8px;
+    --title: 17px;
+    --tlh: 22px;
+    --time: 13px;
+    --tpad: 0px;
+    --large: 34px;
+    --llh: 41px;
+    --rpad: 8px;
+    --side: 16px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--page); color: var(--ink); }
+  body {
+    font: 17px/22px -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+    letter-spacing: -0.022em;
+    padding: 0 0 28px;
+  }
+  button, a { font: inherit; color: inherit; background: none; border: 0; padding: 0; text-align: left; text-decoration: none; }
+  .bar {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 4px;
+    position: sticky;
+    top: 0;
+    background: var(--page);
+    z-index: 2;
+  }
+  .nav, .all {
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--link);
+    font-weight: 400;
+    font-size: 17px;
+  }
+  .nav { font-size: 28px; width: 44px; }
+  .all { margin-left: auto; padding: 0 12px; font-weight: 400; }
+  h1 {
+    margin: 2px var(--side) 0;
+    font-size: var(--large);
+    line-height: var(--llh);
+    font-weight: 700;
+    letter-spacing: -0.4px;
+  }
+  .sub {
+    margin: 0 var(--side);
+    color: var(--mut);
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 400;
+  }
+  .tools {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 2px var(--side) 0;
+    min-height: 44px;
+  }
+  .alarm {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    color: var(--mut);
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 400;
+  }
+  .late {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--link);
+    font-size: 15px;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 var(--side) 2px;
+  }
+  .filters span {
+    display: inline-flex;
+    align-items: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0 14px 0 0;
+    color: var(--mut);
+    font-size: 15px;
+    font-weight: 400;
+  }
+  .filters .on { color: var(--ink); font-weight: 600; }
+  .sheet {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr) 44px;
+    column-gap: var(--gap);
+    align-items: baseline;
+    margin: 0 var(--side);
+    padding: 4px 12px;
+    background: var(--card);
+    border-radius: 12px;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: 1 / -1;
+    align-items: baseline;
+    padding: var(--rpad) 0;
+  }
+  .row + .row .body { box-shadow: inset 0 0.5px 0 var(--line); }
+  .when, .ttl { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif; }
+  .when {
+    grid-column: 1;
+    justify-self: stretch;
+    text-align: right;
+    font-size: var(--time);
+    line-height: var(--tlh);
+    padding-top: var(--tpad);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .when.flex { color: var(--mut); }
+  .body { grid-column: 2; min-width: 0; }
+  .ttl {
+    font-size: var(--title);
+    line-height: var(--tlh);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    overflow-wrap: break-word;
+  }
+  .end { white-space: nowrap; }
+  .mk { font-weight: 400; }
+  .go { color: var(--link); font-weight: 400; margin-left: 12px; }
+  .meta {
+    margin-top: 1px;
+    color: var(--mut);
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 400;
+  }
+  .badge {
+    display: inline-block;
+    margin-right: 6px;
+    padding: 0 5px;
+    border-radius: 4px;
+    font-size: 11px;
+    line-height: 16px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    vertical-align: 1px;
+  }
+  .badge.now { background: var(--now); color: #fff; }
+  .badge.nx { color: var(--ink); box-shadow: inset 0 0 0 1px rgba(28, 28, 30, 0.45); }
+  .acts { display: flex; flex-wrap: wrap; column-gap: 16px; }
+  .act {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--link);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 20px;
+  }
+  .done {
+    grid-column: 3;
+    align-self: start;
+    width: 44px;
+    height: 44px;
+    margin-top: calc(var(--rpad) * -1);
+    position: relative;
+  }
+  .done::before {
+    content: "";
+    position: absolute;
+    left: 11px;
+    top: calc(var(--rpad) + (var(--tlh) - 22px) / 2);
+    width: 22px;
+    height: 22px;
+    border: 1.5px solid var(--ink);
+    border-radius: 50%;
+  }
+  .done.ghost::before { border-color: transparent; }
+  .past .ttl, .past .when, .past .meta { color: var(--mut); font-weight: 400; }
+  .past .done::before { border-color: #8e8e93; }
+  .contents {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 44px;
+    margin: 12px var(--side) 0;
+    font-size: 17px;
+    font-weight: 400;
+  }
+  .grouped .contents {
+    background: #fff;
+    border-radius: 12px;
+    padding: 0 16px;
+    min-height: 44px;
+  }
+  .contents::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    margin-right: 4px;
+    border-right: 1.5px solid var(--mut);
+    border-bottom: 1.5px solid var(--mut);
+    transform: rotate(-45deg);
+  }
+  .foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 8px var(--side) 0;
+    color: var(--mut);
+    font-size: 13px;
+    line-height: 18px;
+  }
+  .foot b {
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: var(--link);
+    font-weight: 400;
+  }
+</style>
+</head>
+<body class="grouped">
+  <header class="bar">
+    <button class="nav" aria-label="Previous day">‹</button>
+    <button class="nav" aria-label="Next day">›</button>
+    <button class="all">All days</button>
+  </header>
+  <h1>Thursday 3</h1>
+  <p class="sub">🇸🇬 December · Singapore</p>
+  <div class="tools">
+    <p class="alarm">⏰ Alarm (computed) 6:50 AM</p>
+    <button class="late">🏃 Running late</button>
+  </div>
+  <div class="filters"><span class="on">All</span><span>Food</span><span>Coffee</span><span>Sights</span><span>Photo</span><span>Transport</span></div>
+  <section class="sheet">
+    <article class="row">
+      <div class="when"></div>
+      <div class="body">
+        <div class="ttl">🏨 Hotel 1900 @ <span class="end">Chinatown<span class="go">↗</span></span></div>
+        <div class="acts">
+          <a class="act">View Confirmation</a>
+          <a class="act">🗺️ Day route in <span class="end">Maps<span class="go">↗</span></span></a>
+        </div>
+      </div>
+      <div class="done ghost"></div>
+    </article>
+    <article class="row past">
+    <div class="when flex">Flexible</div>
+    <div class="body">
+      <div class="ttl"><span class="mk">🍔</span> BREAKFAST: Tong Ah Eating House - Kaya <span class="end">Toast<span class="go">↗</span></span></div>
+      <div class="meta">Food · Breakfast</div>
+      
+    </div>
+    <button class="done" aria-label="Mark done"></button>
+  </article><article class="row past">
+    <div class="when flex">Flexible</div>
+    <div class="body">
+      <div class="ttl"><span class="mk">☕</span> COFFEE: Maps <span class="end">Link<span class="go">↗</span></span></div>
+      <div class="meta">Coffee</div>
+      
+    </div>
+    <button class="done" aria-label="Mark done"></button>
+  </article><article class="row past">
+    <div class="when">9:00 AM</div>
+    <div class="body">
+      <div class="ttl"><span class="mk">🏃</span> Walk around Chinatown, Guoco Tower <span class="end">(optional)<span class="go">↗</span></span></div>
+      <div class="meta">Sights</div>
+      
+    </div>
+    <button class="done" aria-label="Mark done"></button>
+  </article><article class="row past">
+    <div class="when">10:00 AM</div>
+    <div class="body">
+      <div class="ttl"><span class="mk">📸</span> National Gallery: Padang Atrium + Roof Garden (50 <span class="end">min)<span class="go">↗</span></span></div>
+      <div class="meta">Photo</div>
+      
+    </div>
+    <button class="done" aria-label="Mark done"></button>
+  </article><article class="row past">
+    <div class="when">11:30 AM</div>
+    <div class="body">
+      <div class="ttl"><span class="mk">🏃</span> Merlion <span class="end">Park<span class="go">↗</span></span></div>
+      <div class="meta">Sights</div>
+      
+    </div>
+    <button class="done" aria-label="Mark done"></button>
+  </article><article class="row now">
+    <div class="when">12:00–1:00 PM</div>
+    <div class="body">
+      <div class="ttl"><span class="mk">🍔</span> LUNCH: Lau Pa <span class="end">Sat<span class="go">↗</span></span></div>
+      <div class="meta"><span class="badge now">NOW</span>Food · Lunch</div>
+      
+    </div>
+    <button class="done" aria-label="Mark done"></button>
+  </article><article class="row nx">
+    <div class="when">~1:35–4:05 PM</div>
+    <div class="body">
+      <div class="ttl"><span class="mk">🏃</span> Gardens by the Bay <span class="end">domes<span class="go">↗</span></span></div>
+      <div class="meta"><span class="badge nx">NEXT</span>Sights · Booked</div>
+      <a class="act">View Confirmation</a>
+    </div>
+    <button class="done" aria-label="Mark done"></button>
+  </article><article class="row">
+    <div class="when">4:05–5:45 PM</div>
+    <div class="body">
+      <div class="ttl"><span class="mk">🛋️</span> free time near Gardens</div>
+      <div class="meta">Sights</div>
+      
+    </div>
+    <button class="done" aria-label="Mark done"></button>
+  </article><article class="row">
+    <div class="when">6:00 PM</div>
+    <div class="body">
+      <div class="ttl"><span class="mk">🏃</span> MBS SkyPark (sunset 6:57, ~1 <span class="end">hr)<span class="go">↗</span></span></div>
+      <div class="meta">Sights · Booked</div>
+      <a class="act">View Confirmation</a>
+    </div>
+    <button class="done" aria-label="Mark done"></button>
+  </article><article class="row">
+    <div class="when">7:45 PM</div>
+    <div class="body">
+      <div class="ttl"><span class="mk">🏃</span> Garden Rhapsody (Christmas Wonderland <span class="end">ticket)<span class="go">↗</span></span></div>
+      <div class="meta">Sights · Booked</div>
+      <a class="act">View Confirmation</a>
+    </div>
+    <button class="done" aria-label="Mark done"></button>
+  </article><article class="row">
+    <div class="when">8:30 PM</div>
+    <div class="body">
+      <div class="ttl"><span class="mk">🍔</span> DINNER: TBD, MBS</div>
+      <div class="meta">Food · Dinner</div>
+      <a class="act">🗺️ Pick from saved <span class="end">list<span class="go">↗</span></span></a>
+    </div>
+    <button class="done" aria-label="Mark done"></button>
+  </article>
+    <article class="row quiet"><div class="when"></div><div class="body"><div class="ttl">💙 Katherine's plan · read-only · 11</div></div><div class="done ghost"></div></article>
+  </section>
+  <div class="contents">Contents · 11 stops</div>
+  <footer class="foot"><span>Updated Nov 13, 2:48 PM Taiwan/SG</span><b>Refresh</b></footer>
+</body>
+</html>

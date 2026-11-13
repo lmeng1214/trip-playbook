@@ -732,7 +732,7 @@ function css() {
     [data-theme="board"] .plate {
       display: block;
       margin: 8px -16px 0;
-      height: 112px;
+      height: 96px;
       overflow: hidden;
       background: #0c0b09;
       border-bottom: 1px solid #5e564e;
@@ -740,15 +740,13 @@ function css() {
     [data-theme="board"] .plate img {
       display: block;
       width: 100%;
-      height: 112px;
+      height: 96px;
       object-fit: cover;
       object-position: center 40%;
     }
     [data-theme="board"] .plate.singapore img { object-position: center 62%; }
     [data-theme="board"] .dayhead { align-items: center; padding-top: 12px; }
-    [data-theme="board"] .dnum { font-size: 56px; line-height: 0.8; }
-    [data-theme="board"] .areas,
-    [data-theme="board"] .alarm { grid-column: 1 / -1; }
+    [data-theme="board"] .dnum { font-size: 44px; line-height: 1; text-align: right; }
     [data-theme="board"] .big {
       font-family: "JetBrains Mono", ui-monospace, monospace;
       font-weight: 500;
@@ -767,9 +765,9 @@ function css() {
     [data-theme="board"] .when .flex,
     [data-theme="board"] .contents .when .flex { color: #9c9388; font-weight: 500; }
     [data-theme="board"] .row.now .when {
-      background: #f0b429;
-      color: #1c1406;
-      box-shadow: none;
+      background: transparent;
+      color: #f6f1e7;
+      box-shadow: inset 3px 0 0 #f0b429;
     }
     [data-theme="board"] .badge.nx {
       color: #f6f1e7;
@@ -779,7 +777,7 @@ function css() {
     [data-theme="board"] .pl .go { margin-right: 8px; }
     [data-theme="board"] .crow .on { font-weight: 500; }
     [data-theme="board"] .done::before { border-color: #9c9388; }
-    [data-theme="board"] .fchip.on::after { bottom: 0; left: 6px; right: 6px; }
+    [data-theme="board"] .fchip.on::after { bottom: 6px; left: 8px; right: 8px; }
     [data-theme="board"] .row.past .pl,
     [data-theme="board"] .row.past .tag,
     [data-theme="board"] .row.past .trv,

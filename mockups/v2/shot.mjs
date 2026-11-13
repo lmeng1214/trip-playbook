@@ -10,7 +10,7 @@ const htmlDir = join(root, "html");
 const outDir = join(root, process.argv[2] || "r1");
 mkdirSync(outDir, { recursive: true });
 
-const themes = ["rail", "plate", "poster"];
+const themes = process.env.THEME ? process.env.THEME.split(",") : ["board"];
 const screens = [
   { id: "day4", scroll: null, full: true },
   { id: "expanded", scroll: "s4", full: false },

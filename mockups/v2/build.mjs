@@ -284,6 +284,7 @@ function page(theme, day, opts) {
   const progress = Math.round((100 * index) / (data.days.length));
   const todayMark = opts.today ? " · today" : "";
   const flag = day.countries[0] === "Singapore" ? "🇸🇬" : "🇹🇼";
+  const city = day.countries[0] === "Singapore" ? "singapore" : "taipei";
   const alarm = day.noAlarm
     ? ""
     : `<div class="alarm"><span class="em">⏰</span> ${day.alarm ? `<span class="al">Alarm (computed)</span> <span class="big">${esc(day.alarm)}</span>` : "No alarm set"}</div>`;
@@ -322,6 +323,7 @@ ${css()}
   </div>
 </header>
 <main>
+  <div class="plate ${city}"><img src="../img/${city}.jpg" alt=""></div>
   <section class="dayhead">
     <div class="dnum">${day.d}</div>
     <div class="dtop"><span class="em">${flag}</span>${DOW[day.dow]} · ${MON[day.mo - 1]}</div>
@@ -380,6 +382,19 @@ function css() {
       --plate: transparent;
       --plate-ink: #111111;
       --bar: #ffe14a;
+    }
+    [data-theme="board"] {
+      --ink: #f6f1e7;
+      --muted: #b3a89a;
+      --rule: #322e29;
+      --page: #141210;
+      --now: #f0b429;
+      --now-ink: #1c1406;
+      --chip: transparent;
+      --chip-ink: #f6f1e7;
+      --plate: transparent;
+      --plate-ink: #f6f1e7;
+      --bar: #f0b429;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; width: 393px; overflow-x: clip; }
@@ -712,10 +727,54 @@ function css() {
       color: var(--muted);
     }
     .refresh { font-size: 16px; color: var(--ink); }
+    .plate { display: none; }
+    [data-theme="board"] .plate {
+      display: block;
+      margin: 8px -16px 0;
+      height: 112px;
+      overflow: hidden;
+      background: #0c0b09;
+    }
+    [data-theme="board"] .plate img {
+      display: block;
+      width: 100%;
+      height: 112px;
+      object-fit: cover;
+      object-position: center 38%;
+    }
+    [data-theme="board"] .plate.singapore img { object-position: center 58%; }
+    }
+    [data-theme="board"] .when,
+    [data-theme="board"] .contents .when,
+    [data-theme="board"] .nl .when {
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0;
+      color: #f0b429;
+    }
+    [data-theme="board"] .when .flex { color: #c9a15a; font-weight: 500; }
+    [data-theme="board"] .badge.nx {
+      color: #f0b429;
+      box-shadow: inset 0 0 0 1px #f0b429;
+    }
+    [data-theme="board"] .row.past .pl,
+    [data-theme="board"] .row.past .tag,
+    [data-theme="board"] .row.past .trv,
+    [data-theme="board"] .crow.past .on,
+    [data-theme="board"] .row.is-done .pl { color: #a89f93; }
+    [data-theme="board"] .row.past .when,
+    [data-theme="board"] .crow.past .when,
+    [data-theme="board"] .row.is-done .when { color: #a89870; }
+    [data-theme="board"] .done[aria-pressed="true"]::before { background: #f6f1e7; }
+    [data-theme="board"] .done[aria-pressed="true"]::after { border-color: #141210; }
+    [data-theme="board"] button:active,
+    [data-theme="board"] a:active,
+    [data-theme="board"] summary:active { background: rgba(255, 255, 255, 0.08); }
   `;
 }
 
-const themes = ["rail", "plate", "poster"];
+const themes = ["board"];
 const outDir = join(root, "html");
 mkdirSync(outDir, { recursive: true });
 

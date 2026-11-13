@@ -1,12 +1,12 @@
-# Trip Playbook, poster day sheet
+# Trip Playbook, night board
 
-Build the phone UI from this spec. The winning screens are the white poster sheets in this folder. Content, order, and wording come from `data.json`. Do not invent times, rewrite labels, or drop a row.
+Build the phone UI from this spec. The screens in this folder are the night board: a warm-black sheet, a city photograph, and an amber time rail. Content, order, and wording come from `data.json`. Do not invent times, rewrite labels, or drop a row.
 
-Viewport is 393×852 CSS pixels. Nothing scrolls sideways. Nothing truncates. Text wraps.
+Viewport is 393×852 CSS pixels. Nothing scrolls sideways. Nothing truncates. Text wraps. Every control is at least 44×44.
 
 ## Grid
 
-Page inset is 16px on the left and 16px on the right. The schedule uses one grid:
+Page inset is 16px left and 16px right. The schedule uses one grid:
 
 | Column | Width | What sits there |
 | --- | --- | --- |
@@ -22,155 +22,161 @@ From the screen edge:
 - Text starts at x = 88.
 - Trail starts at x = 333 and ends at x = 377.
 
-The day head, hotel block, now/next block, each stop, and each contents row use this grid. A contents row has no trail column, so its text still starts at x = 88 and runs to x = 377. Header chrome (title, day stepper, progress, filters) uses the 16px inset and the full width between the insets.
+The day head, hotel block, now/next block, and each stop use this grid. A contents row has no trail column, so its text still starts at x = 88 and runs to x = 377. Header chrome (title, day stepper, progress, filters) uses the 16px inset across the full width.
+
+Tag rows and the ideas panel are indented 22px inside the text column, so the words of a tag sit under the title words rather than under the emoji.
 
 ## Type
 
-Font stack: Inter, then WenQuanYi Micro Hei, then Noto Color Emoji. Default letter-spacing is -0.011em. Set letter-spacing to 0 on the clock, times, badges, and filters.
+Font stack: Inter, then WenQuanYi Micro Hei, then Noto Color Emoji. The rail and the alarm clock use JetBrains Mono. Default letter-spacing is -0.011em. Set it to 0 on the clock, the rail, badges, and filters.
 
 | Role | Size / line | Weight | Color |
 | --- | --- | --- | --- |
-| Day numeral | 48px / 0.85 | 700 | ink, letter-spacing -0.045em |
+| Day numeral | 40 / 1 | 700 | ink, letter-spacing -0.045em, left in the rail |
 | App title | 17 / 22 | 600 | ink, letter-spacing -0.02em |
-| Stop title, contents row, weekday line | 16 / 22 | 600 | ink, letter-spacing -0.02em on titles and the weekday |
+| Stop title, weekday | 16 / 22 | 600 | ink |
 | Neighborhoods, hotel, route, pick, idea, running late | 16 / 22 | 500 | ink |
-| Alarm time | 16 / 22 | 600 | ink, tabular figures |
-| Time and Flexible | 13 / 22 | 600 | ink, tabular figures |
-| Clock, progress label, alarm words, footer | 13 / 18 | 500 for clock and progress, 400 for alarm words and footer | muted |
+| Contents row title | 16 / 22 | 500 | ink |
+| Alarm time | 16 / 22 | 600 | ink, tabular |
+| Rail time | 12 / 22 mono | 500 | `#f0b429` |
+| Flexible | 12 / 22 mono | 500 | `#9c9388` |
+| Clock, progress, alarm words, footer | 13 / 18 | 500 or 400 | muted |
 | Category tag | 13 / 18 | 500 | muted |
 | Meal tag, Booked | 13 / 18 | 600 | ink |
 | Filter | 13 / 18 | 500, selected 600 | muted, selected ink |
 | View Confirmation | 13 / 18 | 600 | ink |
-| NOW / NEXT | 11 / 16 | 700 | see color, letter-spacing 0.04em |
-| Idea area | 13 / 18 | 600 | muted |
+| NOW / NEXT | 11 / 16 | 700 | see color, letter-spacing 0.04em, box height 18 |
+| Idea area | 12 / 16 | 600 | muted, letter-spacing 0.08em |
 
 ## Color
 
 | Token | Value | Use |
 | --- | --- | --- |
-| page | `#ffffff` | Canvas and sticky header |
-| ink | `#111111` | Text, rules that are marks, checkbox, progress fill |
-| muted | `#595959` | Clock, tags, alarm words, footer, past is not this |
-| past | `#6e6e6e` | Title, time, and tags of a past stop |
-| rule | `#e6e6e6` | Hairlines, progress track |
-| now | `#ffe14a` | NOW badge fill and the current-stop bar |
-| now-ink | `#111111` | Text on the NOW badge |
+| page | `#141210` | Canvas and sticky header |
+| ink | `#f6f1e7` | Titles, weekday, progress fill, confirmation border |
+| muted | `#b3a89a` | Clock, category tags, alarm words, footer |
+| quiet | `#9c9388` | Flexible, past times |
+| past | `#a89f93` | Past and done titles and tags |
+| rule | `#5e564e` | Hairlines |
+| amber | `#f0b429` | Clock times, the current time cell, NOW fill, NEXT stroke |
+| now-ink | `#1c1406` | Text on amber |
 
-Yellow means the current stop only. The done checkbox stays ink. NEXT is an ink outline, not yellow. Corners are square. No shadow, no gradient, no blur.
+Corners are square. The only fade is the 28px scrim at the bottom of the city photograph, from transparent to `#141210`. No glow, no shadow on controls.
+
+Pressed: background `rgba(255, 255, 255, 0.08)`. Focus-visible: 2px ink outline, 2px offset.
 
 ## Spacing
 
-Use 4, 8, and 16. The 11px figure below exists only so a 22px line plus padding lands on a 44px target.
+Use 4, 8, and 16. The 11px figure exists so a 22px line plus padding lands on a 44px target.
 
-- Header title block: padding-top 8px, min-height 52px, 8px between the title block and All days.
-- Stepper row: 44px tall. Previous and next are 44×44. The day name is centered and flexes.
-- Progress row: 8px gap between the 3px track and the label, padding-bottom 8px.
-- Day head: padding-top 16px. Neighborhoods 8px below the weekday line. Alarm 8px below the neighborhoods.
+- Header title block: padding-top 8px, min-height 52px.
+- Stepper row: 44px. Previous and next are 44×44.
+- Progress row: 8px between the 3px track and the label, padding-bottom 8px.
+- Photograph: 88px tall, margin 8px above, full bleed.
+- Day head: padding-top 10px. The weekday is centered on the numeral. Neighborhoods 8px below. Alarm 8px below that.
 - Hotel block: margin-top 8px.
 - Now block: margin-top 8px, padding-top 8px, hairline on top.
-- Stop meta row: gap 8px, padding-bottom 4px.
-- Action rows (hotel, route, pick, ideas, idea links, running late): min-height 44px, padding 8px 0, 16px between the label and the trailing glyph.
-- Stop hairline on the bottom edge of the row. No extra card padding.
+- Action rows: min-height 44, padding 8px 0, at least 16px between the label and the trailing glyph.
+- Tag row: gap 8px, padding-bottom 8px, padding-left 22px.
+- Stop hairline on the bottom edge. No card padding.
 
 ## Baseline alignment
 
-This is the rule for the time column.
+The time or the word Flexible is right-aligned in the 64px rail. Its box has padding-top 11px and line-height 22px. The stop title has the same padding-top and the same line-height. Those line boxes start at the same y, so the first baselines match. The time is not vertically centered on the card.
 
-The time or the word Flexible is right-aligned in the 64px rail. Its box has padding-top 11px and line-height 22px. The stop title has the same padding-top 11px and the same line-height 22px. Those two line boxes start at the same y, so the first baselines match. The time is not vertically centered on the card.
+If a time wraps, break after `/`, `–`, or `~`. The first fragment stays on the title's first line. Later fragments stay in the rail.
 
-If a time wraps, break after `/`, `–`, or `~`. The first fragment stays on the title's first line. Later fragments stay in the rail, right-aligned, and do not cross into the text column.
+The done control is a 44×44 button in the trail column, on the title's row only. The 18×18 box is inset 13px from the top and 13px from the left of that button, with a 1.5px ink stroke. Checked: the box fills `#f6f1e7`, and the check is `#141210`, drawn at left 17px, top 18px, 10×6, 2px borders, rotated -45 degrees.
 
-The done control is a 44×44 button in the trail column, on the title's row only. It does not stretch down the card. The 18×18 box is inset 13px from the top and 13px from the left of that button, with a 1.5px ink stroke. Checked: the box fills ink, and a white check is drawn at left 17px, top 18px, 10×6, with 2px borders, rotated -45 degrees.
-
-The day numeral is left-aligned in the rail, so 5 and 25 share x = 16. It baseline-aligns with the weekday line in the text column. "Wed · Nov" starts at x = 88, the same edge as every stop title.
-
-A map arrow on a title is floated to the top-right of the title block, with margin 1px 0 0 8px. It stays on the first line. It is not glued to the last word, and it does not drop onto its own line. Trailing arrows on hotel, route, pick, and idea rows sit on the shared right edge (x = 377), with at least 16px of space before the glyph.
+A map arrow on a title is floated to the top-right of the title block, with margin 1px 8px 0 8px, so it stays on the first line and does not sit on the checkbox. Trailing arrows on hotel, route, pick, and idea rows sit on the shared right edge at x = 377.
 
 ## Components
 
+### City photograph
+
+Taiwan days use `img/taipei.jpg`. Singapore days use `img/singapore.jpg`. The image is 88px tall, full bleed, `object-fit: cover`. Taipei is positioned at `center 38%`. Singapore is positioned at `center 58%`. A 28px scrim at the bottom fades into the page color. No type sits on the picture.
+
 ### Header
 
-Sticky, page color, solid. "Trip Playbook" and "Taiwan/SG now {time}" on the left. "All days" on the right, 44px tall, weight 600.
+Sticky, page color. "Trip Playbook" and "Taiwan/SG now {time}" on the left. "All days" on the right, 44px tall.
 
-The day stepper reads `Day {n} · {Dow} {mo}/{d}` and adds ` · today` when this day is today. Previous and next are `‹` and `›` at 26px. Disabled at the ends of the trip, still 44×44.
+The day stepper reads `Day {n} · {Dow} {mo}/{d}` and adds ` · today` when this day is today. Previous and next are `‹` and `›`.
 
-The meter is a 3px track in `rule`, filled with ink to `Math.round(100 * dayNumber / 15)` percent. The label is `Day {n} of 15`.
+The meter is a 3px track in the rule color, filled with ink to `Math.round(100 * dayNumber / 15)` percent. The label is `Day {n} of 15`.
 
 ### Day head
 
-Flag emoji, then `{Dow} · {Mon}` where Mon is the short month. Neighborhoods are the day's areas joined with ` · `. Alarm is `⏰ Alarm (computed) {time}` when set, otherwise `⏰ No alarm set`. The words "Alarm (computed)" are muted 13/400. The clock time is ink 16/600.
+The numeral is the day of the month, left in the rail, centered against `{flag} {Dow} · {Mon}` in the text column. Neighborhoods are the areas joined with ` · `. Alarm is `⏰ Alarm (computed) {time}` when set, otherwise `⏰ No alarm set`. The words are muted. The clock time is ink.
 
 ### Hotel and route
 
-`🏨 {name}` is a row. A parenthetical note in the hotel name drops to the next line, muted, weight 500. The `↗` is in the trail column. Confirmation docs render as View Confirmation chips in the text column, under the name. `🗺️ Day route in Maps` is the same row pattern, only when the day has a route link.
+`🏨 {name}` is a row. A parenthetical in the hotel name drops to the next line, muted, weight 500. The `↗` is on the right edge. Each confirmation doc is a View Confirmation chip under the name. `🗺️ Day route in Maps` uses the same row, only when the day has a route link.
 
 ### Now and next
 
-Shown only when the open day is today. The current stop's badge sits in the rail, right-aligned, and the title starts at x = 88. NEXT uses the same placement. Under them, `🏃 Running late` is a full text-column row with a chevron on the right edge.
+Shown only when the open day is today. In the summary, the NOW or NEXT badge sits in the rail and the title starts at x = 88. Under them, `🏃 Running late` is a text-column row with a chevron on the right edge.
 
-NOW and NEXT on the stop itself repeat in the tag row. One system:
+On the stop itself the badges repeat in the tag row.
 
-- NOW: height 18px, padding 0 5px, fill `#ffe14a`, ink text.
-- NEXT: the same box, transparent fill, 1px ink inset stroke.
-- The current stop also gets a 3px `#ffe14a` bar on the left edge of its time cell, the height of that cell.
+- NOW: height 18, padding 0 5px, fill `#f0b429`, text `#1c1406`.
+- NEXT: the same box, transparent fill, 1px `#f0b429` inset stroke, amber text.
+- The current stop's time cell is filled `#f0b429` with `#1c1406` text. Other clock times stay amber type on the page, with no fill. Flexible stays `#9c9388`.
 
 Which row is current: among stops whose start is at or before now, the latest one that has not ended. A stop with no end is over once now is past its start and a later stop exists. The next row is the following stop that is not past. If the current row has not started, it is NEXT and there is no NOW.
 
 ### Filters
 
-All, Food, Coffee, Sights, Photo, Transport. One wrapping row, each at least 44×44, padding 0 6px. Selected (All, in these screens) is ink weight 600 with a 2px ink underline inset 8px from the chip's sides and sitting 8px above the row's bottom hairline. The hairline is the bottom border of the filter row. Do not add a second rule directly under that underline.
+All, Food, Coffee, Sights, Photo, Transport. Each is at least 44×44, padding 0 6px. The row has a bottom hairline. Selected (All, in these screens) is ink weight 600 with a 2px ink underline inset 8px from the sides and 8px above the hairline.
 
 ### Contents
 
-Summary: `Contents · {count} stops`, weight 600, min-height 44, chevron on the right. Collapsed chevron points right. Open chevron points down. Rows use the rail grid. Each row is the time or Flexible, the leading emoji, and the label. The whole row is the button, min-height 44. A hairline separates rows. Past rows use the past color.
+Summary: `Contents · {count} stops`, weight 600, min-height 44, chevron on the right. Collapsed chevron points right. Open chevron points down. Each row is the time or Flexible, the leading emoji, and the label. The whole row is the button. Past rows use the past color.
 
 ### Stop
 
-Order inside the row, top to bottom:
+Order, top to bottom:
 
 1. Time or Flexible, title, done toggle. Same first baseline.
-2. Tag row: NOW or NEXT if this is that stop, then the category, then the meal in title case (Breakfast, Lunch, Dinner, Coffee, Snack), then Booked if booked, then one View Confirmation chip per doc link.
-3. Travel line, 16/22 muted, if the step has one.
+2. Tag row, indented 22px: NOW or NEXT if this is that stop, then the category, then the meal in title case, then Booked if booked, then one View Confirmation chip per doc link.
+3. Travel line, if the step has one.
 4. Day-of and deadline notes, if any.
 5. `🗺️ Pick from saved list` with a trailing `↗`, if the step has a saved-list link. No box around this row.
 6. `💡 Ideas · {n}` with a chevron, if the step has ideas.
 7. Details with a chevron, only when the step's source text is not already on the card.
 
-The title is the step label. Its leading emoji is the leading pictograph sequence of the step text, drawn at 16px in Noto Color Emoji, 4px before the words, vertically aligned -0.125em. A maps link adds the floated `↗`. A title with no link is the same text without the arrow.
+The title is the step label. Its leading emoji is the leading pictograph sequence of the step text, 16px, 4px before the words, vertically aligned -0.125em. A maps link adds the floated `↗`.
 
-View Confirmation is an inline chip: min-height 44, min-width 44, padding 0 12px, 1px ink border, transparent fill, 13/18 weight 600. It sits in the tag row. It is not a filled black button.
+View Confirmation: min-height 44, min-width 44, padding 0 12px, 1px ink border, transparent fill.
 
-Ideas open under the disclosure. The area name is one 13/18 muted line. Each idea is a 44px row: emoji, text, trailing `↗` when it has a map link. Chinese and English stay one string, as written.
+Ideas open under the disclosure, indented another 22px. The area name is the 12px tracked label. Each idea is a 44px row: emoji, text, trailing `↗` when it has a map link.
 
 ### Done, past, skipped
 
-- Default checkbox: empty 18px square.
-- Done: filled ink square and white check. Title and time switch to muted.
-- Past: title, time, and tags use `#6e6e6e`.
-- Skipped: same past color, and the tag row says Skipped instead of NOW or NEXT.
-
-Pressed: the control's background is `rgba(0, 0, 0, 0.06)`. Focus-visible: 2px ink outline, 2px offset.
+- Default checkbox: empty 18px square, ink stroke.
+- Done: filled `#f6f1e7` with a `#141210` check. Title and time use the quiet colors above.
+- Past: title and tags `#a89f93`. Time `#9c9388`, and the time cell has no amber fill.
+- Skipped: the past colors, and the tag row says Skipped instead of NOW or NEXT.
 
 ### Chevron
 
-8×8, 2px ink borders on the top and right. Collapsed, rotated 45 degrees (points right). Open, rotated 135 degrees (points down). 4px from the right edge of its row.
+8×8, 2px borders on the top and right. Collapsed, rotated 45 degrees. Open, rotated 135 degrees. 4px from the right edge of its row.
 
 ### Footer
 
-`Updated {Mon} {D}, {h:mm AM/PM} Taiwan/SG` in muted 13/18, and `↻ Refresh` at 16px ink, min 44×44. 12px above the footer.
+`Updated {Mon} {D}, {h:mm AM/PM} Taiwan/SG` in muted 13/18, and `↻ Refresh` at 16px ink, min 44×44.
 
 ### Katherine
 
-On days that have her rows, a disclosure under the plan: `💙 Katherine's plan · read-only · {n}`. Rows are muted, pre-wrapped, separated by hairlines. It is not editable.
+On days that have her rows, a disclosure under the plan: `💙 Katherine's plan · read-only · {n}`. Rows are muted and pre-wrapped.
 
-## Screens in this folder
+## Screens
 
 | File | What it shows |
 | --- | --- |
-| `day4.png` | Day 4, Wed 11/25, collapsed. Clock 3:18 PM. Not today, so no NOW or NEXT. |
+| `day4.png` | Day 4, Wed 11/25, collapsed. Clock 3:18 PM. Taipei photograph. Not today. |
 | `day4-full.png` | The same day, full height. |
 | `day4-expanded.png` | Scrolled to Spring City Resort Soak, with View Confirmation and its map arrow, and Dinner's ideas open. |
 | `contents.png` | Day stepper and Contents open on Day 4. |
-| `now.png` | Day 14, Sat 12/5, today, clock 9:30 AM. Temple is past and done. NOW is Tekka Centre breakfast. NEXT is Kampong Glam. |
+| `now.png` | Day 14, Sat 12/5, today, opened on the Singapore photograph. Clock 9:30 AM. Temple is past and done. NOW is Tekka Centre breakfast, with the time cell filled amber. NEXT is Kampong Glam. |
 
-`rejected/` holds the round-1 sheets that lost: rail (black masthead, mono times) and plate (dark green day band).
+`rejected/` holds the earlier sheets: rail, plate, and the white poster.

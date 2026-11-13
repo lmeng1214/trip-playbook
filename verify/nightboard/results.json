@@ -1,5 +1,6 @@
 {
   "viewport": "393x852 CSS px, deviceScaleFactor 3 for the screenshots in this folder",
+  "baseline": "mockups/v2/r4/board-*.png on cursor/mockups-v2-7010. A fresh render of mockups/v2/html/board-*.html from the commit that produced those PNGs matches them at 0% hot pixels.",
   "content": {
     "days": 15,
     "fieldDiffs": 0,
@@ -19,12 +20,12 @@
     "overlappingTapTargets": 0
   },
   "mockupScore": {
-    "threshold": "channel delta above 18",
+    "threshold": "channel delta above 18, deviceScaleFactor 1",
     "day4": "0.310% pixels differ. Flexible times sit 2px lower so the first baseline matches the title.",
-    "day4-full": "0.803% pixels differ. Same time shift, plus the booked tag reads ✓ Booked and the confirmation chip sits to its right.",
-    "day4-expanded": "1.106% pixels differ. Same time shift and booked tag. Dinner ideas are open on Spring City Resort Soak.",
-    "contents": "0.620% pixels differ. Flexible times in the contents rows sit 2px lower.",
-    "now": "0.387% pixels differ. Rail times sit 2px lower. NOW is Tekka Centre and NEXT is Kampong Glam at 9:30 AM."
+    "day4-full": "0.599% pixels differ. Same time shift, plus the booked tag reads ✓ Booked and the confirmation chip sits to its right. Page height is 1667 CSS px, the same as the board screenshot.",
+    "day4-expanded": "0.759% pixels differ. Same time shift and booked tag. The frame is Spring City Resort Soak with Dinner's ideas open.",
+    "contents": "0.517% pixels differ. Flexible times in the contents rows sit 2px lower.",
+    "now": "0.398% pixels differ. Rail times sit 2px lower. NOW is Tekka Centre and NEXT is Kampong Glam at 9:30 AM."
   },
   "contrastOnPage": {
     "ink": 16.6,
@@ -39,6 +40,8 @@
     "doneKey": "done:1125:TBD#0 stored as 1 and aria-pressed true",
     "today": "Taiwan/SG now 9:30 AM, NOW Tekka, NEXT Kampong Glam, temple done",
     "runningLate": "Maps href contains the in-browser coordinates. localStorage stayed pb-data-v1. No request URL contained the coordinates.",
-    "reservations": "23 rows, 23 View Confirmation chips, host docs.google.com"
+    "reservations": "23 rows, 23 View Confirmation chips, host docs.google.com",
+    "day10": "Taipei plate, flag 🇹🇼, hotel note present",
+    "day12": "Singapore plate, flag 🇸🇬, Katherine 11 rows, link 46x44"
   }
 }

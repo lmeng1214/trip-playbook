@@ -179,41 +179,32 @@
         white-space: nowrap;
       }
       .plate {
-        position: relative;
         margin: 8px -16px 0;
-        height: 88px;
+        height: 112px;
         overflow: hidden;
         background: #0c0b09;
-      }
-      .plate::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: 28px;
-        background: linear-gradient(to bottom, rgba(20, 18, 16, 0), #141210);
+        border-bottom: 1px solid var(--rule);
       }
       .plate img {
         display: block;
         width: 100%;
-        height: 88px;
+        height: 112px;
         object-fit: cover;
-        object-position: center 38%;
+        object-position: center 40%;
       }
-      .plate.singapore img { object-position: center 58%; }
+      .plate.singapore img { object-position: center 62%; }
       .dayhead, .stay, .nowbox {
         display: grid;
         grid-template-columns: 64px minmax(0, 1fr) 44px;
         column-gap: 8px;
       }
-      .dayhead { align-items: center; padding-top: 10px; }
+      .dayhead { align-items: center; padding-top: 12px; }
       .dnum {
         grid-column: 1;
         grid-row: 1;
         text-align: left;
-        font-size: 40px;
-        line-height: 1;
+        font-size: 56px;
+        line-height: 0.8;
         font-weight: 700;
         letter-spacing: -0.045em;
         font-variant-numeric: tabular-nums;
@@ -226,7 +217,7 @@
         font-weight: 600;
       }
       .areas {
-        grid-column: 2 / -1;
+        grid-column: 1 / -1;
         margin-top: 8px;
         font-size: 16px;
         line-height: 22px;
@@ -234,7 +225,7 @@
         overflow-wrap: break-word;
       }
       .alarm {
-        grid-column: 2 / -1;
+        grid-column: 1 / -1;
         margin-top: 8px;
         font-size: 13px;
         line-height: 18px;
@@ -242,9 +233,11 @@
       }
       .al { color: var(--muted); font-weight: 400; }
       .big {
-        font-size: 16px;
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 15px;
         line-height: 22px;
-        font-weight: 600;
+        font-weight: 500;
+        letter-spacing: 0;
         font-variant-numeric: tabular-nums;
       }
       .em {
@@ -315,9 +308,9 @@
       .fchip.on::after {
         content: "";
         position: absolute;
-        left: 8px;
-        right: 8px;
-        bottom: 8px;
+        left: 6px;
+        right: 6px;
+        bottom: 0;
         height: 2px;
         background: var(--ink);
       }
@@ -383,7 +376,7 @@
         font-size: 12px;
         line-height: 22px;
         letter-spacing: 0;
-        color: var(--amber);
+        color: var(--ink);
       }
       .row > .when,
       .crow > .when { padding-top: 13px; }
@@ -417,10 +410,10 @@
         top: 13px;
         width: 18px;
         height: 18px;
-        border: 1.5px solid var(--ink);
+        border: 1.5px solid var(--quiet);
         background: transparent;
       }
-      .done[aria-pressed="true"]::before { background: #f6f1e7; }
+      .done[aria-pressed="true"]::before { background: #f6f1e7; border-color: #f6f1e7; }
       .done[aria-pressed="true"]::after {
         content: "";
         position: absolute;
@@ -434,12 +427,13 @@
       }
       .meta, .trv, .note, .rowlink, .exp, .panel, .dayof, .dl, .late { grid-column: 2 / -1; }
       .meta {
+        grid-column: 2;
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         gap: 8px;
         min-width: 0;
-        padding: 0 0 8px 22px;
+        padding: 0 0 8px;
       }
       .tag {
         font-size: 13px;
@@ -463,8 +457,8 @@
       .badge.now { background: var(--amber); color: var(--now-ink); }
       .badge.nx {
         background: transparent;
-        color: var(--amber);
-        box-shadow: inset 0 0 0 1px var(--amber);
+        color: var(--ink);
+        box-shadow: inset 0 0 0 1px var(--ink);
       }
       .chip {
         display: inline-flex;
@@ -488,13 +482,13 @@
       }
       .trv { margin: 0 0 4px; }
       .sub, .dayof, .dl { padding: 8px 0; }
-      .panel { padding: 0 0 8px 22px; }
+      .panel { padding: 0 0 8px; }
       .ia {
         padding-top: 8px;
-        font-size: 12px;
+        font-size: 13px;
         line-height: 18px;
         font-weight: 600;
-        letter-spacing: 0.08em;
+        letter-spacing: 0;
         color: var(--muted);
       }
       .det div { padding: 8px 0; white-space: pre-wrap; }
@@ -580,7 +574,7 @@
         line-height: 22px;
         font-weight: 500;
         letter-spacing: 0;
-        color: var(--amber);
+        color: var(--ink);
       }
       .ovr .on, .bi { font-size: 16px; line-height: 22px; font-weight: 600; overflow-wrap: anywhere; }
       .oa, .prov, .on2 { color: var(--muted); font-size: 13px; line-height: 18px; overflow-wrap: anywhere; }

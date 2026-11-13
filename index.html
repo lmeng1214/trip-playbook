@@ -307,9 +307,9 @@
         font-size: 12px;
         line-height: 22px;
         letter-spacing: 0;
-        white-space: nowrap;
         color: var(--amber);
       }
+      .when .frag { white-space: nowrap; }
       .when .flex { color: var(--muted); font-weight: 500; }
       .ttl { grid-column: 2; grid-row: 1; min-width: 0; align-self: start; }
       .pl {
@@ -819,7 +819,17 @@
           );
         }
         function q(t) {
-          return t.timeText ? u(t.timeText) : '<span class="flex">Flexible</span>';
+          if (!t.timeText) return '<span class="flex">Flexible</span>';
+          var parts = t.timeText.split("\u2013");
+          return parts
+            .map(function (part, i) {
+              return (
+                '<span class="frag">' +
+                u(i < parts.length - 1 ? part + "\u2013" : part) +
+                "</span>"
+              );
+            })
+            .join("<wbr>");
         }
         function F(t) {
           return t.doc

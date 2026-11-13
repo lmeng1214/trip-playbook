@@ -1,7 +1,7 @@
 {
   "viewport": "393x852 CSS px, deviceScaleFactor 3",
   "pageWeight": {
-    "indexHtmlBytes": 68431,
+    "indexHtmlBytes": 68760,
     "requests": ["index.html", "data.json"],
     "imageRequests": 0,
     "fontRequests": 0
@@ -37,7 +37,7 @@
     "ellipsis": 0,
     "overlappingTapTargets": 0,
     "rail": "104px. Time right edge x=120. Title starts x=128. Done toggle stays x=333-377.",
-    "times": "Every timeText is one line, verbatim, with the same 11px top padding. The 16px title baseline sits 2px lower than the 12px time on every row."
+    "times": "Each timeText is verbatim. A break is allowed only after an en dash, and the dash stays on the first fragment. ~ and / sit inside a nowrap span. On the 104px rail all 10 longest strings render as one line, right edge x=120."
   },
   "longestTimes": [
     { "text": "10:00–10:45 AM", "day": 15, "lines": 1, "right": 120 },

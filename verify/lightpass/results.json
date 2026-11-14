@@ -1,0 +1,26 @@
+{
+  "contentDiffDays": 0,
+  "contentCompared": "whitespace-stripped time, title, tags and badges, per-stop chip count, stop order, total chip count, alarm text versus origin/main index.html on the same data.json, all 15 days",
+  "idHits": 0,
+  "idsChecked": 69,
+  "pageErrors": [],
+  "requests": [
+    "document index.html",
+    "fetch data.json"
+  ],
+  "imageRequests": 0,
+  "fontRequests": 0,
+  "ellipsis": 0,
+  "day14Clock": "Taiwan/SG now 9:30 AM",
+  "contentsOpen": { "open": true, "visibleRows": 10 },
+  "dinnerIdeasOpen": 2,
+  "layout": {
+    "viewport": "393x852 deviceScaleFactor 3",
+    "days": 15,
+    "scrollWidthMax": 393,
+    "controlsUnder44": 0,
+    "overlappingTapTargets": 0,
+    "elementsOutsideViewportX": 0,
+    "closedContentsRowsWithBoxes": 0
+  }
+}

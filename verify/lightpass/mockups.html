@@ -1,0 +1,418 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Light layout mockups</title>
+    <style>
+      :root {
+        --ink: #1c1914;
+        --muted: #5c564e;
+        --quiet: #5c564e;
+        --past: #5c564e;
+        --rule: #b0a694;
+        --page: #f6f1e6;
+        --amber: #7a4a08;
+        --now-ink: #f6f1e6;
+        --rail: 76px;
+        --gap: 4px;
+      }
+      * { box-sizing: border-box; }
+      button, a {
+        font: inherit;
+        color: inherit;
+        background: none;
+        border: 0;
+        padding: 0;
+        text-align: left;
+        text-decoration: none;
+      }
+      body {
+        margin: 0;
+        background: #d9d3c7;
+        font-family: -apple-system, system-ui, sans-serif;
+        color: var(--ink);
+      }
+      .wrap { display: flex; gap: 24px; align-items: flex-start; padding: 16px; }
+      .label { font: 600 13px/18px -apple-system, system-ui, sans-serif; margin: 0 0 8px; }
+      .screen {
+        width: 393px;
+        height: 852px;
+        overflow: hidden;
+        background: var(--page);
+        color: var(--ink);
+        font-size: 16px;
+        line-height: 22px;
+      }
+      header { background: var(--page); }
+      .top, .days, .meter, .body { padding-left: 16px; padding-right: 16px; }
+      .top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        min-height: 52px;
+        padding-top: 8px;
+      }
+      h1 { margin: 0; font-size: 17px; line-height: 22px; font-weight: 600; letter-spacing: -0.02em; }
+      .clock { margin-top: 1px; font-size: 13px; line-height: 18px; font-weight: 500; color: var(--muted); }
+      .all, .nav, .daysel {
+        min-width: 44px;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+      }
+      .all { justify-content: flex-end; padding: 0 2px; font-size: 16px; }
+      .days { display: flex; align-items: center; }
+      .nav { width: 44px; height: 44px; font-size: 26px; line-height: 1; flex: 0 0 44px; }
+      .daysel {
+        flex: 1;
+        min-width: 0;
+        height: 44px;
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: -0.015em;
+      }
+      .meter { display: flex; align-items: center; gap: 8px; padding-bottom: 8px; }
+      .prog { flex: 1; height: 3px; background: var(--rule); }
+      .prog i { display: block; height: 100%; background: var(--ink); }
+      .pn { font-size: 13px; line-height: 18px; font-weight: 500; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+      .em { font-style: normal; margin-right: 4px; }
+      .go { min-width: 16px; text-align: right; font-weight: 500; }
+      .rowlink {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        min-height: 44px;
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 500;
+        text-decoration: none;
+        color: inherit;
+      }
+      .rowlink .name { flex: 1; min-width: 0; }
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        min-width: 44px;
+        padding: 0 12px;
+        border: 1px solid var(--ink);
+        color: inherit;
+        text-decoration: none;
+        font-size: 13px;
+        line-height: 18px;
+        font-weight: 600;
+      }
+      .filters { display: flex; flex-wrap: wrap; align-items: center; border-bottom: 1px solid var(--rule); margin-top: 8px; }
+      .fchip {
+        min-width: 44px;
+        min-height: 44px;
+        padding: 0 6px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 18px;
+        font-weight: 500;
+        position: relative;
+      }
+      .fchip.on { color: var(--ink); font-weight: 600; }
+      .fchip.on::after {
+        content: "";
+        position: absolute;
+        left: 6px;
+        right: 6px;
+        bottom: 0;
+        height: 2px;
+        background: var(--ink);
+      }
+      .contents { border-bottom: 1px solid var(--rule); }
+      .sum {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        min-height: 44px;
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 600;
+      }
+      .chev {
+        width: 8px;
+        height: 8px;
+        margin-left: auto;
+        margin-right: 4px;
+        border-top: 2px solid currentColor;
+        border-right: 2px solid currentColor;
+        transform: rotate(45deg);
+      }
+      .row, .nl {
+        display: grid;
+        grid-template-columns: var(--rail) minmax(0, 1fr) 44px;
+        column-gap: var(--gap);
+        align-items: start;
+        border-bottom: 1px solid var(--rule);
+      }
+      .when {
+        grid-column: 1;
+        padding-top: 8px;
+        text-align: right;
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
+        color: var(--amber);
+        font-variant-numeric: tabular-nums;
+      }
+      .when span { display: block; white-space: nowrap; }
+      .when.one { line-height: 22px; }
+      .ttl { grid-column: 2; min-width: 0; }
+      .pl {
+        display: block;
+        min-height: 44px;
+        padding: 8px 0 4px;
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 600;
+        color: inherit;
+        text-decoration: none;
+        overflow-wrap: break-word;
+      }
+      .pl .go { float: right; margin-left: 4px; }
+      .done {
+        grid-column: 3;
+        width: 44px;
+        height: 44px;
+        position: relative;
+      }
+      .done::before {
+        content: "";
+        position: absolute;
+        left: 13px;
+        top: 13px;
+        width: 18px;
+        height: 18px;
+        border: 1.5px solid var(--quiet);
+      }
+      .meta, .subrow { grid-column: 2 / -1; }
+      .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 0 0 8px;
+      }
+      .tag { font-size: 13px; line-height: 18px; font-weight: 500; color: var(--muted); }
+      .tag.meal, .tag.booked { color: var(--ink); }
+      .subrow { min-height: 44px; }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        height: 18px;
+        padding: 0 5px;
+        font-family: -apple-system, system-ui, sans-serif;
+        font-size: 11px;
+        line-height: 16px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+      }
+      .badge.now { background: var(--amber); color: var(--now-ink); }
+      .badge.nx { box-shadow: inset 0 0 0 1px var(--ink); }
+      .nl .when { padding-top: 13px; line-height: 18px; }
+      .nl .on {
+        grid-column: 2 / -1;
+        min-width: 0;
+        padding: 11px 0;
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 600;
+      }
+      .nowbox { margin-top: 8px; border-top: 1px solid var(--rule); }
+      .late {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        min-height: 44px;
+        font-weight: 500;
+      }
+      .row.now .when { background: var(--amber); color: var(--now-ink); padding-bottom: 8px; }
+      .row.past .pl, .row.past .tag { color: var(--past); }
+      .row.past .when { color: var(--quiet); }
+      .al { color: var(--muted); }
+      .big {
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 15px;
+        line-height: 22px;
+        font-weight: 500;
+        color: var(--amber);
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* A — baseline lockup, ruled hotel rows */
+      .a .dayhead { padding-top: 8px; }
+      .a .drow { display: flex; align-items: baseline; gap: 8px; }
+      .a .dnum {
+        font-size: 32px;
+        line-height: 36px;
+        font-weight: 700;
+        letter-spacing: -0.045em;
+        font-variant-numeric: tabular-nums;
+      }
+      .a .dtop { font-size: 16px; line-height: 22px; font-weight: 600; }
+      .a .areas { margin-top: 4px; font-size: 16px; line-height: 22px; font-weight: 500; }
+      .a .alarm { margin-top: 4px; font-size: 13px; line-height: 18px; }
+      .a .stay { margin-top: 8px; }
+      .a .stay .rowlink, .a .chiprow {
+        border-top: 1px solid var(--rule);
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      /* B — place is the title, chip shares the hotel row */
+      .b .dayhead { padding-top: 8px; }
+      .b .kicker {
+        font-size: 13px;
+        line-height: 18px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        color: var(--muted);
+      }
+      .b .areas { margin-top: 4px; font-size: 20px; line-height: 26px; font-weight: 600; letter-spacing: -0.02em; }
+      .b .alarm { margin-top: 4px; font-size: 13px; line-height: 18px; }
+      .b .stay { margin-top: 8px; border-top: 1px solid var(--rule); }
+      .b .hotelrow {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 44px;
+      }
+      .b .hotelrow .name { flex: 1; min-width: 0; font-weight: 500; }
+      .b .chiprow { display: flex; align-items: center; min-height: 44px; }
+      .b .route { border-top: 1px solid var(--rule); }
+
+      /* C — meta stacked beside the numeral, hotel is one quiet block */
+      .c .dayhead { padding-top: 8px; }
+      .c .lock { display: flex; align-items: flex-start; gap: 8px; }
+      .c .dnum {
+        font-size: 36px;
+        line-height: 32px;
+        font-weight: 700;
+        letter-spacing: -0.045em;
+        font-variant-numeric: tabular-nums;
+        padding-top: 2px;
+      }
+      .c .stack { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+      .c .dtop { font-size: 16px; line-height: 22px; font-weight: 600; }
+      .c .areas { font-size: 16px; line-height: 22px; font-weight: 500; }
+      .c .alarm { font-size: 13px; line-height: 18px; }
+      .c .stay { margin-top: 8px; }
+      .c .hotelrow {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 44px;
+      }
+      .c .hotelrow .name { flex: 1; min-width: 0; font-weight: 500; }
+      .c .chiprow { display: flex; align-items: center; min-height: 44px; padding-bottom: 4px; }
+      .c .route { border-top: 1px solid var(--rule); }
+    </style>
+  </head>
+  <body>
+    <div class="wrap" id="wrap"></div>
+    <script>
+      var days = {
+        4: {
+          n: 4, date: "25", dow: "Wed", mon: "Nov", sel: "Day 4 · Wed 11/25",
+          clock: "Taiwan/SG now 7:56 AM", flag: "🇹🇼", areas: "Beitou, Tamsui, Ximending",
+          alarm: "9:00 AM", prog: 27, of: "Day 4 of 15", route: true, stops: "10",
+          hotel: "Wonstar Hotel Zhong Hua",
+          now: null,
+          rows: [
+            { t: "Flexible", ic: "🍔", name: "BREAKFAST: TBD", tags: ["Food", "Breakfast"], pick: true },
+            { t: "Flexible", ic: "🚆", name: "EasyCard: Taipei → Beitou", tags: ["Transport"], go: true },
+            { t: "Flexible", ic: "🏃", name: "Thermal Valley", tags: ["Sights"], go: true },
+            { t: "Flexible", ic: "🍔", name: "LUNCH: TBD", tags: ["Food", "Lunch"], pick: true },
+            { t: "Flexible", ic: "🏃", name: "Spring City Resort Soak", tags: ["Sights", "Booked"], go: true }
+          ]
+        },
+        14: {
+          n: 14, date: "5", dow: "Sat", mon: "Dec", sel: "Day 14 · Sat 12/5 · today",
+          clock: "Taiwan/SG now 9:30 AM", flag: "🇸🇬", areas: "Singapore",
+          alarm: "6:55 AM", prog: 93, of: "Day 14 of 15", route: false, stops: "13",
+          hotel: "Hotel 1900 @ Chinatown",
+          now: {
+            cur: "BREAKFAST: Tekka Centre + Delhi Lahori",
+            curIc: "🍔",
+            next: "Kampong Glam: Sultan Mosque (modest dress), Arab St, Haji Lane (45 min)",
+            nextIc: "🏃"
+          },
+          rows: [
+            { t: "8:30 AM", ic: "🏃", name: "Sri Veeramakaliamman Temple", tags: ["Sights"], go: true, past: true },
+            { t: "9:15–10:15 AM", ic: "🍔", name: "BREAKFAST: Tekka Centre + Delhi Lahori", tags: ["Food", "Breakfast"], go: true, now: true, badge: "NOW" },
+            { t: "10:45 AM", ic: "🏃", name: "Kampong Glam: Sultan Mosque (modest dress), Arab St, Haji Lane (45 min)", tags: ["Sights"], go: true, badge: "NEXT" }
+          ]
+        }
+      };
+
+      function timeHtml(t) {
+        var p = t.split("–");
+        if (p.length < 2) return '<div class="when one"><span>' + t + "</span></div>";
+        return '<div class="when"><span>' + p[0] + "–</span><span>" + p[1] + "</span></div>";
+      }
+      function tags(list) {
+        return list.map(function (t) {
+          var cls = t === "Breakfast" || t === "Lunch" || t === "Dinner" ? " meal" : t === "Booked" ? " booked" : "";
+          return '<span class="tag' + cls + '">' + (t === "Booked" ? "✓ Booked" : t) + "</span>";
+        }).join("");
+      }
+      function row(r) {
+        var cls = "row" + (r.past ? " past" : "") + (r.now ? " now" : "");
+        var badge = r.badge ? '<span class="badge ' + (r.badge === "NOW" ? "now" : "nx") + '">' + r.badge + "</span>" : "";
+        var go = r.go ? '<span class="go">↗</span>' : "";
+        var pick = r.pick ? '<a class="rowlink subrow"><span class="em">🗺️</span><span class="name">Pick from saved list</span><span class="go">↗</span></a>' : "";
+        return '<article class="' + cls + '">' + timeHtml(r.t) +
+          '<div class="ttl"><a class="pl">' + go + '<span class="em">' + r.ic + "</span><span class=\"name\">" + r.name + "</span></a></div>" +
+          '<button class="done"></button><div class="meta">' + badge + tags(r.tags) + "</div>" + pick + "</article>";
+      }
+      function head(v, d) {
+        var alarm = '<span class="em">⏰</span> <span class="al">Alarm (computed)</span> <span class="big">' + d.alarm + "</span>";
+        if (v === "a") {
+          return '<section class="dayhead"><div class="drow"><div class="dnum">' + d.date + '</div><div class="dtop"><span class="em">' + d.flag + "</span>" + d.dow + " · " + d.mon + '</div></div><div class="areas">' + d.areas + '</div><div class="alarm">' + alarm + "</div></section>";
+        }
+        if (v === "b") {
+          return '<section class="dayhead"><div class="kicker">' + d.dow.toUpperCase() + " · " + d.mon.toUpperCase() + " " + d.date + '</div><div class="areas">' + d.areas + '</div><div class="alarm">' + alarm + "</div></section>";
+        }
+        return '<section class="dayhead"><div class="lock"><div class="dnum">' + d.date + '</div><div class="stack"><div class="dtop"><span class="em">' + d.flag + "</span>" + d.dow + " · " + d.mon + '</div><div class="areas">' + d.areas + '</div><div class="alarm">' + alarm + "</div></div></div></section>";
+      }
+      function stay(v, d) {
+        var name = '<span class="em">🏨</span>' + d.hotel;
+        var route = d.route ? '<a class="rowlink route"><span class="name"><span class="em">🗺️</span>Day route in Maps</span><span class="go">↗</span></a>' : "";
+        var chip = '<a class="chip">View Confirmation</a>';
+        if (v === "b") {
+          return '<section class="stay"><div class="hotelrow"><span class="name">' + name + '</span><span class="go">↗</span></div><div class="chiprow">' + chip + "</div>" + route + "</section>";
+        }
+        if (v === "c") {
+          return '<section class="stay"><div class="hotelrow"><span class="name">' + name + '</span><span class="go">↗</span></div><div class="chiprow">' + chip + "</div>" + route + "</section>";
+        }
+        return '<section class="stay"><a class="rowlink"><span class="name">' + name + '</span><span class="go">↗</span></a><div class="chiprow">' + chip + "</div>" + route + "</section>";
+      }
+      function nowbox(d) {
+        if (!d.now) return "";
+        return '<section class="nowbox"><button class="nl"><span class="when"><span class="badge now">NOW</span></span><span class="on"><span class="em">' + d.now.curIc + "</span>" + d.now.cur + '</span></button><button class="nl"><span class="when"><span class="badge nx">NEXT</span></span><span class="on"><span class="em">' + d.now.nextIc + "</span>" + d.now.next + '</span></button><button class="late"><span class="em">🏃</span><span class="name">Running late</span><span class="chev"></span></button></section>';
+      }
+      function screen(v, key) {
+        var d = days[key];
+        return '<div><p class="label">' + v.toUpperCase() + " · Day " + key + '</p><section class="screen ' + v + '"><header><div class="top"><div><h1>Trip Playbook</h1><div class="clock">' + d.clock + '</div></div><div class="all">All days</div></div><div class="days"><div class="nav">‹</div><div class="daysel">' + d.sel + '</div><div class="nav">›</div></div><div class="meter"><div class="prog"><i style="width:' + d.prog + '%"></i></div><span class="pn">' + d.of + '</span></div></header><div class="body">' + head(v, d) + stay(v, d) + nowbox(d) + '<div class="filters"><span class="fchip on">All</span><span class="fchip">Food</span><span class="fchip">Coffee</span><span class="fchip">Sights</span><span class="fchip">Photo</span><span class="fchip">Transport</span></div><div class="contents"><div class="sum"><span>Contents · ' + d.stops + ' stops</span><span class="chev"></span></div></div><div class="plan">' + d.rows.map(row).join("") + "</div></div></section></div>";
+      }
+      document.getElementById("wrap").innerHTML = ["a", "b", "c"].map(function (v) {
+        return screen(v, 4) + screen(v, 14);
+      }).join("");
+    </script>
+  </body>
+</html>

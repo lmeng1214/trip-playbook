@@ -21,7 +21,7 @@
         --page: #f6f1e6;
         --amber: #7a4a08;
         --now-ink: #f6f1e6;
-        --rail: 104px;
+        --rail: 76px;
       }
       * { box-sizing: border-box; }
       [hidden] { display: none !important; }
@@ -123,45 +123,37 @@
         font-variant-numeric: tabular-nums;
         white-space: nowrap;
       }
-      .dayhead, .stay, .nowbox {
-        display: grid;
-        grid-template-columns: var(--rail) minmax(0, 1fr) 44px;
-        column-gap: 8px;
-      }
-      .dayhead { align-items: center; padding-top: 16px; }
+      .dayhead { padding-top: 8px; }
+      .dlock { display: flex; align-items: center; }
+      .dnum { margin-right: 8px; }
+      .dlock > .flag { align-self: center; margin-right: 4px; }
       .dnum {
-        grid-column: 1;
-        grid-row: 1;
-        text-align: left;
-        font-size: 56px;
-        line-height: 0.8;
+        font-size: 32px;
+        line-height: 32px;
         font-weight: 700;
         letter-spacing: -0.045em;
         font-variant-numeric: tabular-nums;
       }
       .dtop {
-        grid-column: 2 / -1;
-        grid-row: 1;
         font-size: 16px;
         line-height: 22px;
         font-weight: 600;
       }
       .areas {
-        grid-column: 1 / -1;
-        margin-top: 8px;
+        margin-top: 4px;
         font-size: 16px;
         line-height: 22px;
         font-weight: 500;
         overflow-wrap: break-word;
       }
       .alarm {
-        grid-column: 1 / -1;
-        margin-top: 8px;
+        margin-top: 4px;
         font-size: 13px;
         line-height: 18px;
         font-weight: 400;
       }
       .al { color: var(--muted); font-weight: 400; }
+      .alarm .big { line-height: 18px; }
       .big {
         font-family: ui-monospace, "SF Mono", Menlo, monospace;
         font-size: 15px;
@@ -177,7 +169,12 @@
         margin-right: 4px;
         vertical-align: -0.125em;
       }
-      .stay { margin-top: 8px; }
+      .stay { margin-top: 8px; border-top: 1px solid var(--rule); }
+      .stay > .meta + .rowlink,
+      .stay > .rowlink + .rowlink,
+      .stay > .dl + .rowlink,
+      .stay > .dayof + .rowlink { margin-top: 4px; border-top: 1px solid var(--rule); }
+      .stay > .meta { padding-bottom: 0; }
       .rowlink, .exp, .idea {
         display: flex;
         align-items: center;
@@ -192,13 +189,13 @@
       .rowlink .name, .exp .name, .idea .name { flex: 1; min-width: 0; overflow-wrap: break-word; }
       .rowlink .go, .idea .go, .exp .chev { margin-left: auto; flex: 0 0 auto; }
       .go { display: inline-block; min-width: 16px; text-align: right; font-weight: 500; }
-      .pl .go { float: right; margin: 1px 8px 0 8px; }
-      .hnote { display: block; margin-top: 2px; font-weight: 500; color: var(--muted); }
-      .nowbox { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--rule); }
+      .pl .go { float: right; margin: 0 0 0 4px; }
+      .hnote { display: block; margin-top: 4px; font-weight: 500; color: var(--muted); }
+      .nowbox { margin-top: 8px; border-top: 1px solid var(--rule); }
       .nl {
         display: grid;
         grid-template-columns: var(--rail) minmax(0, 1fr) 44px;
-        column-gap: 8px;
+        column-gap: 4px;
         grid-column: 1 / -1;
         align-items: start;
         width: 100%;
@@ -209,7 +206,7 @@
       .nl .on {
         grid-column: 2 / -1;
         min-width: 0;
-        padding: 11px 0;
+        padding: 8px 0;
         font-size: 16px;
         line-height: 22px;
         font-weight: 600;
@@ -219,6 +216,7 @@
         display: flex;
         flex-wrap: wrap;
         align-items: center;
+        margin-top: 8px;
         border-bottom: 1px solid var(--rule);
       }
       .fchip {
@@ -241,7 +239,7 @@
         position: absolute;
         left: 6px;
         right: 6px;
-        bottom: 0;
+        bottom: -1px;
         height: 2px;
         background: var(--ink);
       }
@@ -257,6 +255,7 @@
         cursor: pointer;
         list-style: none;
       }
+      details:not([open]) > :not(summary) { display: none; }
       summary::-webkit-details-marker { display: none; }
       summary .chev { margin-left: auto; }
       .chev {
@@ -272,7 +271,7 @@
       .crow {
         display: grid;
         grid-template-columns: var(--rail) minmax(0, 1fr);
-        column-gap: 8px;
+        column-gap: 4px;
         align-items: start;
         width: 100%;
         min-height: 44px;
@@ -281,7 +280,7 @@
       }
       .crow .on {
         min-width: 0;
-        padding: 11px 0;
+        padding: 8px 0;
         font-size: 16px;
         line-height: 22px;
         font-weight: 500;
@@ -291,7 +290,7 @@
       .row {
         display: grid;
         grid-template-columns: var(--rail) minmax(0, 1fr) 44px;
-        column-gap: 8px;
+        column-gap: 4px;
         align-items: start;
         border-bottom: 1px solid var(--rule);
         min-width: 0;
@@ -300,23 +299,27 @@
         grid-column: 1;
         grid-row: 1;
         align-self: start;
-        padding-top: 11px;
+        justify-self: stretch;
+        width: auto;
+        max-width: 100%;
+        padding: 8px 0;
         text-align: right;
         font-family: ui-monospace, "SF Mono", Menlo, monospace;
         font-weight: 500;
         font-size: 12px;
-        line-height: 22px;
+        line-height: 16px;
         letter-spacing: 0;
         color: var(--amber);
       }
-      .when .frag { white-space: nowrap; }
+      .nl .when { line-height: 22px; padding-bottom: 0; }
+      .when .frag { display: block; white-space: nowrap; }
       .when .flex { color: var(--muted); font-weight: 500; }
       .ttl { grid-column: 2; grid-row: 1; min-width: 0; align-self: start; }
       .pl {
         display: block;
         min-height: 44px;
         min-width: 44px;
-        padding: 11px 0 4px;
+        padding: 8px 0 4px;
         font-size: 16px;
         line-height: 22px;
         font-weight: 600;
@@ -337,7 +340,7 @@
         content: "";
         position: absolute;
         left: 13px;
-        top: 13px;
+        top: 10px;
         width: 18px;
         height: 18px;
         border: 1.5px solid var(--quiet);
@@ -348,7 +351,7 @@
         content: "";
         position: absolute;
         left: 17px;
-        top: 18px;
+        top: 15px;
         width: 10px;
         height: 6px;
         border-left: 2px solid var(--page);
@@ -356,6 +359,14 @@
         transform: rotate(-45deg);
       }
       .meta, .trv, .note, .rowlink, .exp, .panel, .dayof, .dl, .late { grid-column: 2 / -1; }
+      .row > .meta,
+      .row > .trv,
+      .row > .note,
+      .row > .rowlink,
+      .row > .exp,
+      .row > .panel,
+      .row > .dayof,
+      .row > .dl { grid-column: 2; }
       .meta {
         grid-column: 2;
         display: flex;
@@ -454,7 +465,7 @@
         align-items: center;
         justify-content: space-between;
         gap: 12px;
-        margin-top: 12px;
+        margin-top: 16px;
         padding-top: 4px;
         padding-bottom: env(safe-area-inset-bottom);
         font-size: 13px;
@@ -821,15 +832,16 @@
         function q(t) {
           if (!t.timeText) return '<span class="flex">Flexible</span>';
           var parts = t.timeText.split("\u2013");
-          return parts
-            .map(function (part, i) {
-              return (
-                '<span class="frag">' +
-                u(i < parts.length - 1 ? part + "\u2013" : part) +
-                "</span>"
-              );
-            })
-            .join("<wbr>");
+          if (parts.length < 2)
+            return '<span class="frag">' + u(t.timeText) + "</span>";
+          return (
+            '<span class="frag">' +
+            u(parts[0] + "\u2013") +
+            "</span>" +
+            '<span class="frag">' +
+            u(parts.slice(1).join("\u2013")) +
+            "</span>"
+          );
         }
         function F(t) {
           return t.doc
@@ -1388,15 +1400,15 @@
               I = "",
               L = "Singapore" === S.countries[0];
             ((I +=
-              '<section class="dayhead"><div class="dnum">' +
+              '<section class="dayhead"><div class="dlock"><div class="dnum">' +
               S.d +
-              '</div><div class="dtop"><span class="em">' +
+              '</div><span class="em flag">' +
               (L ? "🇸🇬" : "🇹🇼") +
-              "</span>" +
+              "</span><div class=\"dtop\">" +
               k[S.date.getUTCDay()] +
               " · " +
               w[S.date.getUTCMonth()] +
-              "</div>" +
+              "</div></div>" +
               (S.areas.length
                 ? '<div class="areas">' + u(S.areas.join(" · ")) + "</div>"
                 : "") +

@@ -1669,11 +1669,22 @@
                       );
                     })
                     .join("") +
-                  (S.routeLink
-                    ? '<a class="rowlink" href="' +
-                      u(S.routeLink) +
-                      '"><span class="name"><span class="em">🗺️</span>Day route in Maps</span><span class="go" aria-hidden="true">↗</span></a>'
-                    : "");
+                  (Array.isArray(S.routeLinks)
+                    ? S.routeLinks
+                    : S.routeLink
+                      ? [{ label: "Day route in Maps", href: S.routeLink }]
+                      : []
+                  )
+                    .map(function (t) {
+                      return (
+                        '<a class="rowlink" href="' +
+                        u(t.href) +
+                        '"><span class="name"><span class="em">🗺️</span>' +
+                        u(t.label) +
+                        '</span><span class="go" aria-hidden="true">↗</span></a>'
+                      );
+                    })
+                    .join("");
                 return stay
                   ? '<section class="stay">' + stay + "</section>"
                   : "";

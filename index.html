@@ -445,26 +445,14 @@
         overflow-wrap: break-word;
       }
       .twmuted { color: var(--muted); }
-      .twbody a {
-        color: var(--ink);
-        text-decoration: underline;
-        text-underline-offset: 2px;
-        display: inline-flex;
-        align-items: center;
-        max-width: 100%;
-        min-width: 44px;
-        min-height: 44px;
-        padding: 0;
-        vertical-align: middle;
-        overflow-wrap: break-word;
-      }
-      .twacts { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+      .twacts { display: flex; flex-wrap: nowrap; align-items: center; gap: 8px; margin-top: 8px; }
+      .twacts .chip { min-width: 0; }
       .call {
         display: inline-flex;
         align-items: center;
+        flex: 0 0 auto;
         min-width: 44px;
         min-height: 44px;
-        padding: 8px 0;
         color: var(--ink);
         font-weight: 500;
         text-decoration: none;
@@ -502,17 +490,13 @@
       }
       .kath { margin-top: 16px; border-top: 1px solid var(--rule); }
       .k { padding: 8px 0; border-top: 1px solid var(--rule); white-space: pre-wrap; }
-      .k a, .dayof a, .dl a {
+      .k a, .dayof a, .dl a, .twbody a {
         color: var(--ink);
         text-decoration: underline;
         text-underline-offset: 2px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 44px;
-        min-height: 44px;
-        padding: 0 8px;
-        vertical-align: middle;
+        display: inline;
+        padding: 11px 8px;
+        margin: -11px -8px;
       }
       .foot {
         display: flex;

@@ -409,7 +409,7 @@
         color: var(--ink);
         box-shadow: inset 0 0 0 1px var(--ink);
       }
-      .chip {
+      .chip, .call, .call:link, .call:visited, .call:hover, .call:active {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -427,6 +427,7 @@
         white-space: normal;
         overflow-wrap: break-word;
         text-align: center;
+        text-decoration: none;
       }
       .ttl .chip { max-width: 100%; }
       .meta:empty { display: none; }
@@ -447,17 +448,7 @@
       }
       .twmuted { color: var(--muted); }
       .twacts { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 8px; }
-      .twacts .chip { min-width: 0; }
-      .call, .call:link, .call:visited, .call:hover, .call:active {
-        display: inline-flex;
-        align-items: center;
-        flex: 0 0 auto;
-        min-width: 44px;
-        min-height: 44px;
-        color: var(--ink);
-        font-weight: 500;
-        text-decoration: none;
-      }
+      .twacts .chip, .twacts .call { min-width: 0; }
       .row.appchip {
         display: block;
         position: relative;
@@ -473,6 +464,7 @@
       .row.is-done.appchip .twname,
       .row.is-done.appchip .twnote,
       .row.is-done.appchip .call { color: var(--past); }
+      .row.past.appchip .call, .row.is-done.appchip .call { border-color: var(--past); }
       .trv, .sub, .dayof, .dl, .note, .det div, .k, .loose {
         font-size: 16px;
         line-height: 22px;

@@ -409,7 +409,7 @@
         color: var(--ink);
         box-shadow: inset 0 0 0 1px var(--ink);
       }
-      .chip {
+      .chip, .call, .call:link, .call:visited, .call:hover, .call:active {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -427,36 +427,44 @@
         white-space: normal;
         overflow-wrap: break-word;
         text-align: center;
+        text-decoration: none;
       }
       .ttl .chip { max-width: 100%; }
       .meta:empty { display: none; }
       .tw { border-top: 1px solid var(--rule); }
       .twcard { border-top: 1px solid var(--rule); padding: 8px 0; min-width: 0; }
+      .tw:not(:has(.twcard + .twcard)) > .twcard { border-top: 0; padding-top: 0; }
       .twname {
         font-size: 16px;
         line-height: 22px;
         font-weight: 600;
         overflow-wrap: break-word;
       }
-      .twmuted, .twbody {
+      .twmuted, .twnote {
         margin: 4px 0 0;
         font-size: 16px;
         line-height: 22px;
         overflow-wrap: break-word;
       }
       .twmuted { color: var(--muted); }
-      .twacts { display: flex; flex-wrap: nowrap; align-items: center; gap: 8px; margin-top: 8px; }
-      .twacts .chip { min-width: 0; }
-      .call {
-        display: inline-flex;
-        align-items: center;
-        flex: 0 0 auto;
-        min-width: 44px;
-        min-height: 44px;
-        color: var(--ink);
-        font-weight: 500;
-        text-decoration: none;
+      .twacts { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 8px; }
+      .twacts .chip, .twacts .call { min-width: 0; }
+      .row.appchip {
+        display: block;
+        position: relative;
+        padding: 8px 0;
+        background: rgba(28, 25, 20, 0.06);
       }
+      .row.appchip .done { position: absolute; top: 0; right: 0; }
+      .row.appchip .twname { padding-right: 48px; }
+      .row.past.appchip .twname,
+      .row.past.appchip .twnote,
+      .row.past.appchip .twmuted,
+      .row.past.appchip .call,
+      .row.is-done.appchip .twname,
+      .row.is-done.appchip .twnote,
+      .row.is-done.appchip .call { color: var(--past); }
+      .row.past.appchip .call, .row.is-done.appchip .call { border-color: var(--past); }
       .trv, .sub, .dayof, .dl, .note, .det div, .k, .loose {
         font-size: 16px;
         line-height: 22px;
@@ -490,7 +498,7 @@
       }
       .kath { margin-top: 16px; border-top: 1px solid var(--rule); }
       .k { padding: 8px 0; border-top: 1px solid var(--rule); white-space: pre-wrap; }
-      .k a, .dayof a, .dl a, .twbody a {
+      .k a, .dayof a, .dl a {
         color: var(--ink);
         text-decoration: underline;
         text-underline-offset: 2px;
@@ -928,6 +936,7 @@
             .replace(/[^\p{L}\p{N}]+/gu, "");
         }
         function W(t, e, n, a) {
+          if (e.lines && e.lines.length) return appRow(t, e, n, a);
           var i = m(t, e),
             skipped = h(t, e),
             s = (function (t, e) {
@@ -1233,29 +1242,28 @@
           });
         }
         var twOpen = { vouchers: !1, todos: !1 };
-        function twP(t, e) {
-          return '<p class="' + t + '">' + u(e) + "</p>";
+        function twLines(t) {
+          return t
+            .map(function (e, n) {
+              return (
+                '<p class="' + (n ? "twnote" : "twmuted") + '">' + u(e) + "</p>"
+              );
+            })
+            .join("");
         }
-        function twActs(t, e, n) {
-          return (
-            (t
-              ? '<a class="call" href="' + u(t[0]) + '">' + u(t[1]) + "</a>"
-              : "") +
-            '<a class="chip" href="' +
-            u(e) +
-            '">' +
-            u(n) +
-            "</a>"
-          );
+        function twBtn(t) {
+          return t.tel
+            ? '<a class="call" href="' + u(t.href) + '">' + u(t.label) + "</a>"
+            : '<a class="chip" href="' + u(t.href) + '">' + u(t.label) + "</a>";
         }
         function twCard(t, e, n) {
           return (
             '<article class="twcard"><div class="twname">' +
             u(t) +
             "</div>" +
-            e.join("") +
+            twLines(e) +
             '<div class="twacts">' +
-            n +
+            twBtn(n) +
             "</div></article>"
           );
         }
@@ -1272,185 +1280,97 @@
             "</details>"
           );
         }
-        function twArrival() {
-          var t = e.days.filter(function (t) {
-              return 12 === t.mo && 1 === t.d;
-            })[0],
-            n =
-              t &&
-              t.steps.filter(function (t) {
-                return "~10:40 PM" === t.timeText || "10:40 PM" === t.timeText;
-              })[0];
-          return n ? n.timeText : "~10:40 PM";
+        function appRow(t, e, n, a) {
+          var i = m(t, e),
+            skipped = h(t, e),
+            cls = "row appchip",
+            badge = "";
+          ((a.res[n].past || skipped) && (cls += " past"),
+            i && (cls += " is-done"),
+            skipped
+              ? (badge = '<span class="tag">Skipped</span>')
+              : a.today && n === a.cur
+                ? (badge = '<span class="badge now">NOW</span>')
+                : a.today &&
+                  n === a.next &&
+                  (badge = '<span class="badge nx">NEXT</span>'));
+          return (
+            '<article class="' +
+            cls +
+            '" id="s' +
+            n +
+            '" data-cat="' +
+            u(e.cat || "") +
+            '" data-cells="' +
+            u((e.cells || []).join(" ")) +
+            '"' +
+            A((e.srcs || []).join("\n")) +
+            '><div class="twname">' +
+            u(e.label) +
+            "</div>" +
+            twLines(e.lines) +
+            '<div class="twacts">' +
+            twBtn(e.act) +
+            badge +
+            '</div><button class="done" data-dn="' +
+            n +
+            '" aria-pressed="' +
+            i +
+            '" aria-label="' +
+            (i ? "Done: " : "Mark done: ") +
+            u(e.label) +
+            '"></button></article>'
+          );
         }
         function tw() {
-          var t = "https://docs.google.com/document/d/1Uh0nBuDfyv8eNrABWDS2B3YkEsMl4JtjRhANA7VNrrk/edit",
-            n = "https://docs.google.com/document/d/1L-cKIWlbQEZ_kFE50ERSVNBP7JjiNnNv6T5DwdQUiqU/edit",
-            a = "https://docs.google.com/document/d/1KzO_VueOv8xQkoXp_YEPs1Z6Pnv8Jlaa7BIy5SY2Eho/edit",
-            o = "https://docs.google.com/document/d/1mh21NwL11exzb7R9hqFeFsWayfuqw4Y95ipERqGjVyc/edit",
-            r =
-              u("On ") +
-              '<a href="https://www.klook.com/activity/141178">' +
-              u("Klook's Starbucks page") +
-              "</a>" +
-              u(
-                ", buy 2x TWD 110 beverage vouchers with the code (50% off), then show the QR e-voucher in store.",
-              ),
-            i = twArrival();
+          var t =
+            "https://docs.google.com/document/d/1Uh0nBuDfyv8eNrABWDS2B3YkEsMl4JtjRhANA7VNrrk/edit";
           return (
             twGroup(
               "vouchers",
               "Vouchers",
               twCard(
-                "Starbucks Buy 1 Get 1 (Taiwan)",
-                [
-                  twP("twmuted", "Buy 1 Get 1 (50% off)"),
-                  twP("twmuted", "Valid until Dec 31, 2026"),
-                  '<p class="twbody">' + r + "</p>",
-                ],
-                twActs(null, t, "Private Doc"),
-              ) +
-                twCard(
-                  "Starbucks 27% off",
-                  [
-                    twP("twmuted", "NT$30 off one TWD 110 voucher"),
-                    twP("twmuted", "Valid until Dec 31"),
-                    twP(
-                      "twbody",
-                      "In Lenny's Klook account; the booking's lead name is Katherine.",
-                    ),
-                    '<p class="twbody">' + r + "</p>",
-                  ],
-                  twActs(null, t, "Private Doc"),
-                ) +
-                twCard(
-                  "HSR Buy 1 Get 1",
-                  [
-                    twP("twmuted", "50% off"),
-                    twP("twmuted", "Valid until Dec 31, one use"),
-                    twP(
-                      "twbody",
-                      "Only for Klook's 'Taiwan High Speed Rail Ticket for non-Taiwanese' going to Taichung, Changhua, Yunlin, Chiayi, Tainan or Kaohsiung.",
-                    ),
-                  ],
-                  twActs(null, "https://www.klook.com/coupons/", "Klook coupons (Lenny's login)"),
-                ) +
-                twCard(
-                  "Taiwan traveler credit (Lenny + Katherine)",
-                  [
-                    twP("twmuted", "Amount UNVERIFIED"),
-                    twP(
-                      "twbody",
-                      "Upload a return ticket within 24h of landing (by 5:20 AM Mon 11/23 Taiwan time), then show the QR + passport at any 7-ELEVEN within 24h to load it onto your own EasyCard/iPASS/icash.",
-                    ),
-                    twP(
-                      "twmuted",
-                      "by 5:20 AM Mon 11/23 Taiwan time for the upload",
-                    ),
-                  ],
-                  twActs(null, t, "Private Doc"),
-                ),
+                "Starbucks X2 (3 Drinks)",
+                ["BOGO + 27% off, until Dec 31; use by Wed 12/2"],
+                { href: t, label: "Codes (private)" },
+              ),
             ) +
             twGroup(
               "todos",
               "To-dos",
               twCard(
-                "Wonstar, ask about the shopping-bag drop",
-                [
-                  twP("twmuted", "Sun 11/22, ~7:30 AM Taiwan time"),
-                  twP(
-                    "twbody",
-                    "When you drop your bags at Wonstar in the morning, ask whether you can also drop shopping bags midday before the 3 PM check-in. Ask at the desk in person, or call.",
-                  ),
-                  twP(
-                    "twbody",
-                    'The Day 1 itinerary has "Drop Shopping Bags at Hotel, Check in @ 3PM", still outstanding. The early bag drop is already confirmed free (Wonstar email, 11/10).',
-                  ),
-                  twP("twmuted", "The front desk is open 6:00 AM\u201311:30 PM Taiwan time."),
-                ],
-                twActs(["tel:+886223820889", "+886 2 2382 0889"], n, "Wonstar booking Doc (first stay)"),
+                "Ask About Bag Drop",
+                ["Sun 11/22, morning, Taiwan time"],
+                { href: "tel:+886223820889", label: "Call Wonstar", tel: 1 },
               ) +
                 twCard(
-                  "traveler credit, upload return tickets (each of you)",
-                  [
-                    twP("twmuted", "Sun 11/22, by 5:20 AM Mon 11/23 Taiwan time"),
-                    twP(
-                      "twbody",
-                      "Each person opens their own link in the private Doc, taps Arrival verification, uploads the return ticket (Scoot TR867, Wed 12/2), then taps Yes. Do it right after landing (5:20 AM Sun).",
-                    ),
-                    twP(
-                      "twbody",
-                      "You both won the Taiwan Tourism Administration traveler credit. Verification must happen within 24 hours of arrival, or it becomes invalid.",
-                    ),
-                    twP("twbody", "Katherine needs her own return-ticket image."),
-                  ],
-                  twActs(null, t, "Vouchers & Taiwan traveler credit"),
+                  "Upload Return Tickets",
+                  ["By 5:20 AM Mon 11/23, Taiwan time"],
+                  { href: t, label: "Private Doc" },
                 ) +
                 twCard(
-                  "traveler credit, redeem at any 7-ELEVEN (each of you)",
-                  [
-                    twP("twmuted", "Sun 11/22 or by Mon 11/23 morning, Taiwan time"),
-                    twP(
-                      "twbody",
-                      "Go to any 7-ELEVEN in Taiwan (not an airport counter). Show the QR-code email and your passport. The credit loads onto your OWN EasyCard, iPASS or icash card (buy one there if needed).",
-                    ),
-                    twP(
-                      "twbody",
-                      "The second 24-hour window. Missing it voids the credit.",
-                    ),
-                  ],
-                  twActs(null, t, "Vouchers & Taiwan traveler credit"),
+                  "Redeem At 7-Eleven",
+                  ["Within 24h of upload, Taiwan time"],
+                  { href: t, label: "Private Doc" },
                 ) +
                 twCard(
-                  "Klook Starbucks vouchers (2)",
+                  "Call View Ocean",
                   [
-                    twP("twmuted", "Any day, Sun 11/22 \u2013 Wed 12/2, Taiwan time"),
-                    twP(
-                      "twbody",
-                      "Use the two Klook Starbucks codes (Buy 1 Get 1, and NT$30 off): buy the TWD 110 Starbucks Rewards beverage voucher on Klook with each code, then show the QR at the counter.",
-                    ),
-                    twP(
-                      "twbody",
-                      "Klook says they're valid until Dec 31, 2026, 11:59 PM. They're Taiwan Starbucks vouchers, so use them before the Wed 12/2 4:40 PM Scoot TR867 departure.",
-                    ),
+                    "Thu 11/26, before 5 PM, Taiwan time",
+                    "No call by 6 PM = room cancelled",
                   ],
-                  twActs(null, t, "Vouchers & Taiwan traveler credit"),
+                  {
+                    href: "tel:+88638348817",
+                    label: "Call View Ocean",
+                    tel: 1,
+                  },
                 ) +
                 twCard(
-                  "CALL View Ocean (required)",
+                  "Call Wonstar Arrival",
                   [
-                    twP("twmuted", "Thu 11/26, 3:00\u20134:45 PM Taiwan time"),
-                    twP(
-                      "twbody",
-                      "Tell them you'll arrive around 6:30\u20137:00 PM (Tze-Chiang 434 gets into Hualien at 6:26 PM) and ask them to hold the room.",
-                    ),
-                    twP(
-                      "twbody",
-                      "The hotel's own booking rules say that if you arrive after 5 PM you must phone, and if nobody calls by 6 PM the room is cancelled. Lenny's 11/10 email doesn't replace the call. Call before 5 PM. You'll be in Yilan, before the 5:21 PM train.",
-                    ),
-                    twP("twmuted", "The front desk is open 7:00 AM\u201311:00 PM Taiwan time."),
+                    "By 10:39 PM Mon 11/30; arrive 10:39 PM Tue 12/1, Taiwan time",
                   ],
-                  twActs(["tel:+88638348817", "+886 3 834 8817"], a, "View Ocean booking Doc"),
-                ) +
-                twCard(
-                  "CALL Wonstar about the late arrival on Tue 12/1",
-                  [
-                    twP(
-                      "twmuted",
-                      "Sun 11/29 (9 AM\u201310 PM Taiwan time), or by ~10:30 PM Mon 11/30 at the latest",
-                    ),
-                    twP("twmuted", i + " Taiwan time"),
-                    twP(
-                      "twbody",
-                      "Tell Wonstar you'll check in around 10:40\u201311:00 PM on Tue 12/1 and ask them to hold the room. Their desk closes at 11:30 PM.",
-                    ),
-                    twP(
-                      "twbody",
-                      'The Capital One booking says the front desk is open 6:00 AM\u201311:30 PM, there\'s no after-hours check-in, and you must contact the hotel at least 24 hours before arrival. The itinerary note says "emailed to hold the room", but no such email is in Lenny\'s Gmail (searched Nov 19), so call.',
-                    ),
-                    twP("twbody", "Or email service_zh@wonstar.com.tw."),
-                  ],
-                  twActs(["tel:+886223820889", "+886 2 2382 0889"], o, "Wonstar booking Doc (second stay)"),
+                  { href: "tel:+886223820889", label: "Call Wonstar", tel: 1 },
                 ),
             )
           );
@@ -1795,7 +1715,7 @@
                       '"' +
                       A(t.srcs.join("\n")) +
                       '><span class="when">' +
-                      q(t) +
+                      (t.lines && t.lines.length ? "" : q(t)) +
                       '</span><span class="on">' +
                       (t.ic ? '<span class="em">' + u(t.ic) + "</span>" : "") +
                       '<span class="name">' +

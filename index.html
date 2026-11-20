@@ -432,6 +432,7 @@
       .meta:empty { display: none; }
       .tw { border-top: 1px solid var(--rule); }
       .twcard { border-top: 1px solid var(--rule); padding: 8px 0; min-width: 0; }
+      .tw:not(:has(.twcard + .twcard)) > .twcard { border-top: 0; padding-top: 0; }
       .twname {
         font-size: 16px;
         line-height: 22px;
@@ -1340,15 +1341,7 @@
                 "Starbucks X2 (3 Drinks)",
                 ["BOGO + 27% off, until Dec 31; use by Wed 12/2"],
                 { href: t, label: "Codes (private)" },
-              ) +
-                twCard(
-                  "HSR Buy 1 Get 1",
-                  ["50% off, southbound only, until Dec 31"],
-                  {
-                    href: "https://www.klook.com/coupons/",
-                    label: "Klook coupons",
-                  },
-                ),
+              ),
             ) +
             twGroup(
               "todos",

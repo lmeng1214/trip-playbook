@@ -593,7 +593,7 @@
       <div class="days" id="days"></div>
       <div class="meter" id="dots"></div>
       <div class="links">
-        <a class="chip" href="https://docs.google.com/document/d/1Uh0nBuDfyv8eNrABWDS2B3YkEsMl4JtjRhANA7VNrrk/edit">Vouchers &amp; Taiwan traveler credit</a>
+        <a class="chip" href="https://docs.google.com/document/d/1Uh0nBuDfyv8eNrABWDS2B3YkEsMl4JtjRhANA7VNrrk/edit">Confirmations (private)</a>
       </div>
     </header>
     <main id="main"></main>
@@ -1241,7 +1241,7 @@
             behavior: n && !r ? "smooth" : "auto",
           });
         }
-        var twOpen = { vouchers: !1, todos: !1 };
+        var twOpen = { todos: !1 };
         function twLines(t) {
           return t
             .map(function (e, n) {
@@ -1325,54 +1325,35 @@
         function tw() {
           var t =
             "https://docs.google.com/document/d/1Uh0nBuDfyv8eNrABWDS2B3YkEsMl4JtjRhANA7VNrrk/edit";
-          return (
-            twGroup(
-              "vouchers",
-              "Vouchers",
-              twCard(
-                "Starbucks X2 (3 Drinks)",
-                ["BOGO + 27% off, until Dec 31; use by Wed 12/2"],
-                { href: t, label: "Codes (private)" },
-              ),
+          return twGroup(
+            "todos",
+            "To-dos",
+            twCard(
+              "Katherine: Redeem Prize",
+              [
+                "By 6:18 AM Mon 11/23, Taiwan time. Bring passport + EasyCard, iPASS or icash.",
+              ],
+              { href: t, label: "Private Doc" },
             ) +
-            twGroup(
-              "todos",
-              "To-dos",
               twCard(
-                "Ask About Bag Drop",
-                ["Sun 11/22, morning, Taiwan time"],
-                { href: "tel:+886223820889", label: "Call Wonstar", tel: 1 },
+                "Call View Ocean",
+                [
+                  "Thu 11/26, before 5 PM, Taiwan time",
+                  "No call by 6 PM = room cancelled",
+                ],
+                {
+                  href: "tel:+88638348817",
+                  label: "Call View Ocean",
+                  tel: 1,
+                },
               ) +
-                twCard(
-                  "Upload Return Tickets",
-                  ["By 5:20 AM Mon 11/23, Taiwan time"],
-                  { href: t, label: "Private Doc" },
-                ) +
-                twCard(
-                  "Redeem At 7-Eleven",
-                  ["Within 24h of upload, Taiwan time"],
-                  { href: t, label: "Private Doc" },
-                ) +
-                twCard(
-                  "Call View Ocean",
-                  [
-                    "Thu 11/26, before 5 PM, Taiwan time",
-                    "No call by 6 PM = room cancelled",
-                  ],
-                  {
-                    href: "tel:+88638348817",
-                    label: "Call View Ocean",
-                    tel: 1,
-                  },
-                ) +
-                twCard(
-                  "Call Wonstar Arrival",
-                  [
-                    "By 10:39 PM Mon 11/30; arrive 10:39 PM Tue 12/1, Taiwan time",
-                  ],
-                  { href: "tel:+886223820889", label: "Call Wonstar", tel: 1 },
-                ),
-            )
+              twCard(
+                "Call Wonstar Arrival",
+                [
+                  "By 10:39 PM Mon 11/30; arrive 10:39 PM Tue 12/1, Taiwan time",
+                ],
+                { href: "tel:+886223820889", label: "Call Wonstar", tel: 1 },
+              ),
           );
         }
         function twBind() {

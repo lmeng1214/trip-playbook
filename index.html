@@ -472,6 +472,15 @@
         overflow-wrap: anywhere;
       }
       .trv { margin: 0 0 4px; }
+      .row > .ride {
+        grid-column: 2;
+        max-width: 100%;
+        padding: 8px 10px;
+        margin: 0 0 8px;
+        background: rgba(28, 25, 20, 0.06);
+      }
+      .row.past .ride,
+      .row.is-done .ride { color: var(--past); }
       .sub, .dayof, .dl { padding: 8px 0; }
       .panel { padding: 0 0 8px; }
       .ia {
@@ -1074,6 +1083,17 @@
             (chipOnly ? "" : e.conf.map(F).join("")) +
             "</div>" +
             (e.travelRow ? '<div class="trv">' + u(e.travelRow) + "</div>" : "") +
+            (e.ride
+              ? '<div class="ride"><div class="twname">' +
+                u(e.ride.title) +
+                "</div>" +
+                e.ride.lines
+                  .map(function (t) {
+                    return '<p class="twnote">' + u(t) + "</p>";
+                  })
+                  .join("") +
+                "</div>"
+              : "") +
             e.dayof.map(R).join("") +
             (e.deadlines || []).map(P).join("") +
             (e.pick
@@ -1335,18 +1355,6 @@
               ],
               { href: t, label: "Private Doc" },
             ) +
-              twCard(
-                "Call View Ocean",
-                [
-                  "Thu 11/26, before 5 PM, Taiwan time",
-                  "No call by 6 PM = room cancelled",
-                ],
-                {
-                  href: "tel:+88638348817",
-                  label: "Call View Ocean",
-                  tel: 1,
-                },
-              ) +
               twCard(
                 "Call Wonstar Arrival",
                 [
